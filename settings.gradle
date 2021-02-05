@@ -1,0 +1,7 @@
+include ':testqgspeech'
+include ':testui'
+include ':c100_ivoka'
+include ':animtion'
+include ':DynamicFeature'
+include ':app'
+rootProject.name = "testxl"
