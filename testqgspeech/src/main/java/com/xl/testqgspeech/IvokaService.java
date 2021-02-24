@@ -10,7 +10,24 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
+import com.xl.testqgspeech.data.IDataInterface;
+import com.xl.testqgspeech.di.annotation.MessageData;
+import com.xl.testqgspeech.di.annotation.SpeechData;
+
+import javax.inject.Inject;
+
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class IvokaService extends Service {
+
+    @SpeechData
+    @Inject
+    IDataInterface mSpeechData;
+
+    @MessageData
+    @Inject
+    IDataInterface mMessageData;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -35,6 +52,8 @@ public class IvokaService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        mSpeechData.sendRequest();
+        mMessageData.sendRequest();
     }
 
     @Nullable
