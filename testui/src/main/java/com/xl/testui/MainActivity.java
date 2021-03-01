@@ -25,6 +25,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.qinggan.speech.VuiServiceMgr;
+import com.qinggan.util.QGSpeechSystemProperties;
 import com.xl.testui.databinding.ActivityMainBinding;
 
 import java.io.File;
@@ -35,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private WindowManager mWindowManager;
     public static final int REQUEST_WRITE_EXTERNAL_STORAGE = 1;
     private String cur_path;
+    VuiServiceMgr vuiServiceMgr;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +54,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         checkWPermission();
+        vuiServiceMgr = VuiServiceMgr.getInstance(getApplication(), new VuiServiceMgr.VuiConnectionCallback() {
+            @Override
+            public void onServiceConnected() {
+                Log.d("xLLL","on service connected");
 
+            }
+
+            @Override
+            public void onServiceDisconnect() {
+                Log.d("xLLL","on service disconnected");
+            }
+        });
 
     }
 
@@ -113,7 +128,16 @@ public class MainActivity extends AppCompatActivity {
 //            showImage();
         });
         windowView.findViewById(R.id.test3).setOnClickListener(v -> showImage());
-
+        windowView.findViewById(R.id.test4).setOnClickListener(v -> {
+            Log.i("xLLL","cancel Request");
+            vuiServiceMgr.cancelRequest();
+//            private static final String AUDIO_SAVE_SOURCE        = "source";
+//            private static final String AUDIO_SAVE_PROCESS       = "process";
+//            private static final String AUDIO_SAVE_FEED          = "feed";
+//            private static final String AUDIO_SAVE_ALL           = "all";
+//            private static final String AUDIO_SAVE_NONE          = "none";
+            QGSpeechSystemProperties.set("persist.sys.va.drive_mode","all");
+        });
         mWindowManager.addView(windowView,params);
     }
 

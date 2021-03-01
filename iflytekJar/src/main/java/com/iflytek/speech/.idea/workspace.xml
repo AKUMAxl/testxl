@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c1bb294e-6412-40e8-b823-e7c73d0f106f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/../../../../../../../testui/libs/QGSpeech.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../settings.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../testqgspeech/src/main/java/com/xl/testqgspeech/BootReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../testqgspeech/src/main/java/com/xl/testqgspeech/BootReceiver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../testqgspeech/src/main/java/com/xl/testqgspeech/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../testqgspeech/src/main/java/com/xl/testqgspeech/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../testqgspeech/src/main/java/com/xl/testqgspeech/data/SpeechDataProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../testqgspeech/src/main/java/com/xl/testqgspeech/data/SpeechDataProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../testui/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../testui/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../testui/src/main/java/com/xl/testui/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../testui/src/main/java/com/xl/testui/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../../../../testui/src/main/res/layout/view_window.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../../../../testui/src/main/res/layout/view_window.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../../../../.." />
+  </component>
+  <component name="ProjectId" id="1p9EfZ6Oem1qmuKq1t8U6lj6Ybo" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c1bb294e-6412-40e8-b823-e7c73d0f106f" name="Default Changelist" comment="" />
+      <created>1614587009563</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1614587009563</updated>
+    </task>
+    <servers />
+  </component>
+</project>

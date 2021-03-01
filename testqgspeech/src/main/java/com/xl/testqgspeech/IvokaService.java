@@ -9,10 +9,11 @@ import android.os.IBinder;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import com.xl.testqgspeech.data.IDataInterface;
 import com.xl.testqgspeech.di.annotation.MessageData;
-import com.xl.testqgspeech.di.annotation.SpeechData;
+import com.xl.testqgspeech.di.annotation.VoiceData;
 
 import javax.inject.Inject;
 
@@ -21,9 +22,9 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class IvokaService extends Service {
 
-    @SpeechData
+    @VoiceData
     @Inject
-    IDataInterface mSpeechData;
+    IDataInterface mVoiceData;
 
     @MessageData
     @Inject
@@ -52,8 +53,11 @@ public class IvokaService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        mSpeechData.sendRequest();
-        mMessageData.sendRequest();
+//        mSpeechData.sendRequest();
+//        mMessageData.sendRequest();
+//        mVoiceData
+//        ContextCompat.checkSelfPermission()
+
     }
 
     @Nullable

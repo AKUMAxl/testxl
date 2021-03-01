@@ -1,3 +1,4 @@
+include ':iflytekJar'
 include ':testqgspeech'
 include ':testui'
 include ':c100_ivoka'

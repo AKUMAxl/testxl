@@ -1,33 +1,43 @@
 package com.xl.testqgspeech.di.module;
 
-import android.content.Context;
-
-import com.qinggan.speech.VuiServiceMgr;
 import com.xl.testqgspeech.data.IDataInterface;
-import com.xl.testqgspeech.data.MessageDataProcessor;
-import com.xl.testqgspeech.data.SpeechDataProcessor;
+import com.xl.testqgspeech.data.message.MessageDataProcessor;
+import com.xl.testqgspeech.data.voice.VoiceDataProcessor;
 import com.xl.testqgspeech.di.annotation.MessageData;
-import com.xl.testqgspeech.di.annotation.SpeechData;
+import com.xl.testqgspeech.di.annotation.VoiceData;
 
 
 import dagger.Binds;
 import dagger.Module;
 import dagger.hilt.InstallIn;
-import dagger.hilt.android.components.ApplicationComponent;
+import dagger.hilt.components.SingletonComponent;
 
 
-@InstallIn(ApplicationComponent.class)
+@InstallIn(SingletonComponent.class)
 @Module
 public abstract class DataModule {
 
-    @SpeechData
+    @VoiceData
     @Binds
-    abstract IDataInterface bindSpeechData(SpeechDataProcessor speechDataProcessor);
+    abstract IDataInterface bindSpeechData(VoiceDataProcessor speechDataProcessor);
 
     @MessageData
     @Binds
     abstract IDataInterface bindMessageData(MessageDataProcessor messageDataProcessor);
 
+//    @Provides
+//    public static VoiceStatus provideVoiceState(){
+//        return new VoiceStatus();
+//    }
 
+//    @Provides
+//    public static VoiceWakeupHandler provideVuiVoiceWakeupHandler(){
+//        return new VoiceWakeupHandler();
+//    }
+//
+//    @Provides
+//    public static VoiceActionHandler provideVoiceActionHandler(){
+//        return new VoiceActionHandler();
+//    }
 
 }

@@ -4,18 +4,24 @@ import android.app.Application;
 import android.content.IntentFilter;
 
 import com.xl.testqgspeech.data.IDataInterface;
-import com.xl.testqgspeech.di.annotation.SpeechData;
+import com.xl.testqgspeech.di.annotation.MessageData;
+import com.xl.testqgspeech.di.annotation.VoiceData;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.HiltAndroidApp;
-import dagger.internal.ProviderOfLazy;
 
 @HiltAndroidApp
 public class App extends Application {
 
 
+    @VoiceData
+    @Inject
+    IDataInterface mVoiceData;
 
+    @MessageData
+    @Inject
+    IDataInterface mMessageData;
 
 
     @Override
