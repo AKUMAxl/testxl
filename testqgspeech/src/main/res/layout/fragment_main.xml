@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <ImageView
+        android:id="@+id/main_btn_back"
+        android:layout_width="@dimen/back_btn_size"
+        android:layout_height="@dimen/back_btn_size"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="132dp"
+        android:background="@drawable/ic_launcher_background"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/main_tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:text="@string/voice_skill_center"
+        android:textColor="@color/white_eb"
+        android:textSize="@dimen/text_size_28"
+        app:layout_constraintBottom_toBottomOf="@+id/main_btn_back"
+        app:layout_constraintStart_toEndOf="@+id/main_btn_back"
+        app:layout_constraintTop_toTopOf="@+id/main_btn_back" />
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigationView"
+        android:layout_width="@dimen/navigation_width"
+        android:layout_height="@dimen/navigation_height"
+        android:layout_marginTop="@dimen/navigation_margin_top"
+        app:layout_constraintEnd_toEndOf="@+id/main_btn_back"
+        app:layout_constraintStart_toStartOf="@+id/main_btn_back"
+        app:layout_constraintTop_toBottomOf="@+id/main_btn_back"
+        tools:ignore="MissingConstraints" />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager2"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/view_pager_height"
+        android:layout_marginStart="@dimen/view_pager_margin_start"
+        android:layout_marginLeft="@dimen/view_pager_margin_start"
+        android:layout_marginEnd="@dimen/view_pager_margin_end"
+        android:layout_marginRight="@dimen/view_pager_margin_end"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/navigationView"
+        app:layout_constraintTop_toTopOf="@+id/navigationView"
+        tools:ignore="MissingConstraints"
+         />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="0dp"
+        android:layout_height="@dimen/rc_height"
+        android:layout_marginTop="@dimen/rc_margin_start"
+        android:layout_marginBottom="@dimen/rc_margin_start"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/viewPager2"
+        app:layout_constraintStart_toStartOf="@+id/viewPager2"
+        app:layout_constraintTop_toBottomOf="@+id/viewPager2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

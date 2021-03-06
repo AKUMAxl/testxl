@@ -31,6 +31,7 @@ public class App extends Application {
         IntentFilter filter = new IntentFilter();
         filter.addAction("android.intent.action.BOOT_COMPLETED");
         filter.addAction("com.android.internal.intent.action.REQUEST_SHUTDOWN");
+        filter.addAction("com.test.test");
         getApplicationContext().registerReceiver(bootReceiver,filter);
 
     }

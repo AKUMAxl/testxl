@@ -3,7 +3,9 @@
     package="com.xl.testqgspeech">
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -30,6 +32,8 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <!-- 关机 -->
                 <action android:name="android.intent.action.ACTION_SHUTDOWN" />
+                <!-- 测试 -->
+                <action android:name="com.test.test"/>
             </intent-filter>
         </receiver>
 

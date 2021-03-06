@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TestQGSpeech</string>
+    <string name="voice_skill_center">语音技能中心</string>
 </resources>

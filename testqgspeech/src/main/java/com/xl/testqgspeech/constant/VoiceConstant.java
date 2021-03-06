@@ -1,5 +1,10 @@
 package com.xl.testqgspeech.constant;
 
+import androidx.annotation.IntDef;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 public class VoiceConstant {
 
     public static final class VoiceStatusConstant{
@@ -22,5 +27,24 @@ public class VoiceConstant {
 
     }
 
+
+    public static final class VoiceAction{
+        public static final int HIDE = 0;
+        public static final int SHOW = 1;
+        public static final int HELP_TEXT_UPDATE = 2;
+        public static final int VOICE_START = 3;
+        public static final int VOICE_END = 4;
+        public static final int ASR_START = 5;
+        public static final int ASR_UPDATE = 6;
+        public static final int ASR_END = 7;
+        public static final int TTS_START = 8;
+        public static final int TTS_END = 9;
+        public static final int INTERRUPT = 10;
+    }
+
+    @IntDef({VoiceAction.HIDE,VoiceAction.SHOW,VoiceAction.HELP_TEXT_UPDATE,VoiceAction.VOICE_START,VoiceAction.VOICE_END,VoiceAction.ASR_START,
+            VoiceAction.ASR_UPDATE, VoiceAction.ASR_END,VoiceAction.TTS_START,VoiceAction.TTS_END,VoiceAction.INTERRUPT,})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface ActionType{}
 
 }

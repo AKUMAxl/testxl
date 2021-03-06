@@ -25,19 +25,5 @@ public abstract class DataModule {
     @Binds
     abstract IDataInterface bindMessageData(MessageDataProcessor messageDataProcessor);
 
-//    @Provides
-//    public static VoiceStatus provideVoiceState(){
-//        return new VoiceStatus();
-//    }
-
-//    @Provides
-//    public static VoiceWakeupHandler provideVuiVoiceWakeupHandler(){
-//        return new VoiceWakeupHandler();
-//    }
-//
-//    @Provides
-//    public static VoiceActionHandler provideVoiceActionHandler(){
-//        return new VoiceActionHandler();
-//    }
 
 }
