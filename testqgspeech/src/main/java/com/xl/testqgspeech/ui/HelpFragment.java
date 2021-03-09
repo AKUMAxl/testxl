@@ -5,10 +5,11 @@ import android.view.View;
 import androidx.navigation.Navigation;
 
 import com.xl.testqgspeech.R;
+import com.xl.testqgspeech.databinding.FragmentHelpBinding;
 
-public class HelpFragment extends BaseFragment{
+public class HelpFragment extends BaseFragment<FragmentHelpBinding>{
     @Override
-    int getLayoutId() {
+    protected int getLayoutId() {
         return R.layout.fragment_help;
     }
 

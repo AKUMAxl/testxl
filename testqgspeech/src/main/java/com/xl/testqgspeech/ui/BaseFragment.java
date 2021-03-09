@@ -7,17 +7,26 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 
-public abstract class BaseFragment extends Fragment {
+import dagger.hilt.android.AndroidEntryPoint;
+
+
+
+public abstract class BaseFragment<T extends ViewDataBinding> extends Fragment {
+
+    T mBinding;
 
     View mRootView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        return super.onCreateView(inflater, container, savedInstanceState);
-        mRootView = LayoutInflater.from(getContext()).inflate(getLayoutId(),null);
+        mBinding = DataBindingUtil.inflate(getLayoutInflater(),getLayoutId(),container,false);
+        mRootView = mBinding.getRoot();
+        mBinding.setLifecycleOwner(getActivity());
         return mRootView;
     }
 

@@ -2,6 +2,7 @@ package com.xl.testqgspeech.di.module;
 
 import com.xl.testqgspeech.data.IDataInterface;
 import com.xl.testqgspeech.data.message.MessageDataProcessor;
+import com.xl.testqgspeech.data.voice.VoiceActionHandler;
 import com.xl.testqgspeech.data.voice.VoiceDataProcessor;
 import com.xl.testqgspeech.di.annotation.MessageData;
 import com.xl.testqgspeech.di.annotation.VoiceData;
@@ -9,6 +10,7 @@ import com.xl.testqgspeech.di.annotation.VoiceData;
 
 import dagger.Binds;
 import dagger.Module;
+import dagger.Provides;
 import dagger.hilt.InstallIn;
 import dagger.hilt.components.SingletonComponent;
 
@@ -24,6 +26,5 @@ public abstract class DataModule {
     @MessageData
     @Binds
     abstract IDataInterface bindMessageData(MessageDataProcessor messageDataProcessor);
-
 
 }

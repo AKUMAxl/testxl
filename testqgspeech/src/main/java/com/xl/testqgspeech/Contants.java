@@ -7,4 +7,10 @@ public class Contants {
 
     public static final String VOICE_ACTION = "com.qinggan.ivoka.service";
 
+    public static final class EXTRA_KEY{
+
+        public static final String INDEX = "index";
+
+    }
+
 }

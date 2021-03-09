@@ -137,6 +137,16 @@ public class IvokaService extends Service implements LifecycleOwner {
         params.gravity = Gravity.TOP;
         params.y = 60;
         View windowView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.view_window,null);
+        windowView.findViewById(R.id.test1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.putExtra(Contants.EXTRA_KEY.INDEX,2);
+                intent.setClass(getApplicationContext(),MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
         mWindowManager.addView(windowView,params);
     }
 
