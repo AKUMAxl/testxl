@@ -17,6 +17,7 @@ import com.xl.testqgspeech.Contants;
 import com.xl.testqgspeech.R;
 import com.xl.testqgspeech.Test;
 import com.xl.testqgspeech.bean.messageBean.BaseMessageBean;
+import com.xl.testqgspeech.ui.adapter.BaseAdapter;
 import com.xl.testqgspeech.ui.adapter.MessageAdapter;
 import com.xl.testqgspeech.viewmodel.MainFragmentViewModel;
 import com.xl.testqgspeech.databinding.FragmentMainBinding;
@@ -58,7 +59,7 @@ public class MainFragment extends BaseFragment<FragmentMainBinding> {
 
                     Log.d("xLLL","bean:"+baseMessageBean.toString());
                 }
-                mMessageAdapter.updateData(baseMessageBeans);
+//                mMessageAdapter.updateData(baseMessageBeans);
             }
         });
     }
@@ -89,10 +90,22 @@ public class MainFragment extends BaseFragment<FragmentMainBinding> {
         mBinding.mainIvSetting.setOnClickListener(v -> mBinding.viewPager2.setCurrentItem(fragments.indexOf(mSettingFragment)));
         int item = getActivity().getIntent().getIntExtra(Contants.EXTRA_KEY.INDEX,0);
         mBinding.viewPager2.setCurrentItem(item);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-        mMessageAdapter = new MessageAdapter(getContext(),null);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+
+        ArrayList<BaseMessageBean> beans = new ArrayList<>();
+        beans.add(new BaseMessageBean(1,"3333","000"));
+        beans.add(new BaseMessageBean(1,"4444","000"));
+        beans.add(new BaseMessageBean(1,"4444","000"));
+        beans.add(new BaseMessageBean(1,"4444","000"));
+        beans.add(new BaseMessageBean(1,"4444","000"));
+        beans.add(new BaseMessageBean(1,"4444","000"));
+
+        mMessageAdapter = new MessageAdapter(getContext(),beans);
         mBinding.mainRc.setLayoutManager(layoutManager);
         mBinding.mainRc.setAdapter(mMessageAdapter);
+        mMessageAdapter.setOnItemClickListener(position -> {
+            Log.d("xLLL","click:"+position);
+        });
     }
 
     @Override

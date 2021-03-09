@@ -86,7 +86,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/main_rc"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/message_rc_width"
             android:layout_height="@dimen/rc_height"
             android:layout_marginTop="@dimen/rc_margin_start"
             android:layout_marginBottom="@dimen/rc_margin_start"

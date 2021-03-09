@@ -18,7 +18,7 @@ public abstract class BaseAdapter<Data,T extends RecyclerView.ViewHolder> extend
     public BaseAdapter(Context context, List<Data> data){
         mData = new ArrayList<>();
         this.mContext = context;
-        this.mData = data;
+        this.mData.addAll(data);
     }
 
     @Override
@@ -27,7 +27,11 @@ public abstract class BaseAdapter<Data,T extends RecyclerView.ViewHolder> extend
     }
 
     public void updateData(List<Data> data){
-        mData = data;
+        if (mData==null){
+            mData = new ArrayList<>();
+        }
+        mData.clear();
+        mData.addAll(data);
         notifyDataSetChanged();
     }
 
@@ -35,7 +39,7 @@ public abstract class BaseAdapter<Data,T extends RecyclerView.ViewHolder> extend
         this.mOnItemClickListener = onItemClickListener;
     }
 
-    interface OnItemClickListener{
+    public interface OnItemClickListener{
 
         void onItemClick(int position);
 

@@ -14,6 +14,7 @@
     <dimen name="rc_height">0dp</dimen>
     <dimen name="rc_margin_start">32dp</dimen>
     <dimen name="view_pager_margin_end">32dp</dimen>
+    <dimen name="message_rc_width">1096dp</dimen>
     <dimen name="item_message_width">1096dp</dimen>
     <dimen name="item_message_height">96dp</dimen>
     <dimen name="item_message_icon_width">40dp</dimen>
