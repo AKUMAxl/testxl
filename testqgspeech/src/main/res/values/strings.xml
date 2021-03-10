@@ -3,4 +3,17 @@
     <string name="voice_skill_center">语音技能中心</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="voice_wakeup">语音唤醒</string>
+    <string name="system_wakeup_word">系统唤醒词</string>
+    <string name="custom_wakeup_word">自定义唤醒词</string>
+    <string name="custom_wakeup_info">不能输⼊数字、标点、英⽂和叠字</string>
+    <string name="see_to_speak">可见即可说</string>
+    <string name="continue_speak">连续交互</string>
+    <string name="auto_speak">主动播报</string>
+    <string name="voice_skill_explain">语音技能说明</string>
+    <string name="navigation_skill">导航技能</string>
+    <string name="question">问:</string>
+    <string name="answer">答:</string>
+    <string name="save">保存</string>
+    <string name="cancel">取消</string>
 </resources>

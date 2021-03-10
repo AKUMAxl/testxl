@@ -18,19 +18,12 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/main_fragment">
+    app:startDestination="@id/help_fragment">
 
     <fragment
         android:id="@+id/main_fragment"
         android:name="com.xl.testqgspeech.ui.MainFragment">
 
-        <action
-            android:id="@+id/action_main_fragment_to_help_fragment"
-            app:destination="@id/help_fragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
 
     </fragment>
 
@@ -38,6 +31,13 @@
         android:id="@+id/help_fragment"
         android:name="com.xl.testqgspeech.ui.HelpFragment">
 
+        <action
+            android:id="@+id/action_help_fragment_to_main_fragment"
+            app:destination="@id/main_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
 
     </fragment>
 

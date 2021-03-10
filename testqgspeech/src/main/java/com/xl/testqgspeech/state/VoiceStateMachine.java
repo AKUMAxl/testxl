@@ -1,5 +1,6 @@
 package com.xl.testqgspeech.state;
 
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -22,6 +23,7 @@ public class VoiceStateMachine implements IVoiceState{
         mWakeupState = new WakeUpState(this);
         mAsrState = new AsrState(this);
         mTtsState = new TtsState(this);
+        mCurState = mIdle;
     }
 
     @Override

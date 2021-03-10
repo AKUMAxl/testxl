@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
 
-import com.xl.testqgspeech.Test;
 import com.xl.testqgspeech.bean.messageBean.BaseMessageBean;
 import com.xl.testqgspeech.livedata.MessageLiveData;
 
@@ -14,9 +13,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import dagger.hilt.EntryPoint;
-import dagger.hilt.InstallIn;
-import dagger.hilt.android.components.ActivityRetainedComponent;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 
 @HiltViewModel

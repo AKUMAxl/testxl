@@ -29,7 +29,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:srcCompat="@tools:sample/avatars" />
+            android:background="@drawable/ic_launcher_background" />
 
         <TextView
             android:id="@+id/item_message_time"
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/item_message_time_margin_end"
             android:layout_marginRight="@dimen/item_message_time_margin_end"
-            android:text="11111111"
+            android:text="@{messageBean.time}"
             android:textColor="@color/white_70"
             android:textSize="@dimen/text_size_24"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -52,7 +52,7 @@
             android:layout_marginLeft="@dimen/item_message_content_margin"
             android:layout_marginEnd="@dimen/item_message_content_margin"
             android:layout_marginRight="@dimen/item_message_content_margin"
-            android:text="222222"
+            android:text="@{messageBean.content}"
             android:textColor="@color/white_70"
             android:textSize="@dimen/text_size_28"
             app:layout_constraintBottom_toBottomOf="parent"

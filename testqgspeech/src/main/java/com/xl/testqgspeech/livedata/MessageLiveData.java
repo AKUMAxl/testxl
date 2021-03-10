@@ -4,22 +4,30 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.xl.testqgspeech.bean.messageBean.BaseMessageBean;
-import com.xl.testqgspeech.ui.adapter.MessageAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
-
+@Singleton
 public class MessageLiveData extends LiveData<List<BaseMessageBean>> {
 
     MutableLiveData<List<BaseMessageBean>> mBaseMessageBeans = new MutableLiveData<>();
 
-    @Inject
-    public MessageLiveData(){
 
+    @Inject
+    public MessageLiveData() {
     }
+
+//    private static class SingletonInstance {
+//        private static final MessageLiveData INSTANCE = new MessageLiveData();
+//    }
+//
+//    public static MessageLiveData getInstance() {
+//        return SingletonInstance.INSTANCE;
+//    }
 
     public void setMessage(List<BaseMessageBean> baseMessageBeans){
         mBaseMessageBeans.setValue(baseMessageBeans);
@@ -36,4 +44,5 @@ public class MessageLiveData extends LiveData<List<BaseMessageBean>> {
         setMessage(data);
         return mBaseMessageBeans;
     }
+
 }

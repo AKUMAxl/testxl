@@ -18,7 +18,7 @@
             android:layout_height="@dimen/back_btn_size"
             android:layout_marginStart="40dp"
             android:layout_marginLeft="40dp"
-            android:layout_marginTop="132dp"
+            android:layout_marginTop="28dp"
             android:background="@drawable/ic_launcher_background"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -73,16 +73,11 @@
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager2"
-            android:layout_width="0dp"
+            android:layout_width="1096dp"
             android:layout_height="@dimen/view_pager_height"
-            android:layout_marginStart="@dimen/view_pager_margin_start"
-            android:layout_marginLeft="@dimen/view_pager_margin_start"
-            android:layout_marginEnd="@dimen/view_pager_margin_end"
-            android:layout_marginRight="@dimen/view_pager_margin_end"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/main_iv_image"
-            app:layout_constraintTop_toTopOf="@+id/main_iv_image"
-            android:background="@color/white"/>
+            app:layout_constraintStart_toEndOf="@+id/main_iv_setting"
+            app:layout_constraintTop_toTopOf="@+id/main_iv_image" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/main_rc"
@@ -91,10 +86,9 @@
             android:layout_marginTop="@dimen/rc_margin_start"
             android:layout_marginBottom="@dimen/rc_margin_start"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/viewPager2"
-            app:layout_constraintStart_toStartOf="@+id/viewPager2"
-            app:layout_constraintTop_toBottomOf="@+id/viewPager2"
-            android:background="@color/white"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/viewPager2"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

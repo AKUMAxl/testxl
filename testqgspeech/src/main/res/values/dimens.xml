@@ -24,7 +24,30 @@
     <dimen name="item_message_content_margin">24dp</dimen>
 
 
-    <dimen name="text_size_28">28px</dimen>
-    <dimen name="text_size_24">24px</dimen>
-
+    <dimen name="text_size_32">32sp</dimen>
+    <dimen name="text_size_28">28sp</dimen>
+    <dimen name="text_size_24">24sp</dimen>
+    <dimen name="fragment_image_width">1096dp</dimen>
+    <dimen name="fragment_image_height">664dp</dimen>
+    <dimen name="fragment_image_big_width">400dp</dimen>
+    <dimen name="fragment_image_big_height">664dp</dimen>
+    <dimen name="fragment_image_small_width">192dp</dimen>
+    <dimen name="fragment_image_small_height">318dp</dimen>
+    <dimen name="fragment_image_small_to_big_margin_left">128dp</dimen>
+    <dimen name="fragment_image_small_to_small_margin_left">88dp</dimen>
+    <dimen name="fragment_image_small_to_small_margin_top">28dp</dimen>
+    <dimen name="fragment_voice_width">1096dp</dimen>
+    <dimen name="fragment_voice_height">664dp</dimen>
+    <dimen name="fragment_voice_big_width">400dp</dimen>
+    <dimen name="fragment_voice_big_height">664dp</dimen>
+    <dimen name="fragment_voice_small_width">192dp</dimen>
+    <dimen name="fragment_voice_small_height">318dp</dimen>
+    <dimen name="fragment_voice_small_margin_start">40dp</dimen>
+    <dimen name="fragment_setting_width">1096dp</dimen>
+    <dimen name="fragment_setting_height">664dp</dimen>
+    <dimen name="custom_wakeup_et_bg">12dp</dimen>
+    <dimen name="fragment_skill_center_width">1096dp</dimen>
+    <dimen name="fragment_skill_center_height">664dp</dimen>
+    <dimen name="fragment_skill_big_width">400dp</dimen>
+    <dimen name="fragment_skill_big_height">664dp</dimen>
 </resources>

@@ -8,20 +8,61 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="@dimen/fragment_image_width"
+        android:layout_height="@dimen/fragment_image_height"
         tools:context=".ui.ImageFragment">
 
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Image"
+        <ImageView
+            android:id="@+id/fragment_image_cur"
+            android:layout_width="@dimen/fragment_image_big_width"
+            android:layout_height="@dimen/fragment_image_big_height"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_launcher_background" />
+
+        <ImageView
+            android:id="@+id/fragment_image_man"
+            android:layout_width="@dimen/fragment_image_small_width"
+            android:layout_height="@dimen/fragment_image_small_height"
+            android:layout_marginStart="@dimen/fragment_image_small_to_big_margin_left"
+            android:layout_marginLeft="@dimen/fragment_image_small_to_big_margin_left"
+            app:layout_constraintStart_toEndOf="@+id/fragment_image_cur"
+            app:layout_constraintTop_toTopOf="parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_launcher_background" />
+
+        <ImageView
+            android:id="@+id/fragment_image_kid"
+            android:layout_width="@dimen/fragment_image_small_width"
+            android:layout_height="@dimen/fragment_image_small_height"
+            android:layout_marginStart="@dimen/fragment_image_small_to_small_margin_left"
+            android:layout_marginLeft="@dimen/fragment_image_small_to_small_margin_left"
+            app:layout_constraintStart_toEndOf="@+id/fragment_image_man"
+            app:layout_constraintTop_toTopOf="parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_launcher_background" />
+
+        <ImageView
+            android:id="@+id/fragment_image_woman"
+            android:layout_width="@dimen/fragment_image_small_width"
+            android:layout_height="@dimen/fragment_image_small_height"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/fragment_image_man"
+            app:layout_constraintTop_toBottomOf="@id/fragment_image_man"
+            android:layout_marginTop="@dimen/fragment_image_small_to_small_margin_top"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_launcher_background" />
+
+        <ImageView
+            android:id="@+id/fragment_image_shop"
+            android:layout_width="@dimen/fragment_image_small_width"
+            android:layout_height="@dimen/fragment_image_small_height"
+            app:layout_constraintBottom_toBottomOf="@id/fragment_image_woman"
+            app:layout_constraintRight_toRightOf="@id/fragment_image_kid"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_launcher_background" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

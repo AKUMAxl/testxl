@@ -18,7 +18,7 @@ public abstract class BaseAdapter<Data,T extends RecyclerView.ViewHolder> extend
     public BaseAdapter(Context context, List<Data> data){
         mData = new ArrayList<>();
         this.mContext = context;
-        this.mData.addAll(data);
+        this.mData = data;
     }
 
     @Override
@@ -27,11 +27,7 @@ public abstract class BaseAdapter<Data,T extends RecyclerView.ViewHolder> extend
     }
 
     public void updateData(List<Data> data){
-        if (mData==null){
-            mData = new ArrayList<>();
-        }
-        mData.clear();
-        mData.addAll(data);
+        mData = data;
         notifyDataSetChanged();
     }
 

@@ -1,4 +1,4 @@
-package com.xl.testqgspeech.data.message;
+package com.xl.testqgspeech.data.voice;
 
 import android.os.Message;
 

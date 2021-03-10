@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="@dimen/fragment_skill_center_width"
+        android:layout_height="@dimen/fragment_skill_center_height">
+
+        <ImageView
+            android:id="@+id/fragment_skill_cur"
+            android:layout_width="@dimen/fragment_skill_big_width"
+            android:layout_height="@dimen/fragment_skill_big_height"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_launcher_background" />
+
+
+        <ViewStub
+            android:id="@+id/fragment_skill_center_vs_request_common"
+            android:layout_width="664dp"
+            android:layout_height="240dp"
+            android:layout="@layout/layout_question_common"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/fragment_skill_cur"
+            app:layout_constraintTop_toBottomOf="@+id/view" />
+
+        <ViewStub
+            android:id="@+id/fragment_skill_center_vs_request_edit"
+            android:layout_width="664dp"
+            android:layout_height="240dp"
+            android:layout="@layout/layout_question_edit"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/fragment_skill_cur"
+            app:layout_constraintTop_toBottomOf="@+id/view" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="0dp"
+            android:layout_height="264dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/fragment_skill_cur"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

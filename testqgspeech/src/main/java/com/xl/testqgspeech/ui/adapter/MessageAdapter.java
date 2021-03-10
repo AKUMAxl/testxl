@@ -2,6 +2,7 @@ package com.xl.testqgspeech.ui.adapter;
 
 import android.content.Context;
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,20 +32,26 @@ public class MessageAdapter extends BaseAdapter<BaseMessageBean, MessageAdapter.
     @Override
     public void onBindViewHolder(@NonNull MessageHolder holder, int position) {
         BaseMessageBean baseMessageBean = mData.get(position);
-        holder.mBinding.itemMessageLayout.setOnClickListener(v -> mOnItemClickListener.onItemClick(position));
-        holder.mBinding.itemMessageContent.setText(baseMessageBean.getContent());
-        holder.mBinding.itemMessageTime.setText(baseMessageBean.getTime());
+        holder.bind(baseMessageBean);
+        holder.setClickListener(v -> mOnItemClickListener.onItemClick(position));
     }
 
 
     static class MessageHolder extends RecyclerView.ViewHolder {
 
-        ItemMessageBinding mBinding;
+        private final ItemMessageBinding mBinding;
 
         public MessageHolder(@NonNull View itemView) {
             super(itemView);
             mBinding = ItemMessageBinding.bind(itemView);
+        }
 
+        public void bind(@NonNull BaseMessageBean baseMessageBean){
+            mBinding.setMessageBean(baseMessageBean);
+        }
+
+        public void setClickListener(View.OnClickListener onClickListener){
+            mBinding.setClickListener(onClickListener);
         }
 
     }

@@ -10,7 +10,6 @@ public class IdleState extends BaseState{
     @Override
     public void handleVisibility(boolean show) {
         if (!show){
-
             mVoiceStateMachine.setState(mVoiceStateMachine.mHideState);
         }
     }

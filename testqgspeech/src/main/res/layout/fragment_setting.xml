@@ -8,18 +8,261 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="@dimen/fragment_setting_width"
+        android:layout_height="@dimen/fragment_setting_height">
 
-        <TextView
-            android:id="@+id/textView"
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_8"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Setting"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="8dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_88"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="88dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_96"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="96dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_128"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="128dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_208"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="208dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_216"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="216dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_296"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="296dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_356"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="356dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_364"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="364dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_444"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="444dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_452"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="452dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_532"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="532dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_540"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="540dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_620"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="620dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_88"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/guideline_8"
+            android:text="@string/voice_wakeup"
+            android:textColor="@color/white_eb"
+            android:textSize="@dimen/text_size_28"/>
+
+        <Switch
+            android:id="@+id/fragment_setting_switch_wakeup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_88"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline_8" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:background="@color/black_02"
+            app:layout_constraintBottom_toTopOf="@id/guideline_364"
+            app:layout_constraintTop_toBottomOf="@id/guideline_96"
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="0dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/system_wakeup_word"
+            android:textSize="@dimen/text_size_28"
+            android:textColor="@color/white_eb_70"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_208"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline_128" />
+
+
+        <TextView
+            android:id="@+id/fragment_setting_tv_system_wakeup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/system_wakeup_word"
+            android:textSize="@dimen/text_size_28"
+            android:textColor="@color/white_eb_70"
+            android:layout_marginEnd="28dp"
+            android:layout_marginRight="28dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_208"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline_128" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/custom_wakeup_word"
+            android:textSize="@dimen/text_size_28"
+            android:textColor="@color/white_eb_70"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_296"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline_216" />
+
+        <EditText
+            android:id="@+id/fragment_setting_et_custom_wakeup"
+            android:layout_width="608dp"
+            android:layout_height="64dp"
+            android:layout_marginEnd="28dp"
+            android:layout_marginRight="28dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_296"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline_216"
+            android:background="@drawable/bg_custom_wakeup"
+            />
+
+        <ImageView
+            android:id="@+id/fragment_setting_iv_custom_wakeup"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_356"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline_296"
+            android:layout_marginEnd="28dp"
+            android:layout_marginRight="28dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_356"
+            app:layout_constraintEnd_toStartOf="@id/fragment_setting_iv_custom_wakeup"
+            app:layout_constraintTop_toTopOf="@+id/guideline_296"
+            android:layout_marginEnd="11dp"
+            android:layout_marginRight="11dp"
+            android:textColor="@color/white_eb_70"
+            android:text="@string/custom_wakeup_info"
+            android:textSize="@dimen/text_size_24"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/see_to_speak"
+            android:textColor="@color/white_eb"
+            android:textSize="@dimen/text_size_28"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_444"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline_364" />
+
+        <Switch
+            android:id="@+id/fragment_setting_switch_see_to_speak"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_444"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline_364"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/continue_speak"
+            android:textColor="@color/white_eb"
+            android:textSize="@dimen/text_size_28"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_540"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline_452" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/auto_speak"
+            android:textColor="@color/white_eb"
+            android:textSize="@dimen/text_size_28"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_620"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline_540" />
+
+
+        <Switch
+            android:id="@+id/fragment_setting_switch_auto_speak"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/guideline_620"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline_540"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

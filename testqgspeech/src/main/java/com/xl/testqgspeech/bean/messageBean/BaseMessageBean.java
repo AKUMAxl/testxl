@@ -3,7 +3,7 @@ package com.xl.testqgspeech.bean.messageBean;
 import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
-//import com.xl.testqgspeech.BR;
+import com.xl.testqgspeech.BR;
 
 
 public class BaseMessageBean extends BaseObservable {
@@ -29,7 +29,7 @@ public class BaseMessageBean extends BaseObservable {
 
     public void setType(int type) {
         this.type = type;
-//        notifyPropertyChanged(BR.type);
+        notifyPropertyChanged(BR.type);
     }
 
     @Bindable
@@ -39,7 +39,7 @@ public class BaseMessageBean extends BaseObservable {
 
     public void setContent(String content) {
         this.content = content;
-//        notifyPropertyChanged(BR.content);
+        notifyPropertyChanged(BR.content);
     }
 
     @Bindable
@@ -49,7 +49,7 @@ public class BaseMessageBean extends BaseObservable {
 
     public void setTime(String time) {
         this.time = time;
-//        notifyPropertyChanged(BR.time);
+        notifyPropertyChanged(BR.time);
     }
 
     @Override
