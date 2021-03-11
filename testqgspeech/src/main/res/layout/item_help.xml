@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener"/>
+        <variable
+            name="helpDataBean"
+            type="com.xl.testqgspeech.bean.voiceBean.HelpDataNewBean" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="@dimen/item_help_width"
+        android:layout_height="@dimen/item_help_height">
+
+        <TextView
+            android:id="@+id/item_help_tv_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginStart="@dimen/item_help_tv_type_margin_start"
+            android:layout_marginTop="@dimen/item_help_tv_type_margin_top"
+            android:text="@{helpDataBean.title}"
+            android:textSize="@dimen/text_size_28"
+            android:textColor="@color/white_eb"
+            android:layout_marginLeft="@dimen/item_help_tv_type_margin_start" />
+
+        <TextView
+            android:id="@+id/item_help_tv_help_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@id/item_help_tv_type"
+            app:layout_constraintTop_toBottomOf="@id/item_help_tv_type"
+            android:layout_marginTop="@dimen/item_help_tv_text_margin_top"
+            android:text="@{helpDataBean.contents[0]}"
+            android:textSize="@dimen/text_size_24"
+            android:textColor="@color/white_eb"
+            android:visibility="@{helpDataBean.contents[0]==null?View.GONE:View.VISIBLE}"
+            />
+
+        <TextView
+            android:id="@+id/item_help_tv_help_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@id/item_help_tv_type"
+            app:layout_constraintTop_toBottomOf="@id/item_help_tv_help_one"
+            android:layout_marginTop="@dimen/item_help_tv_text_margin_top"
+            android:text="@{helpDataBean.contents[1]}"
+            android:textSize="@dimen/text_size_24"
+            android:textColor="@color/white_eb"
+            android:visibility="@{helpDataBean.contents[1]==null?View.GONE:View.VISIBLE}"
+            />
+
+        <TextView
+            android:id="@+id/item_help_tv_help_three"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@id/item_help_tv_type"
+            app:layout_constraintTop_toBottomOf="@id/item_help_tv_help_two"
+            android:layout_marginTop="@dimen/item_help_tv_text_margin_top"
+            android:text="@{helpDataBean.contents[2]}"
+            android:textSize="@dimen/text_size_24"
+            android:textColor="@color/white_eb"
+            android:visibility="@{helpDataBean.contents[2]==null?View.GONE:View.VISIBLE}"
+            />
+
+        <TextView
+            android:id="@+id/item_help_tv_help_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="@id/item_help_tv_type"
+            app:layout_constraintTop_toBottomOf="@id/item_help_tv_help_three"
+            android:layout_marginTop="@dimen/item_help_tv_text_margin_top"
+            android:text="@string/help_more"
+            android:textSize="@dimen/text_size_24"
+            android:textColor="@color/white_eb"
+            android:visibility="@{helpDataBean.contents[3]==null?View.GONE:View.VISIBLE}"
+            />
+
+
+
+        <Button
+            android:id="@+id/item_help_tv_help_go"
+            android:layout_width="192dp"
+            android:layout_height="56dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="@dimen/item_help_tv_help_go_margin"
+            android:layout_marginRight="@dimen/item_help_tv_help_go_margin"
+            android:layout_marginBottom="@dimen/item_help_tv_help_go_margin"
+            android:onClick="@{clickListener}"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

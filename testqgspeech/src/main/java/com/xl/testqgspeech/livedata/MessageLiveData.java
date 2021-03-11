@@ -16,18 +16,9 @@ public class MessageLiveData extends LiveData<List<BaseMessageBean>> {
 
     MutableLiveData<List<BaseMessageBean>> mBaseMessageBeans = new MutableLiveData<>();
 
-
     @Inject
     public MessageLiveData() {
     }
-
-//    private static class SingletonInstance {
-//        private static final MessageLiveData INSTANCE = new MessageLiveData();
-//    }
-//
-//    public static MessageLiveData getInstance() {
-//        return SingletonInstance.INSTANCE;
-//    }
 
     public void setMessage(List<BaseMessageBean> baseMessageBeans){
         mBaseMessageBeans.setValue(baseMessageBeans);
@@ -39,8 +30,6 @@ public class MessageLiveData extends LiveData<List<BaseMessageBean>> {
 
     public MutableLiveData<List<BaseMessageBean>> getMessageData(){
         List<BaseMessageBean> data = new ArrayList<BaseMessageBean>();
-        data.add(new BaseMessageBean(0,"11111111","2021"));
-        data.add(new BaseMessageBean(0,"22222222","2021"));
         setMessage(data);
         return mBaseMessageBeans;
     }

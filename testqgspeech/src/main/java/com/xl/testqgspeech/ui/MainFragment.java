@@ -2,6 +2,7 @@ package com.xl.testqgspeech.ui;
 
 
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -54,14 +55,14 @@ public class MainFragment extends BaseFragment<FragmentMainBinding> {
 
     @Override
     void initView() {
-        mBinding.viewPager2.setUserInputEnabled(false);
-        mBinding.viewPager2.setOrientation(ViewPager2.ORIENTATION_VERTICAL);
+        mBinding.mainVp.setUserInputEnabled(false);
+        mBinding.mainVp.setOrientation(ViewPager2.ORIENTATION_VERTICAL);
         ArrayList<BaseFragment> fragments = new ArrayList<>();
         fragments.add(mSkillCenterFragment);
         fragments.add(mImageFragment);
         fragments.add(mVoiceFragment);
         fragments.add(mSettingFragment);
-        mBinding.viewPager2.setAdapter(new FragmentStateAdapter(this) {
+        mBinding.mainVp.setAdapter(new FragmentStateAdapter(this) {
             @NonNull
             @Override
             public Fragment createFragment(int position) {
@@ -75,41 +76,41 @@ public class MainFragment extends BaseFragment<FragmentMainBinding> {
         });
         mBinding.mainBtnBack.setOnClickListener(v -> Navigation.findNavController(v).navigateUp());
         mBinding.mainTvTitle.setOnClickListener(v -> {
-            mBinding.viewPager2.setCurrentItem(fragments.indexOf(mSkillCenterFragment));
-            updateLayoutParams(false);
-        });
-        mBinding.mainIvImage.setOnClickListener(v -> {
-            mBinding.viewPager2.setCurrentItem(fragments.indexOf(mImageFragment));
-            updateLayoutParams(false);
-        });
-        mBinding.mainIvVoice.setOnClickListener(v -> {
-            mBinding.viewPager2.setCurrentItem(fragments.indexOf(mVoiceFragment));
-            updateLayoutParams(false);
-        });
-        mBinding.mainIvSetting.setOnClickListener(v -> {
-            mBinding.viewPager2.setCurrentItem(fragments.indexOf(mSettingFragment));
+            mBinding.mainVp.setCurrentItem(fragments.indexOf(mSkillCenterFragment));
             updateLayoutParams(true);
         });
+        mBinding.mainIvImage.setOnClickListener(v -> {
+            mBinding.mainVp.setCurrentItem(fragments.indexOf(mImageFragment));
+            updateLayoutParams(true);
+        });
+        mBinding.mainIvVoice.setOnClickListener(v -> {
+            mBinding.mainVp.setCurrentItem(fragments.indexOf(mVoiceFragment));
+            updateLayoutParams(true);
+        });
+        mBinding.mainIvSetting.setOnClickListener(v -> {
+            mBinding.mainVp.setCurrentItem(fragments.indexOf(mSettingFragment));
+            updateLayoutParams(false);
+        });
         int item = requireActivity().getIntent().getIntExtra(Contants.EXTRA_KEY.INDEX,0);
-        mBinding.viewPager2.setCurrentItem(item);
+        mBinding.mainVp.setCurrentItem(item);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mMessageAdapter = new MessageAdapter(getContext(),null);
         mBinding.mainRc.setLayoutManager(layoutManager);
         mBinding.mainRc.setAdapter(mMessageAdapter);
         mMessageAdapter.setOnItemClickListener(position -> {
-
-            Log.d("xLLL","click:"+position);
         });
     }
 
-    private void updateLayoutParams(boolean matchParent){
-        ViewGroup.LayoutParams layoutParams = mBinding.viewPager2.getLayoutParams();
-        if (matchParent){
-            layoutParams.width = 1096;
+    private void updateLayoutParams(boolean showImage){
+        ViewGroup.LayoutParams layoutParams = mBinding.mainVp.getLayoutParams();
+        if (showImage){
+            mBinding.mainIvImageBig.setVisibility(View.VISIBLE);
+            layoutParams.width = 664;
         }else {
-            layoutParams.width = 548;
+            mBinding.mainIvImageBig.setVisibility(View.GONE);
+            layoutParams.width = 1096;
         }
-        mBinding.viewPager2.requestLayout();
+        mBinding.mainVp.requestLayout();
     }
 
 }

@@ -12,15 +12,6 @@
         android:layout_height="@dimen/fragment_image_height"
         tools:context=".ui.ImageFragment">
 
-        <ImageView
-            android:id="@+id/fragment_image_cur"
-            android:layout_width="@dimen/fragment_image_big_width"
-            android:layout_height="@dimen/fragment_image_big_height"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:scaleType="fitXY"
-            android:src="@drawable/ic_launcher_background" />
 
         <ImageView
             android:id="@+id/fragment_image_man"
@@ -28,7 +19,7 @@
             android:layout_height="@dimen/fragment_image_small_height"
             android:layout_marginStart="@dimen/fragment_image_small_to_big_margin_left"
             android:layout_marginLeft="@dimen/fragment_image_small_to_big_margin_left"
-            app:layout_constraintStart_toEndOf="@+id/fragment_image_cur"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:scaleType="fitXY"
             android:src="@drawable/ic_launcher_background" />
