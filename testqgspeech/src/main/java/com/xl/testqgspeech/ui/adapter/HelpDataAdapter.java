@@ -32,7 +32,7 @@ public class HelpDataAdapter extends BaseAdapter<HelpDataNewBean, HelpDataAdapte
     public void onBindViewHolder(@NonNull HelpDataHolder holder, int position) {
         HelpDataNewBean helpDataNewBean = mData.get(position);
         holder.bind(helpDataNewBean);
-        holder.setOnClickListener(v -> mOnItemClickListener.onItemClick(position));
+        holder.setOnClickListener(v -> mOnItemClickListener.onItemClick(position,mData.get(position)));
     }
 
     static class HelpDataHolder extends RecyclerView.ViewHolder {

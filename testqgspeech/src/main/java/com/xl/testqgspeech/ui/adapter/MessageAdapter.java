@@ -33,7 +33,7 @@ public class MessageAdapter extends BaseAdapter<BaseMessageBean, MessageAdapter.
     public void onBindViewHolder(@NonNull MessageHolder holder, int position) {
         BaseMessageBean baseMessageBean = mData.get(position);
         holder.bind(baseMessageBean);
-        holder.setClickListener(v -> mOnItemClickListener.onItemClick(position));
+        holder.setClickListener(v -> mOnItemClickListener.onItemClick(position,mData.get(position)));
     }
 
 

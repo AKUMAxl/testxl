@@ -18,6 +18,7 @@ import com.xl.testqgspeech.Contants;
 import com.xl.testqgspeech.R;
 import com.xl.testqgspeech.bean.messageBean.BaseMessageBean;
 import com.xl.testqgspeech.databinding.FragmentMainBinding;
+import com.xl.testqgspeech.ui.adapter.BaseAdapter;
 import com.xl.testqgspeech.ui.adapter.MessageAdapter;
 import com.xl.testqgspeech.viewmodel.MainFragmentViewModel;
 
@@ -97,8 +98,7 @@ public class MainFragment extends BaseFragment<FragmentMainBinding> {
         mMessageAdapter = new MessageAdapter(getContext(),null);
         mBinding.mainRc.setLayoutManager(layoutManager);
         mBinding.mainRc.setAdapter(mMessageAdapter);
-        mMessageAdapter.setOnItemClickListener(position -> {
-        });
+        mMessageAdapter.setOnItemClickListener((position, o) -> Log.d("xLLL","mesage:"+((BaseMessageBean)o).toString()));
     }
 
     private void updateLayoutParams(boolean showImage){

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import com.xl.testqgspeech.R;
 import com.xl.testqgspeech.bean.voiceBean.HelpDataNewBean;
 import com.xl.testqgspeech.databinding.FragmentHelpBinding;
+import com.xl.testqgspeech.ui.adapter.BaseAdapter;
 import com.xl.testqgspeech.ui.adapter.HelpDataAdapter;
 import com.xl.testqgspeech.viewmodel.HelpViewModel;
 
@@ -44,8 +45,15 @@ public class HelpFragment extends BaseFragment<FragmentHelpBinding>{
     void initView() {
         mBinding.fragmentHelpRc.setLayoutManager(new GridLayoutManager(getContext(),2));
         mHelpDataAdapter = new HelpDataAdapter(getContext(),null);
+        mHelpDataAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position, Object o) {
+                Log.d("xLLL","help data:"+((HelpDataNewBean)o).toString());
+            }
+        });
         mBinding.fragmentHelpRc.setAdapter(mHelpDataAdapter);
 //        mBinding.fragmentHelpRc.addItemDecoration();
+
 
         mBinding.fragmentHelpTvVoiceSkillExplain.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_help_fragment_to_main_fragment));
         mBinding.fragmentHelpBtnBack.setOnClickListener(v -> requireActivity().finish());

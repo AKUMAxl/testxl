@@ -35,9 +35,9 @@ public abstract class BaseAdapter<Data,T extends RecyclerView.ViewHolder> extend
         this.mOnItemClickListener = onItemClickListener;
     }
 
-    public interface OnItemClickListener{
+    public interface OnItemClickListener<Data>{
 
-        void onItemClick(int position);
+        void onItemClick(int position,Data data);
 
     }
 }
