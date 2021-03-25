@@ -15,6 +15,7 @@ public class VoiceStateMachine implements IVoiceState{
 
     private IVoiceState mCurState;
 
+    private IVoiceCallback mVoiceCallback;
 
     @Inject
     public VoiceStateMachine(){
@@ -80,5 +81,11 @@ public class VoiceStateMachine implements IVoiceState{
         mCurState = state;
     }
 
+    public void setVoiceCallback(IVoiceCallback voiceCallback){
+        this.mVoiceCallback = voiceCallback;
+    }
 
+    public IVoiceCallback getVoiceCallback(){
+        return mVoiceCallback;
+    }
 }

@@ -7,6 +7,8 @@ import android.util.Log;
 import com.qinggan.speech.VuiServiceMgr;
 import com.xl.testqgspeech.Test;
 import com.xl.testqgspeech.data.IDataInterface;
+import com.xl.testqgspeech.state.IVoiceCallback;
+import com.xl.testqgspeech.state.VoiceStateMachine;
 
 import javax.inject.Inject;
 
@@ -27,6 +29,8 @@ public class VoiceDataProcessor implements IDataInterface {
     @Inject
     VoiceActionHandler mVuiActionHandler;
 
+    @Inject
+    VoiceStateMachine mVoiceStateMachine;
 
     private VuiServiceMgr mVuiServiceMgr;
 
@@ -57,6 +61,10 @@ public class VoiceDataProcessor implements IDataInterface {
     @Override
     public void sendRequest() {
 
+    }
+
+    public void setVoiceCallback(IVoiceCallback voiceCallback){
+        mVoiceStateMachine.setVoiceCallback(voiceCallback);
     }
 
 }

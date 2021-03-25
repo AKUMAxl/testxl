@@ -1,6 +1,5 @@
 package com.xl.testqgspeech.state;
 
-import javax.inject.Inject;
 
 public class TtsState extends BaseState{
 
@@ -20,17 +19,22 @@ public class TtsState extends BaseState{
 
     @Override
     public void handleVoiceStart(int i) {
-
+        mWakeupDirection = i;
+        callbackTextChange("");
+        mVoiceStateMachine.setState(mVoiceStateMachine.mWakeupState);
     }
 
     @Override
     public void handleVoiceEnd() {
-
+        callbackVoiceImageChange(IVoiceCallback.IDLE);
+        mVoiceStateMachine.setState(mVoiceStateMachine.mIdle);
     }
 
     @Override
     public void handleAsrStart() {
-
+        callbackVoiceImageChange(mWakeupDirection==1?IVoiceCallback.TO_LEFT:IVoiceCallback.TO_RIGHT);
+        callbackTextChange("");
+        mVoiceStateMachine.setState(mVoiceStateMachine.mAsrState);
     }
 
     @Override
@@ -45,16 +49,20 @@ public class TtsState extends BaseState{
 
     @Override
     public void handleTtsStart(String tts) {
-
+        callbackTextChange(tts);
     }
 
     @Override
     public void handleTtsEnd() {
-
+        callbackVoiceImageChange(IVoiceCallback.IDLE);
+        callbackTextChange("");
+        mVoiceStateMachine.setState(mVoiceStateMachine.mIdle);
     }
 
     @Override
     public void handleInterrupt(String error) {
-
+        callbackVoiceImageChange(IVoiceCallback.IDLE);
+        callbackTextChange("");
+        mVoiceStateMachine.setState(mVoiceStateMachine.mIdle);
     }
 }

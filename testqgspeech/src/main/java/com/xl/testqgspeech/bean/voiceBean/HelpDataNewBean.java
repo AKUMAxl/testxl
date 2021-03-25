@@ -22,17 +22,21 @@ public class HelpDataNewBean implements Parcelable {
         contents = in.createStringArrayList();
     }
 
-    public static final Creator<HelpDataNewBean> CREATOR = new Creator<HelpDataNewBean>() {
-        @Override
-        public HelpDataNewBean createFromParcel(Parcel in) {
-            return new HelpDataNewBean(in);
-        }
+    public static final Creator<HelpDataNewBean> CREATOR;
 
-        @Override
-        public HelpDataNewBean[] newArray(int size) {
-            return new HelpDataNewBean[size];
-        }
-    };
+    static {
+        CREATOR = new Creator<HelpDataNewBean>() {
+            @Override
+            public HelpDataNewBean createFromParcel(Parcel in) {
+                return new HelpDataNewBean(in);
+            }
+
+            @Override
+            public HelpDataNewBean[] newArray(int size) {
+                return new HelpDataNewBean[size];
+            }
+        };
+    }
 
     public String getTitle() {
         return title;

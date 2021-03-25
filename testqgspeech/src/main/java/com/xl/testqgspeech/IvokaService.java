@@ -1,17 +1,13 @@
 package com.xl.testqgspeech;
 
-import android.Manifest;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.net.Uri;
-import android.os.Binder;
 import android.os.Build;
 import android.os.IBinder;
 import android.provider.Settings;
@@ -21,31 +17,36 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LifecycleRegistry;
 
-import com.qinggan.util.QGSpeechSystemProperties;
+import com.qinggan.ivokaui.RedFlagAnimView;
 import com.xl.testqgspeech.data.IDataInterface;
+import com.xl.testqgspeech.data.voice.VoiceDataProcessor;
 import com.xl.testqgspeech.di.annotation.MessageData;
 import com.xl.testqgspeech.di.annotation.VoiceData;
+import com.xl.testqgspeech.state.IVoiceCallback;
+import com.xl.testqgspeech.ui.view.AutoScrollTextView;
 
-import java.security.Permission;
-import java.security.Permissions;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
-import static androidx.core.app.ActivityCompat.startActivityForResult;
+import static android.widget.LinearLayout.HORIZONTAL;
+
 
 @AndroidEntryPoint
-public class IvokaService extends Service implements LifecycleOwner {
+public class IvokaService extends Service implements LifecycleOwner, IVoiceCallback {
+
+    public static final String TAG = IvokaService.class.getSimpleName();
 
     @VoiceData
     @Inject
@@ -54,6 +55,9 @@ public class IvokaService extends Service implements LifecycleOwner {
     @MessageData
     @Inject
     IDataInterface mMessageData;
+
+    private RedFlagAnimView mRedFlagAnimView;
+    private AutoScrollTextView mTextView;
 
     private LifecycleRegistry mLifecycleRegistry;
     private WindowManager mWindowManager;
@@ -71,8 +75,10 @@ public class IvokaService extends Service implements LifecycleOwner {
         super.onCreate();
         mLifecycleRegistry = new LifecycleRegistry(this);
         mLifecycleRegistry.setCurrentState(Lifecycle.State.INITIALIZED);
+        ((VoiceDataProcessor)mVoiceData).setVoiceCallback(this);
         checkPermission();
         addView();
+
         mLifecycleRegistry.setCurrentState(Lifecycle.State.CREATED);
         mLifecycleRegistry.setCurrentState(Lifecycle.State.RESUMED);
     }
@@ -95,6 +101,37 @@ public class IvokaService extends Service implements LifecycleOwner {
     @Override
     public Lifecycle getLifecycle() {
         return mLifecycleRegistry;
+    }
+
+
+    @Override
+    public void onImageStateChange(int imageState) {
+        Log.d(TAG, "onImageStateChange() called with: imageState = [" + imageState + "]");
+        if (mRedFlagAnimView==null){
+            Log.d(TAG, "onImageStateChange() return");
+            return;
+        }
+        switch (imageState){
+            case TO_LEFT:
+                mRedFlagAnimView.toListening(RedFlagAnimView.MicDirection.FR_LEFT);
+                break;
+            case TO_RIGHT:
+                mRedFlagAnimView.toListening(RedFlagAnimView.MicDirection.FR_RIGHT);
+                break;
+            case IDLE:
+            default:
+                mRedFlagAnimView.toIdle();
+                break;
+        }
+    }
+
+    @Override
+    public void onTextChange(String text) {
+        Log.d(TAG, "onTextChange() called with: text = [" + text + "]");
+        if (mTextView!=null){
+            Log.d(TAG, " text = [" + text + "]");
+            mTextView.setText(text);
+        }
     }
 
     private void checkPermission(){
@@ -127,25 +164,29 @@ public class IvokaService extends Service implements LifecycleOwner {
     private void addView(){
         mWindowManager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
+                600,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 2038,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                         | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
                         | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 PixelFormat.TRANSLUCENT);
-        params.gravity = Gravity.TOP;
-        params.y = 60;
+        params.gravity = Gravity.TOP|Gravity.END;
+        params.y = 160;
         View windowView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.view_window,null);
-        windowView.findViewById(R.id.test1).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.putExtra(Contants.EXTRA_KEY.INDEX,2);
-                intent.setClass(getApplicationContext(),MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            }
+        mRedFlagAnimView = windowView.findViewById(R.id.red_flag_anim_view);
+        mTextView = windowView.findViewById(R.id.auto_tv);
+//        LinearLayout ll = windowView.findViewById(R.id.window_ll);
+//        ll.setOrientation(HORIZONTAL);
+//        ll.addView(getRedFlagAnimView());
+//        ll.addView(getAutoScrollTextView());
+//        ll.invalidate();
+        mRedFlagAnimView.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.putExtra(Contants.EXTRA_KEY.INDEX,2);
+            intent.setClass(getApplicationContext(),MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         });
         mWindowManager.addView(windowView,params);
     }

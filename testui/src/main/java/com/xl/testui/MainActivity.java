@@ -20,16 +20,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.qinggan.speech.VuiServiceMgr;
 import com.qinggan.util.QGSpeechSystemProperties;
+import com.qinggan.util.TtsHelper;
 import com.xl.testui.databinding.ActivityMainBinding;
+import com.xl.testui.record.TestRecord;
 
 import java.io.File;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int REQUEST_WRITE_EXTERNAL_STORAGE = 1;
     private String cur_path;
     VuiServiceMgr vuiServiceMgr;
-
+    TestUIControl testUIControl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +49,20 @@ public class MainActivity extends AppCompatActivity {
         mActivityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(mActivityMainBinding.getRoot());
 
+        testUIControl = new TestUIControl();
+        testUIControl.registerUIControl();
+
         mWindowManager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
 
         mActivityMainBinding.btnAddView.setOnClickListener(v -> {
             if (checkPermission()){
                 addWindow();
+            }
+        });
+
+        mActivityMainBinding.btnTestRecord.setOnClickListener(v -> {
+            if (checkPermission()){
+                addTestRecordView();
             }
         });
         checkWPermission();
@@ -69,17 +81,23 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        testUIControl.unRegisterUIControl();
+    }
+
     private void checkWPermission() {
         //检查权限（NEED_PERMISSION）是否被授权 PackageManager.PERMISSION_GRANTED表示同意授权
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED
+        ||ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             //用户已经拒绝过一次，再次弹出权限申请对话框需要给用户一个解释
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission
-                    .WRITE_EXTERNAL_STORAGE)) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            ||ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.RECORD_AUDIO)) {
                 Toast.makeText(this, "请开通相关权限，否则无法正常使用本应用！", Toast.LENGTH_SHORT).show();
             }
             //申请权限
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_EXTERNAL_STORAGE);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.RECORD_AUDIO}, REQUEST_WRITE_EXTERNAL_STORAGE);
 
         } else {
             Toast.makeText(this, "授权成功！", Toast.LENGTH_SHORT).show();
@@ -108,6 +126,41 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return true;
+    }
+
+    private void addTestRecordView(){
+        WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                2038,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                        | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+                        | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                PixelFormat.TRANSLUCENT);
+        params.gravity = Gravity.TOP|Gravity.END;
+        params.y = 260;
+        View windowView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.view_window,null);
+        AtomicReference<TestRecord> record = new AtomicReference<>();
+        Button btn1 = windowView.findViewById(R.id.test1);
+        btn1.setText("初始化录音");
+        btn1.setOnClickListener(v -> {
+            record.set(new TestRecord(this));
+        });
+        Button btn2 = windowView.findViewById(R.id.test2);
+        btn2.setText("开始录音");
+        btn2.setOnClickListener(v -> {
+            record.get().startRecord();
+
+        });
+        Button btn3 = windowView.findViewById(R.id.test3);
+        btn3.setText("结束录音");
+        btn3.setOnClickListener(v -> {
+            record.get().stopRecord();
+        });
+        windowView.findViewById(R.id.test4).setOnClickListener(v -> {
+            finish();
+        });
+        mWindowManager.addView(windowView,params);
     }
 
     private void addWindow(){

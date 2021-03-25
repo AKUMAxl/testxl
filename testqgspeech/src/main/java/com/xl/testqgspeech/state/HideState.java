@@ -8,7 +8,6 @@ public class HideState extends BaseState{
 
     @Override
     public void handleVisibility(boolean show) {
-
     }
 
     @Override

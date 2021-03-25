@@ -3,6 +3,7 @@ package com.xl.testqgspeech.data.voice;
 import android.os.Message;
 import android.util.Log;
 
+import com.qinggan.ivokaui.RedFlagAnimView;
 import com.qinggan.speech.VuiStatusListener;
 import com.xl.testqgspeech.constant.VoiceConstant;
 import com.xl.testqgspeech.state.VoiceStateMachine;
@@ -67,7 +68,7 @@ public class VoiceStatus implements VuiStatusListener {
 
     @Override
     public void onShowVolume(int i) {
-        Log.d(TAG, "onShowVolume() called with: i = [" + i + "]");
+//        Log.d(TAG, "onShowVolume() called with: i = [" + i + "]");
     }
 
     @Override
