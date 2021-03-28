@@ -13,4 +13,10 @@ public class Contants {
 
     }
 
+    public static final class DEFAULT_TEXT{
+
+        public static final String WAKE_UP_KEYWORD = "嗨,红旗";
+
+    }
+
 }

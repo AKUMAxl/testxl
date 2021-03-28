@@ -26,6 +26,7 @@ import androidx.core.app.NotificationCompat;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LifecycleRegistry;
+import androidx.navigation.Navigation;
 
 import com.qinggan.ivokaui.RedFlagAnimView;
 import com.xl.testqgspeech.data.IDataInterface;
@@ -55,6 +56,13 @@ public class IvokaService extends Service implements LifecycleOwner, IVoiceCallb
     @MessageData
     @Inject
     IDataInterface mMessageData;
+
+    public static final int FRAGMENT_INDEX_HELP = -1;
+    public static final int FRAGMENT_INDEX_SKILL_CENTER = 0;
+    public static final int FRAGMENT_INDEX_IMAGE = 1;
+    public static final int FRAGMENT_INDEX_VOICE = 2;
+    public static final int FRAGMENT_INDEX_SETTING = 3;
+
 
     private RedFlagAnimView mRedFlagAnimView;
     private AutoScrollTextView mTextView;
@@ -130,7 +138,7 @@ public class IvokaService extends Service implements LifecycleOwner, IVoiceCallb
         Log.d(TAG, "onTextChange() called with: text = [" + text + "]");
         if (mTextView!=null){
             Log.d(TAG, " text = [" + text + "]");
-            mTextView.setText(text);
+            mTextView.setVeticalText(text);
         }
     }
 
@@ -164,7 +172,7 @@ public class IvokaService extends Service implements LifecycleOwner, IVoiceCallb
     private void addView(){
         mWindowManager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                600,
+                ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 2038,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
@@ -172,25 +180,26 @@ public class IvokaService extends Service implements LifecycleOwner, IVoiceCallb
                         | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 PixelFormat.TRANSLUCENT);
         params.gravity = Gravity.TOP|Gravity.END;
-        params.y = 160;
+        params.y = 110;
         View windowView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.view_window,null);
         mRedFlagAnimView = windowView.findViewById(R.id.red_flag_anim_view);
         mTextView = windowView.findViewById(R.id.auto_tv);
-//        LinearLayout ll = windowView.findViewById(R.id.window_ll);
-//        ll.setOrientation(HORIZONTAL);
-//        ll.addView(getRedFlagAnimView());
-//        ll.addView(getAutoScrollTextView());
-//        ll.invalidate();
+        mTextView.setDefaultContentWidth(1730);
+        mTextView.setScrollInterval(10000);
+        mTextView.setMaxLine(1);
+        mTextView.setVeticalText(Contants.DEFAULT_TEXT.WAKE_UP_KEYWORD);
         mRedFlagAnimView.setOnClickListener(v -> {
-            Intent intent = new Intent();
-            intent.putExtra(Contants.EXTRA_KEY.INDEX,2);
-            intent.setClass(getApplicationContext(),MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
+            showView(FRAGMENT_INDEX_HELP);
         });
         mWindowManager.addView(windowView,params);
     }
 
-
+    private void showView(int index){
+        Intent intent = new Intent();
+        intent.putExtra(Contants.EXTRA_KEY.INDEX,index);
+        intent.setClass(getApplicationContext(),MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
 
 }

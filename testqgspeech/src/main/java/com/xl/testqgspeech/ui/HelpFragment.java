@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import com.xl.testqgspeech.Contants;
 import com.xl.testqgspeech.R;
 import com.xl.testqgspeech.bean.voiceBean.HelpDataNewBean;
 import com.xl.testqgspeech.databinding.FragmentHelpBinding;
@@ -52,9 +53,6 @@ public class HelpFragment extends BaseFragment<FragmentHelpBinding>{
             }
         });
         mBinding.fragmentHelpRc.setAdapter(mHelpDataAdapter);
-//        mBinding.fragmentHelpRc.addItemDecoration();
-
-
         mBinding.fragmentHelpTvVoiceSkillExplain.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_help_fragment_to_main_fragment));
         mBinding.fragmentHelpBtnBack.setOnClickListener(v -> requireActivity().finish());
     }

@@ -19,7 +19,6 @@ public class BootReceiver extends BroadcastReceiver {
         Log.d("xLLL", "action:"+action);
         if (Intent.ACTION_BOOT_COMPLETED.equals(action)) {
             startVoiceService(context);
-//            startBrowser(context);
             Log.d("xLLL", "Android操作系统开机了，运行中.......");
         } else if (Intent.ACTION_SHUTDOWN.equals(action)) {
             Log.d("xLLL", "Android操作系统关机了.......");
@@ -39,11 +38,4 @@ public class BootReceiver extends BroadcastReceiver {
         }
     }
 
-//    private void startBrowser(Context context){
-//        Intent intent= new Intent();
-//        intent.setAction("android.intent.action.VIEW");
-//        Uri content_url = Uri.parse("http://172.1.110.3/dsdp/");
-//        intent.setData(content_url);
-//        context.startActivity(intent);
-//    }
 }

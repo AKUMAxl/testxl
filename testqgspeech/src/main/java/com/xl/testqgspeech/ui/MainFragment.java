@@ -1,6 +1,7 @@
 package com.xl.testqgspeech.ui;
 
 
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.xl.testqgspeech.Contants;
+import com.xl.testqgspeech.MainNavDirections;
 import com.xl.testqgspeech.R;
 import com.xl.testqgspeech.bean.messageBean.BaseMessageBean;
 import com.xl.testqgspeech.databinding.FragmentMainBinding;
@@ -93,6 +95,7 @@ public class MainFragment extends BaseFragment<FragmentMainBinding> {
             updateLayoutParams(false);
         });
         int item = requireActivity().getIntent().getIntExtra(Contants.EXTRA_KEY.INDEX,0);
+        Log.d("xLLL", "initView: "+item);
         mBinding.mainVp.setCurrentItem(item);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mMessageAdapter = new MessageAdapter(getContext(),null);

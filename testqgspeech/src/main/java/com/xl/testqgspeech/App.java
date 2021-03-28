@@ -23,13 +23,10 @@ public class App extends Application {
     @Inject
     IDataInterface mMessageData;
 
-    @Inject
-    Test test;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        test.get();
         BootReceiver bootReceiver = new BootReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction("android.intent.action.BOOT_COMPLETED");

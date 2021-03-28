@@ -1,11 +1,9 @@
 package com.xl.testqgspeech.data.voice;
 
 import android.content.Context;
-import android.os.Message;
 import android.util.Log;
 
 import com.qinggan.speech.VuiServiceMgr;
-import com.xl.testqgspeech.Test;
 import com.xl.testqgspeech.data.IDataInterface;
 import com.xl.testqgspeech.state.IVoiceCallback;
 import com.xl.testqgspeech.state.VoiceStateMachine;
