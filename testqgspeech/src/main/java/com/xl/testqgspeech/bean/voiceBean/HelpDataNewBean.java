@@ -10,13 +10,18 @@ import java.util.ArrayList;
  */
 public class HelpDataNewBean implements Parcelable {
 
+    public static final String TYPE_TITLE = "title";
+    public static final String TYPE_ITEM = "item";
+
     private String title;
+    private String type;
     private String tabID;
     private String videoName;
     private ArrayList<String> contents;
 
     private HelpDataNewBean(Parcel in) {
         title = in.readString();
+        type = in.readString();
         tabID = in.readString();
         videoName = in.readString();
         contents = in.createStringArrayList();
@@ -44,6 +49,14 @@ public class HelpDataNewBean implements Parcelable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getTabID() {
@@ -78,6 +91,7 @@ public class HelpDataNewBean implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(title);
+        dest.writeString(type);
         dest.writeString(tabID);
         dest.writeString(videoName);
         dest.writeStringList(contents);
@@ -87,6 +101,7 @@ public class HelpDataNewBean implements Parcelable {
     public String toString() {
         return "HelpDataNewBean{" +
                 "title='" + title + '\'' +
+                ", type='" + type + '\'' +
                 ", tabID='" + tabID + '\'' +
                 ", videoName='" + videoName + '\'' +
                 ", contents=" + contents +

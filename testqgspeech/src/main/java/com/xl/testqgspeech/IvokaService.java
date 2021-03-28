@@ -45,7 +45,7 @@ import static android.widget.LinearLayout.HORIZONTAL;
 
 
 @AndroidEntryPoint
-public class IvokaService extends Service implements LifecycleOwner, IVoiceCallback {
+public class IvokaService extends Service implements IVoiceCallback {
 
     public static final String TAG = IvokaService.class.getSimpleName();
 
@@ -67,13 +67,11 @@ public class IvokaService extends Service implements LifecycleOwner, IVoiceCallb
     private RedFlagAnimView mRedFlagAnimView;
     private AutoScrollTextView mTextView;
 
-    private LifecycleRegistry mLifecycleRegistry;
     private WindowManager mWindowManager;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("xLLL", "onStartCommand()");
-        mLifecycleRegistry.setCurrentState(Lifecycle.State.STARTED);
         startForeground();
         return START_STICKY;
     }
@@ -81,14 +79,11 @@ public class IvokaService extends Service implements LifecycleOwner, IVoiceCallb
     @Override
     public void onCreate() {
         super.onCreate();
-        mLifecycleRegistry = new LifecycleRegistry(this);
-        mLifecycleRegistry.setCurrentState(Lifecycle.State.INITIALIZED);
+
         ((VoiceDataProcessor)mVoiceData).setVoiceCallback(this);
         checkPermission();
         addView();
 
-        mLifecycleRegistry.setCurrentState(Lifecycle.State.CREATED);
-        mLifecycleRegistry.setCurrentState(Lifecycle.State.RESUMED);
     }
 
 
@@ -102,13 +97,6 @@ public class IvokaService extends Service implements LifecycleOwner, IVoiceCallb
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mLifecycleRegistry.setCurrentState(Lifecycle.State.DESTROYED);
-    }
-
-    @NonNull
-    @Override
-    public Lifecycle getLifecycle() {
-        return mLifecycleRegistry;
     }
 
 
