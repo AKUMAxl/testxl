@@ -1,7 +1,12 @@
 package com.xl.testqgspeech.ui;
 
+import android.view.View;
+
+import androidx.databinding.DataBindingUtil;
+
 import com.xl.testqgspeech.R;
 import com.xl.testqgspeech.databinding.FragmentSkillCenterBinding;
+import com.xl.testqgspeech.databinding.LayoutQuestionCommonBinding;
 
 public class SkillCenterFragment extends BaseFragment<FragmentSkillCenterBinding>{
 
@@ -22,6 +27,9 @@ public class SkillCenterFragment extends BaseFragment<FragmentSkillCenterBinding
 
     @Override
     void initView() {
+        View layoutQuestionCommon = mBinding.fragmentSkillCenterVsRequestCommon.getViewStub().inflate();
+        LayoutQuestionCommonBinding layoutQuestionCommonBinding = DataBindingUtil.getBinding(layoutQuestionCommon);
+
 
     }
 }

@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.xl.testqgspeech.bean.messageBean.BaseMessageBean;
 import com.xl.testqgspeech.bean.voiceBean.HelpDataNewBean;
 import com.xl.testqgspeech.util.HelpDataParser;
+import com.xl.testqgspeech.util.ThreadPoolUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class HelpDataLiveData extends LiveData<ArrayList<HelpDataNewBean>> {
     }
 
     public MutableLiveData<ArrayList<HelpDataNewBean>> getHelpData(){
-        mHelpDataNewBeans.setValue(mHelpDataParser.getWakeUpHelpData());
+        ThreadPoolUtil.getInstance().execute(() -> mHelpDataNewBeans.postValue(mHelpDataParser.getWakeUpHelpData()));
         return mHelpDataNewBeans;
     }
 

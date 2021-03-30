@@ -20,14 +20,14 @@ public class AsrState extends BaseState{
     @Override
     public void handleVoiceStart(int i) {
         mWakeupDirection = i;
-        callbackTextChange("");
+        callbackTextChange("",IVoiceCallback.DEFAULT);
         mVoiceStateMachine.setState(mVoiceStateMachine.mWakeupState);
     }
 
     @Override
     public void handleVoiceEnd() {
         callbackVoiceImageChange(IVoiceCallback.IDLE);
-        callbackTextChange("");
+        callbackTextChange("",IVoiceCallback.DEFAULT);
         mVoiceStateMachine.setState(mVoiceStateMachine.mIdle);
     }
 
@@ -38,7 +38,7 @@ public class AsrState extends BaseState{
 
     @Override
     public void handleAsrUpdate(String text) {
-        callbackTextChange(text);
+        callbackTextChange(text,IVoiceCallback.DEFAULT);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class AsrState extends BaseState{
     @Override
     public void handleTtsStart(String tts) {
         callbackVoiceImageChange(mWakeupDirection==1?IVoiceCallback.TO_LEFT:IVoiceCallback.TO_RIGHT);
-        callbackTextChange(tts);
+        callbackTextChange(tts,IVoiceCallback.DEFAULT);
         mVoiceStateMachine.setState(mVoiceStateMachine.mTtsState);
     }
 
@@ -61,7 +61,7 @@ public class AsrState extends BaseState{
     @Override
     public void handleInterrupt(String error) {
         callbackVoiceImageChange(IVoiceCallback.IDLE);
-        callbackTextChange("");
+        callbackTextChange("",IVoiceCallback.DEFAULT);
         mVoiceStateMachine.setState(mVoiceStateMachine.mIdle);
     }
 }

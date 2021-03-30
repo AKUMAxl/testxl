@@ -33,6 +33,7 @@ public class HelpDataParser {
     public final String wakeupHelpFileName = "wakeup_help_data.json";
 
     public ArrayList<HelpDataNewBean> getWakeUpHelpData() {
+
         ArrayList<HelpDataNewBean> helpDataNewBeans;
         String jsonResult = getJsonFromAsset(wakeupHelpFileName);
 

@@ -99,6 +99,7 @@ public class MainFragment extends BaseFragment<FragmentMainBinding> {
         mBinding.mainVp.setCurrentItem(item);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mMessageAdapter = new MessageAdapter(getContext(),null);
+        mBinding.mainRc.setOverScrollMode(View.OVER_SCROLL_NEVER);
         mBinding.mainRc.setLayoutManager(layoutManager);
         mBinding.mainRc.setAdapter(mMessageAdapter);
         mMessageAdapter.setOnItemClickListener((position, o) -> Log.d("xLLL","mesage:"+((BaseMessageBean)o).toString()));

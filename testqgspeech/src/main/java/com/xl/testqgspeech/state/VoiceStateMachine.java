@@ -1,11 +1,15 @@
 package com.xl.testqgspeech.state;
 
 
+import android.util.Log;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
 public class VoiceStateMachine implements IVoiceState{
+
+    private static final String TAG = VoiceStateMachine.class.getSimpleName();
 
     HideState mHideState;
     IdleState mIdle;
@@ -78,6 +82,7 @@ public class VoiceStateMachine implements IVoiceState{
     }
 
     void setState(IVoiceState state){
+        Log.d(TAG, "setState() called with: state = [" + state + "]");
         mCurState = state;
     }
 

@@ -13,13 +13,13 @@ public class IdleState extends BaseState{
 
     @Override
     public void handleIdleText(String text) {
-        callbackTextChange(text);
+        callbackTextChange(text,IVoiceCallback.SCROLL);
     }
 
     @Override
     public void handleVoiceStart(int i) {
         mWakeupDirection = i;
-        callbackTextChange("");
+        callbackTextChange("",IVoiceCallback.DEFAULT);
         callbackVoiceImageChange(mWakeupDirection==1?IVoiceCallback.TO_LEFT:IVoiceCallback.TO_RIGHT);
         mVoiceStateMachine.setState(mVoiceStateMachine.mWakeupState);
     }
@@ -46,7 +46,7 @@ public class IdleState extends BaseState{
 
     @Override
     public void handleTtsStart(String tts) {
-        callbackTextChange(tts);
+        callbackTextChange(tts,IVoiceCallback.DEFAULT);
         mVoiceStateMachine.setState(mVoiceStateMachine.mWakeupState);
     }
 

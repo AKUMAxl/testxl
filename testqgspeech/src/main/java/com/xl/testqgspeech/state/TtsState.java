@@ -14,13 +14,15 @@ public class TtsState extends BaseState{
 
     @Override
     public void handleIdleText(String text) {
-
+        callbackVoiceImageChange(IVoiceCallback.IDLE);
+        callbackTextChange(text,IVoiceCallback.DEFAULT);
+        mVoiceStateMachine.setState(mVoiceStateMachine.mIdle);
     }
 
     @Override
     public void handleVoiceStart(int i) {
         mWakeupDirection = i;
-        callbackTextChange("");
+        callbackTextChange("",IVoiceCallback.DEFAULT);
         mVoiceStateMachine.setState(mVoiceStateMachine.mWakeupState);
     }
 
@@ -33,7 +35,7 @@ public class TtsState extends BaseState{
     @Override
     public void handleAsrStart() {
         callbackVoiceImageChange(mWakeupDirection==1?IVoiceCallback.TO_LEFT:IVoiceCallback.TO_RIGHT);
-        callbackTextChange("");
+        callbackTextChange("",IVoiceCallback.DEFAULT);
         mVoiceStateMachine.setState(mVoiceStateMachine.mAsrState);
     }
 
@@ -49,20 +51,20 @@ public class TtsState extends BaseState{
 
     @Override
     public void handleTtsStart(String tts) {
-        callbackTextChange(tts);
+        callbackTextChange(tts,IVoiceCallback.DEFAULT);
     }
 
     @Override
     public void handleTtsEnd() {
         callbackVoiceImageChange(IVoiceCallback.IDLE);
-        callbackTextChange("");
+        callbackTextChange("",IVoiceCallback.DEFAULT);
         mVoiceStateMachine.setState(mVoiceStateMachine.mIdle);
     }
 
     @Override
     public void handleInterrupt(String error) {
         callbackVoiceImageChange(IVoiceCallback.IDLE);
-        callbackTextChange("");
+        callbackTextChange("",IVoiceCallback.DEFAULT);
         mVoiceStateMachine.setState(mVoiceStateMachine.mIdle);
     }
 }

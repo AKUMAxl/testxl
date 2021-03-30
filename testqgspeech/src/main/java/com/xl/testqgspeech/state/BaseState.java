@@ -15,10 +15,10 @@ public abstract class BaseState implements IVoiceState{
         mVoiceStateMachine.getVoiceCallback().onImageStateChange(imageState);
     }
 
-    void callbackTextChange(String text){
+    void callbackTextChange(String text, @IVoiceCallback.TEXT_TYPE int textType){
         if(mVoiceStateMachine.getVoiceCallback()==null){
             return;
         }
-        mVoiceStateMachine.getVoiceCallback().onTextChange(text);
+        mVoiceStateMachine.getVoiceCallback().onTextChange(text,textType);
     }
 }

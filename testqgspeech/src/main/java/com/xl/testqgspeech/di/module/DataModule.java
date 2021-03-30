@@ -1,5 +1,6 @@
 package com.xl.testqgspeech.di.module;
 
+import com.qinggan.speech.customqa.CustomQAMgr;
 import com.xl.testqgspeech.data.IDataInterface;
 import com.xl.testqgspeech.data.message.MessageDataProcessor;
 import com.xl.testqgspeech.data.voice.VoiceActionHandler;
@@ -26,5 +27,10 @@ public abstract class DataModule {
     @MessageData
     @Binds
     abstract IDataInterface bindMessageData(MessageDataProcessor messageDataProcessor);
+
+//    @Provides
+//    CustomQAMgr provideCustomQAMgr(){
+//        return CustomQAMgr.getInstance();
+//    }
 
 }

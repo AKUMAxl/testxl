@@ -74,6 +74,7 @@ public class libissse {
 	final public static String ISS_SE_PARAM_CHANNEL_TRANSFORM_RULES_H5		 =	"0=0*1, 1=1*1, 2=0*0, 3=0*0, 4=2*1, 5=3*1";					///< channel_transform_rules:H5
 	final public static String ISS_SE_PARAM_CHANNEL_TRANSFORM_RULES_HS5		 =	"0=2*1, 1=3*1, 2=0*0, 3=0*0, 4=0*1, 5=1*1";					///< channel_transform_rules:HS5
 
+
 	final public static String ISS_SE_PARAM_AEC_REF_NUMBER					 = "aec_ref_number";	///< param AEC ref number param_id
 	final public static String ISS_SE_PARAM_VALUE_AEC_REF_ZERO				 = "0";					///< no ref
 	final public static String ISS_SE_PARAM_VALUE_AEC_REF_SGL				 = "1";					///< single ref

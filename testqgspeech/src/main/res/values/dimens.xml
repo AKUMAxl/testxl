@@ -77,4 +77,7 @@
     <dimen name="item_help_tv_help_go_margin">32dp</dimen>
     <dimen name="item_help_width">560dp</dimen>
     <dimen name="item_help_height">360dp</dimen>
+    <dimen name="question_tv_margin_top">32dp</dimen>
+    <dimen name="question_tv_margin_start">32dp</dimen>
+    <dimen name="answer_tv_margin_top">32dp</dimen>
 </resources>

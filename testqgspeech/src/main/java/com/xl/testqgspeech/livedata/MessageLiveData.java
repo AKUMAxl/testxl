@@ -30,6 +30,12 @@ public class MessageLiveData extends LiveData<List<BaseMessageBean>> {
 
     public MutableLiveData<List<BaseMessageBean>> getMessageData(){
         List<BaseMessageBean> data = new ArrayList<BaseMessageBean>();
+
+        data.add(new BaseMessageBean(1,"aaaaa","1111"));
+        data.add(new BaseMessageBean(1,"bbbbb","1111"));
+        data.add(new BaseMessageBean(1,"vvvvv","1111"));
+        data.add(new BaseMessageBean(1,"ddddd","1111"));
+        data.add(new BaseMessageBean(1,"ccccc","1111"));
         setMessage(data);
         return mBaseMessageBeans;
     }

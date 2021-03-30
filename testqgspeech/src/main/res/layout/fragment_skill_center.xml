@@ -44,7 +44,8 @@
             android:layout_marginLeft="@dimen/fragment_skill_center_view_margin_start"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@mipmap/ic_launcher"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

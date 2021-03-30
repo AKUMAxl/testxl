@@ -17,16 +17,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.LifecycleRegistry;
-import androidx.navigation.Navigation;
+
 
 import com.qinggan.ivokaui.RedFlagAnimView;
 import com.xl.testqgspeech.data.IDataInterface;
@@ -41,7 +35,6 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
-import static android.widget.LinearLayout.HORIZONTAL;
 
 
 @AndroidEntryPoint
@@ -122,11 +115,15 @@ public class IvokaService extends Service implements IVoiceCallback {
     }
 
     @Override
-    public void onTextChange(String text) {
+    public void onTextChange(String text,int textType) {
         Log.d(TAG, "onTextChange() called with: text = [" + text + "]");
         if (mTextView!=null){
             Log.d(TAG, " text = [" + text + "]");
-            mTextView.setVeticalText(text);
+            if (textType==DEFAULT){
+                mTextView.setText(text);
+            }else {
+                mTextView.setVeticalText(text);
+            }
         }
     }
 

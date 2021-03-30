@@ -1,8 +1,9 @@
 package com.xl.testqgspeech.ui;
 
 import android.util.Log;
+import android.view.View;
 
-import androidx.lifecycle.Observer;
+
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -14,14 +15,11 @@ import com.xl.testqgspeech.ui.adapter.BaseAdapter;
 import com.xl.testqgspeech.ui.adapter.HelpDataAdapter;
 import com.xl.testqgspeech.viewmodel.HelpViewModel;
 
-import java.util.ArrayList;
 
 public class HelpFragment extends BaseFragment<FragmentHelpBinding>{
 
 
     public static final int SPAN_COUNT = 2;
-
-    private HelpViewModel mHelpViewModel;
 
     private HelpDataAdapter mHelpDataAdapter;
 
@@ -32,14 +30,8 @@ public class HelpFragment extends BaseFragment<FragmentHelpBinding>{
 
     @Override
     void initViewModel() {
-        mHelpViewModel = new ViewModelProvider(requireActivity()).get(HelpViewModel.class);
-        mHelpViewModel.getHelpData().observe(this, new Observer<ArrayList<HelpDataNewBean>>() {
-            @Override
-            public void onChanged(ArrayList<HelpDataNewBean> helpDataNewBeans) {
-                Log.d("xLLL","help data:"+helpDataNewBeans.toString());
-                mHelpDataAdapter.updateData(helpDataNewBeans);
-            }
-        });
+        HelpViewModel mHelpViewModel = new ViewModelProvider(requireActivity()).get(HelpViewModel.class);
+        mHelpViewModel.getHelpData().observe(this, helpDataNewBeans -> mHelpDataAdapter.updateData(helpDataNewBeans));
     }
 
     @Override
@@ -56,6 +48,7 @@ public class HelpFragment extends BaseFragment<FragmentHelpBinding>{
             }
         });
         mBinding.fragmentHelpRc.setLayoutManager(gridLayoutManager);
+        mBinding.fragmentHelpRc.setOverScrollMode(View.OVER_SCROLL_NEVER);
         mHelpDataAdapter.setOnItemClickListener((BaseAdapter.OnItemClickListener) (position, o) -> Log.d("xLLL","help data:"+((HelpDataNewBean)o).toString()));
         mBinding.fragmentHelpRc.setAdapter(mHelpDataAdapter);
         mBinding.fragmentHelpTvVoiceSkillExplain.setOnClickListener(v -> Navigation.findNavController(v).navigate(R.id.action_help_fragment_to_main_fragment));

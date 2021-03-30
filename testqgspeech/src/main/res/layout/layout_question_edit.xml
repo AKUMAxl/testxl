@@ -1,48 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="664dp"
-    android:layout_height="368dp">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <EditText
-        android:id="@+id/layout_et_question"
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:hint="111111"
-        android:textColor="@color/white_eb"
-        android:textSize="@dimen/text_size_24"
-        tools:ignore="MissingConstraints" />
+    <data>
 
-    <EditText
-        android:id="@+id/layout_et_answer"
-        android:layout_width="match_parent"
-        android:layout_height="192dp"
-        android:textColor="@color/white_eb"
-        android:textSize="@dimen/text_size_24"
-        android:hint="111111"
-        app:layout_constraintTop_toBottomOf="@+id/layout_et_question" />
+    </data>
 
-    <Button
-        android:id="@+id/layout_btn_save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/save"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/layout_btn_cancel"
-        app:layout_constraintTop_toBottomOf="@+id/layout_et_answer" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="664dp"
+        android:layout_height="368dp">
 
-    <Button
-        android:id="@+id/layout_btn_cancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/cancel"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/layout_btn_save"
-        app:layout_constraintTop_toBottomOf="@+id/layout_et_answer" />
+        <EditText
+            android:id="@+id/layout_et_question"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:hint="111111"
+            android:textColor="@color/white_eb"
+            android:textSize="@dimen/text_size_24"
+            tools:ignore="MissingConstraints" />
+
+        <EditText
+            android:id="@+id/layout_et_answer"
+            android:layout_width="match_parent"
+            android:layout_height="192dp"
+            android:textColor="@color/white_eb"
+            android:textSize="@dimen/text_size_24"
+            android:hint="111111"
+            app:layout_constraintTop_toBottomOf="@+id/layout_et_question" />
+
+        <Button
+            android:id="@+id/layout_btn_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/save"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/layout_btn_cancel"
+            app:layout_constraintTop_toBottomOf="@+id/layout_et_answer" />
+
+        <Button
+            android:id="@+id/layout_btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/layout_btn_save"
+            app:layout_constraintTop_toBottomOf="@+id/layout_et_answer" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
