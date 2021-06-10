@@ -6,3 +6,4 @@ include ':animtion'
 include ':DynamicFeature'
 include ':app'
 rootProject.name = "testxl"
+include ':voice_demo'
