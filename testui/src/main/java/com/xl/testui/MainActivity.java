@@ -73,6 +73,11 @@ public class MainActivity extends AppCompatActivity {
                 addC100TestView();
             }
         });
+        mActivityMainBinding.btnTestVehicle.setOnClickListener(v -> {
+            if (checkPermission()){
+                addC100TesTVehicletView();
+            }
+        });
 
         checkWPermission();
         vuiServiceMgr = VuiServiceMgr.getInstance(getApplication(), new VuiServiceMgr.VuiConnectionCallback() {
@@ -158,6 +163,48 @@ public class MainActivity extends AppCompatActivity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 startForegroundService(intent);
             }
+        });
+        Button btn2 = windowView.findViewById(R.id.test2);
+        btn2.setText("模拟语音按键");
+        btn2.setOnClickListener(v -> {
+            Intent intent = new Intent("com.qinggan.test.voice_hardkey");
+            sendBroadcast(intent);
+
+        });
+        Button btn3 = windowView.findViewById(R.id.test3);
+        btn3.setText("IGN ON");
+        btn3.setOnClickListener(v -> {
+            Intent intent = new Intent("com.qinggan.test.ign");
+            intent.putExtra("status",1);
+            sendBroadcast(intent);
+        });
+        Button btn4 = windowView.findViewById(R.id.test4);
+        btn4.setText("IGN OFF");
+        btn4.setOnClickListener(v -> {
+            Intent intent = new Intent("com.qinggan.test.ign");
+            intent.putExtra("status",2);
+            sendBroadcast(intent);
+        });
+        mWindowManager.addView(windowView,params);
+    }
+
+    private void addC100TesTVehicletView(){
+        WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                2038,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                        | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+                        | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                PixelFormat.TRANSLUCENT);
+        params.gravity = Gravity.TOP|Gravity.END;
+        params.y = 260;
+        View windowView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.view_window,null);
+        AtomicReference<TestRecord> record = new AtomicReference<>();
+        Button btn1 = windowView.findViewById(R.id.test1);
+        btn1.setText("蓝牙");
+        btn1.setOnClickListener(v -> {
+            VehicleTest.getInstance().init(getApplicationContext());
         });
         Button btn2 = windowView.findViewById(R.id.test2);
         btn2.setText("模拟语音按键");
