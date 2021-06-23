@@ -16,12 +16,15 @@
             <option value="$PROJECT_DIR$/animtion" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/c100_ivoka" />
+            <option value="$PROJECT_DIR$/iflytekJar" />
+            <option value="$PROJECT_DIR$/test-annotation" />
+            <option value="$PROJECT_DIR$/test-complier" />
+            <option value="$PROJECT_DIR$/testlocaltion" />
             <option value="$PROJECT_DIR$/testqgspeech" />
             <option value="$PROJECT_DIR$/testui" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
-        <option name="useQualifiedModuleNames" value="true" />
       </GradleProjectSettings>
     </option>
   </component>

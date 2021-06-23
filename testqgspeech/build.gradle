@@ -9,7 +9,7 @@ android {
 
     signingConfigs {
         e111 {
-            storeFile file('/home/xl/code/xl/testxl/e111_platform.keystore')
+            storeFile file('../e111_platform.keystore')
             storePassword '000000'
             keyAlias 'desay'
             keyPassword '000000'

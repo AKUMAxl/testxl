@@ -8,3 +8,4 @@ include ':app'
 rootProject.name = "testxl"
 include ':test-annotation'
 include ':test-complier'
+include ':testlocaltion'
