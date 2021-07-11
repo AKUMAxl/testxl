@@ -2,19 +2,17 @@ package com.xl.testlocaltion;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
-import android.content.Context;
-import android.content.pm.PackageManager;
-import android.location.GnssMeasurementsEvent;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 
-import java.util.List;
+import com.xl.testlocaltion.location.LocationHelper;
+import com.xl.testlocaltion.test.InvokeTest;
+import com.xl.testlocaltion.test.TestInterface;
+
+import java.lang.reflect.Proxy;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},1);
         }
 //        LocationHelper.getInstance().init(getApplicationContext());
+        testInvoke();
     }
 
     @Override
@@ -37,5 +36,20 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         Log.d(TAG, "onRequestPermissionsResult() called with: requestCode = [" + requestCode + "], permissions = [" + permissions + "], grantResults = [" + grantResults + "]");
         LocationHelper.getInstance().init(getApplicationContext());
+    }
+
+    private void testInvoke(){
+        try {
+            Class<?> c = Class.forName("com.xl.testlocaltion.test.RealTest");
+            Object o = c.newInstance();
+            TestInterface t = (TestInterface) Proxy.newProxyInstance(c.getClassLoader(),c.getInterfaces(),new InvokeTest(o));
+            t.doThins("aaa");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
     }
 }
