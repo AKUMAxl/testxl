@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -27,7 +28,6 @@ import android.widget.Toast;
 
 import com.qinggan.speech.VuiServiceMgr;
 import com.qinggan.util.QGSpeechSystemProperties;
-import com.qinggan.util.TtsHelper;
 import com.xl.testui.databinding.ActivityMainBinding;
 import com.xl.testui.record.TestRecord;
 
@@ -50,13 +50,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(mActivityMainBinding.getRoot());
 
         testUIControl = new TestUIControl();
-        testUIControl.registerUIControl();
+        testUIControl.init(getApplicationContext());
+//        testUIControl.registerUIControl();
+        testUIControl.registerListUIControl();
 
         mWindowManager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
 
         mActivityMainBinding.btnAddView.setOnClickListener(v -> {
             if (checkPermission()){
-                addWindow();
+                addTestUIWindow();
             }
         });
 
@@ -65,12 +67,24 @@ public class MainActivity extends AppCompatActivity {
                 addTestRecordView();
             }
         });
+
+        mActivityMainBinding.btnTestC100.setOnClickListener(v -> {
+            if (checkPermission()){
+                addC100TestView();
+            }
+        });
+        mActivityMainBinding.btnTestVehicle.setOnClickListener(v -> {
+            if (checkPermission()){
+                addC100TesTVehicletView();
+            }
+        });
+
         checkWPermission();
         vuiServiceMgr = VuiServiceMgr.getInstance(getApplication(), new VuiServiceMgr.VuiConnectionCallback() {
             @Override
             public void onServiceConnected() {
                 Log.d("xLLL","on service connected");
-
+                testUIControl.setVuiServiceMgr(vuiServiceMgr);
             }
 
             @Override
@@ -128,6 +142,94 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    private void addC100TestView(){
+        WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                2038,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                        | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+                        | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                PixelFormat.TRANSLUCENT);
+        params.gravity = Gravity.TOP|Gravity.END;
+        params.y = 260;
+        View windowView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.view_window,null);
+        AtomicReference<TestRecord> record = new AtomicReference<>();
+        Button btn1 = windowView.findViewById(R.id.test1);
+        btn1.setText("启动IVOKA");
+        btn1.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.setComponent(new ComponentName("com.qinggan.ivoka","com.qinggan.ivoka.service.WindowService"));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForegroundService(intent);
+            }
+        });
+        Button btn2 = windowView.findViewById(R.id.test2);
+        btn2.setText("模拟语音按键");
+        btn2.setOnClickListener(v -> {
+            Intent intent = new Intent("com.qinggan.test.voice_hardkey");
+            sendBroadcast(intent);
+
+        });
+        Button btn3 = windowView.findViewById(R.id.test3);
+        btn3.setText("IGN ON");
+        btn3.setOnClickListener(v -> {
+            Intent intent = new Intent("com.qinggan.test.ign");
+            intent.putExtra("status",1);
+            sendBroadcast(intent);
+        });
+        Button btn4 = windowView.findViewById(R.id.test4);
+        btn4.setText("IGN OFF");
+        btn4.setOnClickListener(v -> {
+            Intent intent = new Intent("com.qinggan.test.ign");
+            intent.putExtra("status",2);
+            sendBroadcast(intent);
+        });
+        mWindowManager.addView(windowView,params);
+    }
+
+    private void addC100TesTVehicletView(){
+        WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                2038,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                        | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+                        | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                PixelFormat.TRANSLUCENT);
+        params.gravity = Gravity.TOP|Gravity.END;
+        params.y = 260;
+        View windowView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.view_window,null);
+        AtomicReference<TestRecord> record = new AtomicReference<>();
+        Button btn1 = windowView.findViewById(R.id.test1);
+        btn1.setText("蓝牙");
+        btn1.setOnClickListener(v -> {
+            VehicleTest.getInstance().init(getApplicationContext());
+        });
+        Button btn2 = windowView.findViewById(R.id.test2);
+        btn2.setText("模拟语音按键");
+        btn2.setOnClickListener(v -> {
+            Intent intent = new Intent("com.qinggan.test.voice_hardkey");
+            sendBroadcast(intent);
+
+        });
+        Button btn3 = windowView.findViewById(R.id.test3);
+        btn3.setText("IGN ON");
+        btn3.setOnClickListener(v -> {
+            Intent intent = new Intent("com.qinggan.test.ign");
+            intent.putExtra("status",1);
+            sendBroadcast(intent);
+        });
+        Button btn4 = windowView.findViewById(R.id.test4);
+        btn4.setText("IGN OFF");
+        btn4.setOnClickListener(v -> {
+            Intent intent = new Intent("com.qinggan.test.ign");
+            intent.putExtra("status",2);
+            sendBroadcast(intent);
+        });
+        mWindowManager.addView(windowView,params);
+    }
+
     private void addTestRecordView(){
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -163,7 +265,7 @@ public class MainActivity extends AppCompatActivity {
         mWindowManager.addView(windowView,params);
     }
 
-    private void addWindow(){
+    private void addTestUIWindow(){
         WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT,

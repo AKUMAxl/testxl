@@ -10,7 +10,8 @@ android {
     signingConfigs {
         e111 {
 //            storeFile file('/home/xl/code/xl/testxl/e111_platform.keystore')
-            storeFile file('../e111_platform.keystore')
+            storeFile file('../testui/HQ_C100.keystore')
+//            storeFile file('../e111_platform.keystore')
             storePassword '000000'
             keyAlias 'desay'
             keyPassword '000000'
@@ -19,7 +20,7 @@ android {
 
     defaultConfig {
         applicationId "com.xl.testui"
-        minSdkVersion 16
+        minSdkVersion 26
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -62,5 +63,6 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
 
     implementation files('libs/QGSpeech.jar')
+    implementation fileTree(dir:'libs',includes: ['*.aar'])
 
 }
