@@ -7,3 +7,7 @@ include ':DynamicFeature'
 include ':app'
 rootProject.name = "testxl"
 include ':voice_demo'
+
+include ':test-annotation'
+include ':test-complier'
+include ':testlocaltion'
