@@ -116,6 +116,7 @@ public class TestRecord {
         }
 
 
+        @Override
         @SuppressLint("LongLogTag")
         public void run() {
             super.run();

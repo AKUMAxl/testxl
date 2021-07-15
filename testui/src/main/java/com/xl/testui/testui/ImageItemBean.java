@@ -1,4 +1,4 @@
-package com.xl.testui;
+package com.xl.testui.testui;
 
 public class ImageItemBean {
 

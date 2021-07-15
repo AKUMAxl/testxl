@@ -1,9 +1,8 @@
-package com.qinggan.voice_demo;
+package com.xl.testui.function;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Message;
-import android.speech.tts.Voice;
 import android.util.Log;
 
 import com.qinggan.dcs.DcsDataWrapper;
@@ -15,8 +14,6 @@ import com.qinggan.speech.VuiActionHandler;
 import com.qinggan.speech.VuiServiceMgr;
 import com.qinggan.speech.VuiTtsObj;
 import com.qinggan.speech.internal.IVuiTtsProcessHandler;
-import com.qinggan.speech.internal.VuiTtsProcessHandler;
-import com.qinggan.util.TtsHelper;
 
 import java.util.ArrayList;
 
@@ -42,7 +39,7 @@ public class PhoneDemo {
     }
 
     public static PhoneDemo getInstance() {
-        return PhoneDemo.SingletonInstance.INSTANCE;
+        return SingletonInstance.INSTANCE;
     }
 
     public void init(Context context){

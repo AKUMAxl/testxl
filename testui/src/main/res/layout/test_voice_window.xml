@@ -1,47 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:gravity="center">
 
     <Button
-        android:id="@+id/btn_test_finish"
+        android:id="@+id/test_voice_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="finish"/>
+        android:text="back"/>
 
     <Button
-        android:id="@+id/btn_test_client"
+        android:id="@+id/test_voice_start_ivoka"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="模拟其他应用"/>
+        android:text="启动IVOKA"/>
 
     <Button
-        android:id="@+id/btn_test_record"
+        android:id="@+id/test_voice_bt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="录音测试"/>
+        android:text="蓝牙"/>
 
     <Button
-        android:id="@+id/btn_test_ui"
+        android:id="@+id/test_voice_hard_key"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="UI测试"/>
+        android:text="模拟语音KEY"/>
 
     <Button
-        android:id="@+id/btn_test_voice"
+        android:id="@+id/test_voice_ign_on"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="语音功能测试"/>
+        android:text="IGN ON"/>
 
     <Button
-        android:id="@+id/btn_test_vehicle"
+        android:id="@+id/test_voice_ign_off"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="车辆服务接口测试"/>
-
+        android:text="IGN OFF"/>
 
 </LinearLayout>

@@ -7,14 +7,14 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
-    signingConfigs {
-        e111 {
-            storeFile file('/home/xl/code/xl/testxl/e111_platform.keystore')
-            storePassword '000000'
-            keyAlias 'desay'
-            keyPassword '000000'
-        }
-    }
+//    signingConfigs {
+//        e111 {
+//            storeFile file('/home/xl/code/xl/testxl/e111_platform.keystore')
+//            storePassword '000000'
+//            keyAlias 'desay'
+//            keyPassword '000000'
+//        }
+//    }
 
     defaultConfig {
         applicationId "com.xl.testqgspeech"
@@ -28,9 +28,9 @@ android {
     }
 
     buildTypes {
-        debug {
-            signingConfig signingConfigs.e111
-        }
+//        debug {
+//            signingConfig signingConfigs.e111
+//        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'

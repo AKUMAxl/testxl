@@ -1,4 +1,4 @@
-package com.xl.testui;
+package com.xl.testui.testui;
 
 import android.content.Context;
 import android.os.Environment;
@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.xl.testui.R;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -72,6 +74,10 @@ public class SelectImageView extends ConstraintLayout {
         Log.d("xLLL","path:"+path);
         File file = new File(path+"/pateo/testui/preview/");
         boolean isDir = file.isDirectory();
+        if (!file.exists()){
+            boolean result = file.mkdirs();
+            Log.d("xLLL","mkdirs result:"+result);
+        }
         Log.d("xLLL","isDir:"+isDir+" -- path:"+file.getAbsolutePath()+" -- can read:"+file.canRead());
 
         File[] files = file.listFiles();

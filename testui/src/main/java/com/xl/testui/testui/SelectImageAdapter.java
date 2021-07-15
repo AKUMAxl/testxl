@@ -1,7 +1,6 @@
-package com.xl.testui;
+package com.xl.testui.testui;
 
 import android.content.Context;
-import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.bumptech.glide.Glide;
+import com.xl.testui.R;
 
-import java.io.File;
 import java.util.List;
 
 public class SelectImageAdapter extends RecyclerView.Adapter<SelectImageAdapter.ViewHolder>  {
