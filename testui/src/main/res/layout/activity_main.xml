@@ -43,5 +43,16 @@
         android:layout_height="wrap_content"
         android:text="车辆服务接口测试"/>
 
+    <Button
+        android:id="@+id/btn_test_iflytek"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="讯飞开放平台SDK测试"/>
+
+    <Button
+        android:id="@+id/btn_test_locate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="定位測試"/>
 
 </LinearLayout>

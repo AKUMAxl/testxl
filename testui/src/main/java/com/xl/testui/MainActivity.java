@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import com.xl.testui.databinding.ActivityMainBinding;
 import com.xl.testui.function.ClientTestManager;
+import com.xl.testui.function.LocateManager;
+import com.xl.testui.iflytek.IflytekTestManager;
 import com.xl.testui.record.RecordTestManager;
 import com.xl.testui.testui.UITestManager;
 import com.xl.testui.vehicle.VehicleTestManager;
@@ -68,7 +70,16 @@ public class MainActivity extends AppCompatActivity {
                 VehicleTestManager.getInstance().init(getApplicationContext(),mWindowManager);
             }
         });
-
+        mActivityMainBinding.btnTestIflytek.setOnClickListener(v -> {
+            if (checkPermission()){
+                IflytekTestManager.getInstance().init(getApplicationContext(),mWindowManager);
+            }
+        });
+        mActivityMainBinding.btnTestLocate.setOnClickListener(v -> {
+            if (checkPermission()){
+                LocateManager.getInstance().init(getApplicationContext(),mWindowManager);
+            }
+        });
         checkWPermission();
     }
 

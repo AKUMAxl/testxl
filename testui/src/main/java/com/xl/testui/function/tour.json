@@ -1,0 +1,45 @@
+{
+  "data": {
+    "bot": "bot-hotel",
+    "content": {
+      "info": {
+        "cate": "四星级/高档型",
+        "address": "浑南区天坛南街8-15号（近营盘街地铁站A出口）",
+        "distance": "1.6km",
+        "star": "高档",
+        "latitude": "41.730364",
+        "hotelCode": "JbMO6BjosFQIEsIAoIKY6Q",
+        "type": "商务酒店",
+        "hotelName": "沈阳奥体营盘街地铁站亚朵酒店",
+        "sid": "JbMO6BjosFQIEsIAoIKY6Q",
+        "ctripCommRate": "5.0",
+        "phone": "024-24507999",
+        "cateId": "400023",
+        "service": {
+          "101045": "行李寄存",
+          "101006": "停车场"
+        },
+        "minPrice": "638.0",
+        "hotelIcon": "http://p0.meituan.net/dnaimgdark/d22699d6c09331f6216592552ce9962e7477983.jpg",
+        "longitude": "123.458053"
+      }
+    },
+    "intentName": "HOTEL_DETAIL",
+    "nlg": {
+      "needDeclare": false,
+      "shouldEndSession": false,
+      "text": "沈阳奥体营盘街地铁站亚朵酒店，位于浑南区天坛南街8-15号（近营盘街地铁站A出口），评分是5.0分"
+    },
+    "nlu": {
+      "slots": "{\"distance\":{\"leftClosure\":\"MIN\",\"rightClosure\":\"2000\",\"type\":\"RANGE\"},\"endLoc\":{\"ori_loc\":\"商务酒店\",\"topic\":\"hotel\"},\"landmark\":{\"ori_loc\":\"CURRENT_ORI_LOC\"},\"startLoc\":{\"ori_loc\":\"CURRENT_ORI_LOC\"}}",
+      "payload": {
+        "address": "附近",
+        "distance": "2000",
+        "hotelName": "商务酒店"
+      }
+    },
+    "streamId": "-2129574453"
+  },
+  "errCode": 0,
+  "op": "nluResult"
+}

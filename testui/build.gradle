@@ -8,12 +8,20 @@ android {
     buildToolsVersion "30.0.3"
 
     signingConfigs {
-        e111 {
+        c100 {
 //            storeFile file('/home/xl/code/xl/testxl/e111_platform.keystore')
             storeFile file('../testui/HQ_C100.keystore')
 //            storeFile file('../e111_platform.keystore')
+            storePassword '043156'
+            keyAlias = 'androiddebugkey'
+            keyPassword '043156'
+        }
+        e111 {
+//            storeFile file('/home/xl/code/xl/testxl/e111_platform.keystore')
+            storeFile file('../testui/HQ_E111.keystore')
+//            storeFile file('../e111_platform.keystore')
             storePassword '000000'
-            keyAlias 'desay'
+            keyAlias = 'desay'
             keyPassword '000000'
         }
     }
@@ -25,19 +33,27 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        signingConfig signingConfigs.e111
+        signingConfig signingConfigs.c100
+
+//        ndk {
+//            // 设置支持的 SO 库构架. nuance 只支持32bit
+//            abiFilters 'armeabi-v7a'//,'armeabi', 'x86_64'// 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64', 'mips', 'mips64'
+//        }
     }
 
 
 
     buildTypes {
-        debug {
+        e111_debug {
             signingConfig signingConfigs.e111
+        }
+        c100_debug {
+            signingConfig signingConfigs.c100
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.e111
+            signingConfig signingConfigs.c100
         }
     }
     compileOptions {
@@ -47,6 +63,12 @@ android {
 
     viewBinding {
         enabled = true
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
     }
 }
 
@@ -62,7 +84,8 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
 
-    implementation files('libs/QGSpeech.jar')
+//    implementation files('libs/QGSpeech.jar')
     implementation fileTree(dir:'libs',includes: ['*.aar'])
+    implementation fileTree(dir:'libs',includes: ['*.jar'])
 
 }

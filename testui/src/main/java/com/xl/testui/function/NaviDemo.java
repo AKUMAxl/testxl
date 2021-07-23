@@ -8,14 +8,23 @@ import android.util.Log;
 
 import com.qinggan.dcs.DcsDataWrapper;
 import com.qinggan.dcs.bean.DcsBean;
+import com.qinggan.dcs.bean.NluBean;
+import com.qinggan.dcs.bean.hotel.HotelDetailNluBean;
+import com.qinggan.dcs.bean.hotel.HotelNumNluBean;
+import com.qinggan.dcs.bean.hotel.HotelQueryNluBean;
 import com.qinggan.dcs.bean.nav.NavConditionBean;
 import com.qinggan.dcs.bean.nav.NavNluBean;
 import com.qinggan.dcs.bean.nav.NavPOIBean;
+import com.qinggan.dcs.bean.restaurant.RestaurantQueryNluBean;
+import com.qinggan.dcs.bean.restaurant.detail.RestaurantDetailNluBean;
+import com.qinggan.dcs.bean.tourist.list.TourQueryNluBean;
 import com.qinggan.speech.VoiceActionID;
 import com.qinggan.speech.VoiceParam;
 import com.qinggan.speech.VoiceParamValue;
 import com.qinggan.speech.VuiActionHandler;
 import com.qinggan.speech.VuiServiceMgr;
+import com.qinggan.speech.VuiTtsObj;
+import com.qinggan.speech.internal.IVuiTtsProcessHandler;
 
 import java.util.ArrayList;
 
@@ -100,48 +109,64 @@ public class NaviDemo {
                 Log.d(TAG, "onProcessResult() called with: message = [" + message.what + "]");
                 Bundle data = message.getData();
                 DcsDataWrapper wrapper = data.getParcelable(VoiceParam.VOICE_PARAM_DCS_DISPLAY);
-                Log.d(TAG, "ACTION_DCS_ROUTELINE_NAV  DcsDataWrapper = [" + wrapper.toString() + "]");
-                NavNluBean navNluBean = (NavNluBean) wrapper.getNluBean();
-                Log.d(TAG, "ACTION_DCS_ROUTELINE_NAV  NavNluBean = [" + navNluBean.toString() + "]");
-                NavNluBean.PayloadBean payloadBean = navNluBean.getPayload();
-                Log.d(TAG, "ACTION_DCS_ROUTELINE_NAV  PayloadBean = [" + payloadBean.toString() + "]");
-                String destination = payloadBean.getDestination();
-                String queryAction = payloadBean.getAction();
-                String pass = payloadBean.getPass();
-                String location = payloadBean.getLocation();
-                String radius = payloadBean.getRadius();
-                String brand = payloadBean.getBrand();
-                Log.d(TAG, "ACTION_DCS_ROUTELINE_NAV  目的地 destination = [" + destination + "]");
-                Log.d(TAG, "ACTION_DCS_ROUTELINE_NAV  查询类型 queryAction = [" + queryAction + "]");
-                Log.d(TAG, "ACTION_DCS_ROUTELINE_NAV  途经点 pass = [" + pass + "]");
-                Log.d(TAG, "ACTION_DCS_ROUTELINE_NAV  位置 location = [" + location + "]");
-                Log.d(TAG, "ACTION_DCS_ROUTELINE_NAV  范围（米） radius = [" + radius + "]");
-                Log.d(TAG, "ACTION_DCS_ROUTELINE_NAV  品牌 brand = [" + brand + "]");
+                NluBean nluBean = wrapper.getNluBean();
+                String sortType = wrapper.getSortType();
+                if (!TextUtils.isEmpty(sortType)){
+                    Log.d(TAG, "onProcessResult() called with: sortType = [" + sortType + "]");
+                }
+                String sort = wrapper.getSort();
+                if (!TextUtils.isEmpty(sortType)){
+                    Log.d(TAG, "onProcessResult() called with: sort = [" + sort + "]");
+                }
                 boolean ret = false;
                 switch (message.what) {
                     // online
                     case VoiceActionID.ACTION_DCS_RESTAURANT_NAV://美食相关
+                        if (nluBean instanceof RestaurantQueryNluBean){
+                            RestaurantQueryNluBean restaurantQueryNluBean = (RestaurantQueryNluBean) nluBean;
+                            parseRestaurantQueryNluBean(restaurantQueryNluBean);
+                        }
+
                         break;
                     case VoiceActionID.ACTION_DCS_POI_NAV: //普通poi
+                        Log.d(TAG, "ACTION_DCS_ROUTELINE_NAV  DcsDataWrapper = [" + wrapper.toString() + "]");
+                        if (nluBean instanceof NavNluBean){
+                            NavNluBean navNluBean = (NavNluBean) nluBean;
+                            parseNaviBean(navNluBean);
+                        }
                         // 附近有没有中国银行
                         // 找找五道口附近的药店
                         // 两公里以内的加油站
                         break;
                     case VoiceActionID.ACTION_DCS_TOURISTATTRACTION_NAV://景点相关
+                    case VoiceActionID.ACTION_TOURIS_TATTRACTION_DETAIL://景点详情
+                        if (nluBean instanceof TourQueryNluBean){
+                            TourQueryNluBean tourQueryNluBean = (TourQueryNluBean) wrapper.getNluBean();
+                            parseTourQueryNluBean(tourQueryNluBean);
+                        }
                         break;
                     case VoiceActionID.ACTION_DCS_HOTEL_NAV://酒店相关
+                    case VoiceActionID.ACTION_DCS_COMMON_SHOW_HOTEL_DETAIL://酒店详情
+                        if (nluBean instanceof HotelQueryNluBean){
+                            HotelQueryNluBean hotelQueryNluBean = (HotelQueryNluBean) wrapper.getNluBean();
+                            parseHotel(hotelQueryNluBean);
+                        }
                         break;
                     case VoiceActionID.ACTION_DCS_PARKING_NAV://保留 停车场相关
-                        break;
-                    case VoiceActionID.ACTION_DCS_COMMON_SHOW_HOTEL_DETAIL://酒店详情
                         break;
                     case VoiceActionID.ACTION_VOICE_IVOKA_HOTEL_CANCEL://保留
                         break;
                     case VoiceActionID.ACTION_VOICE_RESTAURANT_DETAIL://美食详情
-                        break;
-                    case VoiceActionID.ACTION_TOURIS_TATTRACTION_DETAIL://景点相关
+                        if (nluBean instanceof RestaurantDetailNluBean){
+                            RestaurantDetailNluBean restaurantQueryNluBean = (RestaurantDetailNluBean) wrapper.getNluBean();
+                            parseRestaurantDetailNluBean(restaurantQueryNluBean);
+                        }
                         break;
                     case VoiceActionID.ACTION_VOICE_IVOKA_NUMBER_TYPE://第几个第几个
+                        if (nluBean instanceof HotelNumNluBean){
+                            HotelNumNluBean hotelNumNluBean = (HotelNumNluBean) wrapper.getNluBean();
+                            parseNumber(hotelNumNluBean);
+                        }
                         break;
                     case VoiceActionID.ACTION_VOICE_CHARGING_STATION_QUERY://充电桩相关
                         break;
@@ -157,6 +182,13 @@ public class NaviDemo {
                         // 我要去北京东路63号
                         // 导航回家/公司
                         // 导航去德恒事务所
+
+                        Log.d(TAG, "ACTION_DCS_ROUTELINE_NAV  DcsDataWrapper = [" + wrapper.toString() + "]");
+                        if (nluBean instanceof NavNluBean){
+                            NavNluBean navNluBean = (NavNluBean) nluBean;
+                            parseNaviBean(navNluBean);
+//                            return true;
+                        }
                         DcsBean dcsBean = wrapper.getDcsBean();
                         Log.d(TAG, "ACTION_DCS_ROUTELINE_NAV  DcsBean = [" + dcsBean.toString() + "]");
                         NavConditionBean navConditionBean = (NavConditionBean) dcsBean;
@@ -190,6 +222,11 @@ public class NaviDemo {
                     case VoiceActionID.ACTION_NAVI_QUERY:
                         // 到xx堵不堵
                         //终点
+                        Log.d(TAG, "ACTION_DCS_ROUTELINE_NAV  DcsDataWrapper = [" + wrapper.toString() + "]");
+                        if (nluBean instanceof NavNluBean){
+                            NavNluBean navNluBean = (NavNluBean) nluBean;
+                            parseNaviBean(navNluBean);
+                        }
                         String trafficDirection = data.getString(VoiceParam.VOICE_PARAM_NAVI_ADDRESS);
                         //查询类型（remain_time/remain_distance）
                         String queryType = data.getString(VoiceParam.VOICE_PARAM_NAVI_QUERY_TYPE);
@@ -206,6 +243,11 @@ public class NaviDemo {
                         break;
                     case VoiceActionID.ACTION_NAVI_CONTROL:
                         // 还有多远、多久到
+                        Log.d(TAG, "ACTION_DCS_ROUTELINE_NAV  DcsDataWrapper = [" + wrapper.toString() + "]");
+                        if (nluBean instanceof NavNluBean){
+                            NavNluBean navNluBean = (NavNluBean) nluBean;
+                            parseNaviBean(navNluBean);
+                        }
                         String naviCommand = data.getString(VoiceParam.VOICE_PARAM_NAVI_COMMAND);
                         switch (naviCommand) {
                             case VoiceParamValue.NAVI_COMMAND_REMAIN_DISTANCE:
@@ -233,6 +275,352 @@ public class NaviDemo {
                         break;
                 }
                 return ret;
+            }
+        });
+    }
+
+
+    private void parseNaviBean(NavNluBean navNluBean){
+        Log.d(TAG, "ACTION_DCS_ROUTELINE_NAV  NavNluBean = [" + navNluBean.toString() + "]");
+        NavNluBean.PayloadBean payloadBean = navNluBean.getPayload();
+        Log.d(TAG, "ACTION_DCS_ROUTELINE_NAV  PayloadBean = [" + payloadBean.toString() + "]");
+        String destination = payloadBean.getDestination();
+        String queryAction = payloadBean.getAction();
+        String pass = payloadBean.getPass();
+        String location = payloadBean.getLocation();
+        String radius = payloadBean.getRadius();
+        String brand = payloadBean.getBrand();
+        Log.d(TAG, "ACTION_DCS_ROUTELINE_NAV  目的地 destination = [" + destination + "]");
+        Log.d(TAG, "ACTION_DCS_ROUTELINE_NAV  查询类型 queryAction = [" + queryAction + "]");
+        Log.d(TAG, "ACTION_DCS_ROUTELINE_NAV  途经点 pass = [" + pass + "]");
+        Log.d(TAG, "ACTION_DCS_ROUTELINE_NAV  位置 location = [" + location + "]");
+        Log.d(TAG, "ACTION_DCS_ROUTELINE_NAV  范围（米） radius = [" + radius + "]");
+        Log.d(TAG, "ACTION_DCS_ROUTELINE_NAV  品牌 brand = [" + brand + "]");
+    }
+
+    private void parseRestaurantQueryNluBean(RestaurantQueryNluBean restaurantQueryNluBean){
+        Log.d(TAG, "parseRestaurantQueryNluBean() called with: restaurantQueryNluBean = [" + restaurantQueryNluBean + "]");
+        RestaurantQueryNluBean.PayloadBean payloadBean = restaurantQueryNluBean.getPayload();
+        Log.d(TAG, "parseRestaurantQueryNluBean() called with: payloadBean = [" + payloadBean.toString() + "]");
+        String distance = payloadBean.getDistance();
+        if (!TextUtils.isEmpty(distance)){
+            Log.d(TAG, "ACTION_DCS_RESTAURANT_NAV  距离 distance = [" + distance + "]");
+        }
+        String distanceDesc = payloadBean.getDistanceDesc();
+        if (!TextUtils.isEmpty(distanceDesc)){
+            Log.d(TAG, "ACTION_DCS_RESTAURANT_NAV  距离描述 distanceDesc = [" + distanceDesc + "]");
+        }
+        String price = payloadBean.getPrice();
+        if (!TextUtils.isEmpty(price)){
+            Log.d(TAG, "ACTION_DCS_RESTAURANT_NAV  价格 price = [" + price + "]");
+        }
+        String foodType = payloadBean.getFoodType();
+        if (!TextUtils.isEmpty(foodType)){
+            Log.d(TAG, "ACTION_DCS_RESTAURANT_NAV  美食类型 foodType = [" + foodType + "]");
+        }
+        String address = payloadBean.getAddress();
+        if (!TextUtils.isEmpty(address)){
+            Log.d(TAG, "ACTION_DCS_RESTAURANT_NAV  地址 address = [" + address + "]");
+        }
+        String appraisal = payloadBean.getAppraisal();
+        if (!TextUtils.isEmpty(appraisal)){
+            Log.d(TAG, "ACTION_DCS_RESTAURANT_NAV  评价 appraisal = [" + appraisal + "]");
+        }
+        String foodName = payloadBean.getFoodName();
+        if (!TextUtils.isEmpty(foodName)){
+            Log.d(TAG, "ACTION_DCS_RESTAURANT_NAV  菜名 foodName = [" + foodName + "]");
+        }
+        String costTime = payloadBean.getCostTime();
+        if (!TextUtils.isEmpty(costTime)){
+            Log.d(TAG, "ACTION_DCS_RESTAURANT_NAV  交通耗时 costTime = [" + costTime + "]");
+        }
+        String serialNumber = payloadBean.getSerialNumber();
+        if (!TextUtils.isEmpty(serialNumber)){
+            Log.d(TAG, "ACTION_DCS_RESTAURANT_NAV  序号 serialNumber = [" + serialNumber + "]");
+        }
+        String transport = payloadBean.getTransport();
+        if (!TextUtils.isEmpty(transport)){
+            Log.d(TAG, "ACTION_DCS_RESTAURANT_NAV  交通工具 transport = [" + transport + "]");
+        }
+        String costTimeDesc = payloadBean.getCostTimeDesc();
+        if (!TextUtils.isEmpty(costTimeDesc)){
+            Log.d(TAG, "ACTION_DCS_RESTAURANT_NAV  耗时描述 costTimeDesc = [" + costTimeDesc + "]");
+        }
+        String city = payloadBean.getCity();
+        if (!TextUtils.isEmpty(city)){
+            Log.d(TAG, "ACTION_DCS_RESTAURANT_NAV  城市 city = [" + city + "]");
+        }
+        String location = payloadBean.getLocation();
+        if (!TextUtils.isEmpty(location)){
+            Log.d(TAG, "ACTION_DCS_RESTAURANT_NAV  位置 location = [" + location + "]");
+        }
+        String maxPrice = payloadBean.getMaxPrice();
+        if (!TextUtils.isEmpty(maxPrice)){
+            Log.d(TAG, "ACTION_DCS_RESTAURANT_NAV  最大价格 maxPrice = [" + maxPrice + "]");
+        }
+        String minPrice = payloadBean.getMinPrice();
+        if (!TextUtils.isEmpty(minPrice)) {
+            Log.d(TAG, "ACTION_DCS_RESTAURANT_NAV  最小价格  minPrice = [" + minPrice + "]");
+        }
+    }
+
+    private void parseRestaurantDetailNluBean(RestaurantDetailNluBean restaurantDetailNluBean){
+        Log.d(TAG, "parseRestaurantDetailNluBean() called with: restaurantDetailNluBean = [" + restaurantDetailNluBean + "]");
+        RestaurantDetailNluBean.PayloadBean payloadBean = restaurantDetailNluBean.getPayload();
+        Log.d(TAG, "parseRestaurantQueryNluBean() called with: payloadBean = [" + payloadBean.toString() + "]");
+        String distance = payloadBean.getDistance();
+        if (!TextUtils.isEmpty(distance)){
+            Log.d(TAG, "ACTION_DCS_RESTAURANT_NAV  距离 distance = [" + distance + "]");
+        }
+        String distanceDesc = payloadBean.getDistanceDesc();
+        if (!TextUtils.isEmpty(distanceDesc)){
+            Log.d(TAG, "ACTION_DCS_RESTAURANT_NAV  距离描述 distanceDesc = [" + distanceDesc + "]");
+        }
+        String price = payloadBean.getPrice();
+        if (!TextUtils.isEmpty(price)){
+            Log.d(TAG, "ACTION_DCS_RESTAURANT_NAV  价格 price = [" + price + "]");
+        }
+        String foodType = payloadBean.getFoodType();
+        if (!TextUtils.isEmpty(foodType)){
+            Log.d(TAG, "ACTION_DCS_RESTAURANT_NAV  美食类型 foodType = [" + foodType + "]");
+        }
+        String address = payloadBean.getAddress();
+        if (!TextUtils.isEmpty(address)){
+            Log.d(TAG, "ACTION_DCS_RESTAURANT_NAV  地址 address = [" + address + "]");
+        }
+        String appraisal = payloadBean.getAppraisal();
+        if (!TextUtils.isEmpty(appraisal)){
+            Log.d(TAG, "ACTION_DCS_RESTAURANT_NAV  评价 appraisal = [" + appraisal + "]");
+        }
+        String foodName = payloadBean.getFoodName();
+        if (!TextUtils.isEmpty(foodName)){
+            Log.d(TAG, "ACTION_DCS_RESTAURANT_NAV  菜名 foodName = [" + foodName + "]");
+        }
+        String costTime = payloadBean.getCostTime();
+        if (!TextUtils.isEmpty(costTime)){
+            Log.d(TAG, "ACTION_DCS_RESTAURANT_NAV  交通耗时 costTime = [" + costTime + "]");
+        }
+        String serialNumber = payloadBean.getSerialNumber();
+        if (!TextUtils.isEmpty(serialNumber)){
+            Log.d(TAG, "ACTION_DCS_RESTAURANT_NAV  序号 serialNumber = [" + serialNumber + "]");
+        }
+        String transport = payloadBean.getTransport();
+        if (!TextUtils.isEmpty(transport)){
+            Log.d(TAG, "ACTION_DCS_RESTAURANT_NAV  交通工具 transport = [" + transport + "]");
+        }
+        String costTimeDesc = payloadBean.getCostTimeDesc();
+        if (!TextUtils.isEmpty(costTimeDesc)){
+            Log.d(TAG, "ACTION_DCS_RESTAURANT_NAV  耗时描述 costTimeDesc = [" + costTimeDesc + "]");
+        }
+        String city = payloadBean.getCity();
+        if (!TextUtils.isEmpty(city)){
+            Log.d(TAG, "ACTION_DCS_RESTAURANT_NAV  城市 city = [" + city + "]");
+        }
+        String location = payloadBean.getLocation();
+        if (!TextUtils.isEmpty(location)){
+            Log.d(TAG, "ACTION_DCS_RESTAURANT_NAV  位置 location = [" + location + "]");
+        }
+        String maxPrice = payloadBean.getMaxPrice();
+        if (!TextUtils.isEmpty(maxPrice)){
+            Log.d(TAG, "ACTION_DCS_RESTAURANT_NAV  最大价格 maxPrice = [" + maxPrice + "]");
+        }
+        String minPrice = payloadBean.getMinPrice();
+        if (!TextUtils.isEmpty(minPrice)) {
+            Log.d(TAG, "ACTION_DCS_RESTAURANT_NAV  最小价格  minPrice = [" + minPrice + "]");
+        }
+    }
+
+    private void parseNumber(HotelNumNluBean hotelNumNluBean){
+        HotelNumNluBean.PayloadBean payloadBean = hotelNumNluBean.getPayload();
+        String type = payloadBean.getType();
+        if (!TextUtils.isEmpty(type)) {
+            Log.d(TAG, "ACTION_VOICE_IVOKA_NUMBER_TYPE  类型  type = [" + type + "]");
+        }
+        String serialNumber = payloadBean.getSerialNumber();
+        if (!TextUtils.isEmpty(serialNumber)) {
+            Log.d(TAG, "ACTION_VOICE_IVOKA_NUMBER_TYPE  第n个  type = [" + serialNumber + "]");
+        }
+    }
+
+    private void parseTourQueryNluBean(TourQueryNluBean tourQueryNluBean){
+        TourQueryNluBean.PayloadBean payloadBean = tourQueryNluBean.getPayload();
+        if (payloadBean==null){
+            Log.e(TAG, "parseTourQueryNluBean: payload is null" );
+            return;
+        }
+        Log.d(TAG, "parseTourQueryNluBean() called with: payloadBean = [" + payloadBean.toString() + "]");
+        String searchName = payloadBean.getSearchName();
+        if (!TextUtils.isEmpty(searchName)){
+            Log.d(TAG, "ACTION_DCS_TOURISTATTRACTION_NAV  检索关键字 searchName = [" + searchName + "]");
+        }
+        String city = payloadBean.getCity();
+        if (!TextUtils.isEmpty(city)){
+            Log.d(TAG, "ACTION_DCS_TOURISTATTRACTION_NAV  城市 city = [" + city + "]");
+        }
+        String distance = payloadBean.getDistance();
+        if (!TextUtils.isEmpty(distance)){
+            Log.d(TAG, "ACTION_DCS_TOURISTATTRACTION_NAV  距离 distance = [" + distance + "]");
+        }
+        String location = payloadBean.getLocation();
+        if (!TextUtils.isEmpty(location)){
+            Log.d(TAG, "ACTION_DCS_TOURISTATTRACTION_NAV  位置 location = [" + location + "]");
+        }
+        String keyWord = payloadBean.getKeyWord();
+        if (!TextUtils.isEmpty(keyWord)){
+            Log.d(TAG, "ACTION_DCS_TOURISTATTRACTION_NAV  关键字 keyWord = [" + keyWord + "]");
+        }
+        String minPrice = payloadBean.getMinPrice();
+        if (!TextUtils.isEmpty(minPrice)){
+            Log.d(TAG, "ACTION_DCS_TOURISTATTRACTION_NAV  最低价 minPrice = [" + minPrice + "]");
+        }
+        String maxPrice = payloadBean.getMaxPrice();
+        if (!TextUtils.isEmpty(maxPrice)){
+            Log.d(TAG, "ACTION_DCS_TOURISTATTRACTION_NAV  最高价 maxPrice = [" + maxPrice + "]");
+        }
+        String serialNumber = payloadBean.getSerialNumber();
+        if (!TextUtils.isEmpty(serialNumber)){
+            Log.d(TAG, "ACTION_DCS_TOURISTATTRACTION_NAV  序号 serialNumber = [" + serialNumber + "]");
+        }
+        String poiAddress = payloadBean.getPoiAddress();
+        if (!TextUtils.isEmpty(poiAddress)){
+            Log.d(TAG, "ACTION_DCS_TOURISTATTRACTION_NAV  检索POI poiAddress = [" + poiAddress + "]");
+        }
+        String distanceDescr = payloadBean.getDistanceDescr();
+        if (!TextUtils.isEmpty(distanceDescr)){
+            Log.d(TAG, "ACTION_DCS_TOURISTATTRACTION_NAV  根据距离选择 distanceDescr = [" + distanceDescr + "]");
+        }
+        String priceDescr = payloadBean.getPriceDescr();
+        if (!TextUtils.isEmpty(priceDescr)){
+            Log.d(TAG, "ACTION_DCS_TOURISTATTRACTION_NAV  根据价格选择 priceDescr = [" + priceDescr + "]");
+        }
+        speakTTS("OK");
+    }
+
+    private void parseHotel(HotelQueryNluBean hotelQueryNluBean){
+
+        HotelQueryNluBean.PayloadBean payloadBean = hotelQueryNluBean.getPayload();
+        if (payloadBean==null){
+            Log.e(TAG, "parseHotel: payload is null" );
+            return;
+        }
+        Log.d(TAG, "parseHotel() called with: payloadBean = [" + payloadBean.toString() + "]");
+        /**
+         * city : 南京,* distance : 5000
+         * "ratingMin": "4.5","location": "夫子庙","searchScope": "2","brand":"诺富特","seg":"民宿","minPrice":"300", "maxPrice":"400",
+         * "star":"5","startDate":"20190706","facility":"游泳池","sorting":"price,desc","theme":"商务出行"
+         */
+        String city = payloadBean.getCity();
+        if (!TextUtils.isEmpty(city)){
+            Log.d(TAG, "ACTION_DCS_HOTEL_NAV  城市 city = [" + city + "]");
+        }
+        String distance = payloadBean.getDistance();
+        if (!TextUtils.isEmpty(distance)){
+            Log.d(TAG, "ACTION_DCS_HOTEL_NAV  距离 distance = [" + distance + "]");
+        }
+        String ratingMin = payloadBean.getRatingMin();
+        if (!TextUtils.isEmpty(ratingMin)){
+            Log.d(TAG, "ACTION_DCS_HOTEL_NAV  评分 ratingMin = [" + ratingMin + "]");
+        }
+        String location = payloadBean.getLocation();
+        if (!TextUtils.isEmpty(location)){
+            Log.d(TAG, "ACTION_DCS_HOTEL_NAV  位置 location = [" + location + "]");
+        }
+        String searchScope = payloadBean.getSearchScope();
+        if (!TextUtils.isEmpty(searchScope)){
+            Log.d(TAG, "ACTION_DCS_HOTEL_NAV  检索范围 searchScope = [" + searchScope + "]");
+        }
+        String brand = payloadBean.getBrand();
+        if (!TextUtils.isEmpty(brand)){
+            Log.d(TAG, "ACTION_DCS_HOTEL_NAV  品牌 brand = [" + brand + "]");
+        }
+        String seg = payloadBean.getSeg();
+        if (!TextUtils.isEmpty(seg)){
+            Log.d(TAG, "ACTION_DCS_HOTEL_NAV  类型 seg = [" + seg + "]");
+        }
+        String minPrice = payloadBean.getMinPrice();
+        if (!TextUtils.isEmpty(minPrice)){
+            Log.d(TAG, "ACTION_DCS_HOTEL_NAV  最低价 minPrice = [" + minPrice + "]");
+        }
+        String maxPrice = payloadBean.getMaxPrice();
+        if (!TextUtils.isEmpty(maxPrice)){
+            Log.d(TAG, "ACTION_DCS_HOTEL_NAV  最高价 maxPrice = [" + maxPrice + "]");
+        }
+        String star = payloadBean.getStar();
+        if (!TextUtils.isEmpty(star)){
+            Log.d(TAG, "ACTION_DCS_HOTEL_NAV  满星 star = [" + star + "]");
+        }
+        String startDate = payloadBean.getStartDate();
+        if (!TextUtils.isEmpty(startDate)){
+            Log.d(TAG, "ACTION_DCS_HOTEL_NAV  入住日期 startDate = [" + startDate + "]");
+        }
+        String facility = payloadBean.getFacility();
+        if (!TextUtils.isEmpty(facility)){
+            Log.d(TAG, "ACTION_DCS_HOTEL_NAV  设施 facility = [" + facility + "]");
+        }
+        String sorting = payloadBean.getSorting();
+        if (!TextUtils.isEmpty(sorting)){
+            Log.d(TAG, "ACTION_DCS_HOTEL_NAV  排序 = [" + sorting + "]");
+        }
+        String theme = payloadBean.getTheme();
+        if (!TextUtils.isEmpty(theme)){
+            Log.d(TAG, "ACTION_DCS_HOTEL_NAV  主题 theme = [" + theme + "]");
+        }
+        String defaultSearchName = payloadBean.getDefaultSearchName();
+        if (!TextUtils.isEmpty(defaultSearchName)){
+            Log.d(TAG, "ACTION_DCS_HOTEL_NAV  默认检索名 defaultSearchName = [" + defaultSearchName + "]");
+        }
+        String address = payloadBean.getAddress();
+        if (!TextUtils.isEmpty(address)){
+            Log.d(TAG, "ACTION_DCS_HOTEL_NAV  地址 address = [" + address + "]");
+        }
+        String HotelName = payloadBean.getHotelName();
+        if (!TextUtils.isEmpty(HotelName)){
+            Log.d(TAG, "ACTION_DCS_HOTEL_NAV  酒店名称 HotelName = [" + HotelName + "]");
+        }
+        String getHotelLvl = payloadBean.getHotelLvl();
+        if (!TextUtils.isEmpty(getHotelLvl)){
+            Log.d(TAG, "ACTION_DCS_HOTEL_NAV  酒店星级 getHotelLvl = [" + getHotelLvl + "]");
+        }
+        String price = payloadBean.getPrice();
+        if (!TextUtils.isEmpty(price)){
+            Log.d(TAG, "ACTION_DCS_HOTEL_NAV  价格 price = [" + price + "]");
+        }
+        String appraisal = payloadBean.getAppraisal();
+        if (!TextUtils.isEmpty(appraisal)){
+            Log.d(TAG, "ACTION_DCS_HOTEL_NAV  评分 appraisal = [" + appraisal + "]");
+        }
+        speakTTS("OK");
+    }
+
+
+    /**
+     * TTS 需要调用 {@link com.qinggan.speech.VuiServiceMgr#getInstance(Context, VuiServiceMgr.VuiConnectionCallback)}
+     *     在回调 {@link VuiServiceMgr.VuiConnectionCallback#onServiceConnected()} 后调用此方法
+     * @param content
+     */
+    public void speakTTS(String content) {
+        VuiTtsObj ttsObj = new VuiTtsObj("com.xl.testui", VuiTtsObj.TtsContentType.TEXT);// "com.packageName" 需要替换为应用自己的包名
+        ttsObj.setSpeakContent(content);
+        ttsObj.setDisplayText(content);
+        mVuiServiceMgr.sendTtsNotify(ttsObj.toIntent(), new IVuiTtsProcessHandler() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onStop() {
+
+            }
+
+            @Override
+            public void onDone() {
+
+            }
+
+            @Override
+            public void onError() {
+
             }
         });
     }

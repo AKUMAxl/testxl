@@ -29,4 +29,10 @@
         android:layout_height="wrap_content"
         android:text="stop"/>
 
+    <Button
+        android:id="@+id/test_play_pcm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PLAY"/>
+
 </LinearLayout>

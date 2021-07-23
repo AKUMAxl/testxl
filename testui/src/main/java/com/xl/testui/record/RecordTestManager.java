@@ -52,6 +52,7 @@ public class RecordTestManager {
         params.y = 260;
         mRootView = LayoutInflater.from(mContext).inflate(R.layout.test_record_window,null);
         AtomicReference<TestRecord> record = new AtomicReference<>();
+        record.set(new TestRecord(mContext));
         mRootView.findViewById(R.id.test_record_back).setOnClickListener(v -> {
             mWindowManager.removeView(mRootView);
             Intent intent = new Intent();
@@ -60,7 +61,7 @@ public class RecordTestManager {
             mContext.startActivity(intent);
         });
         mRootView.findViewById(R.id.test_record_init).setOnClickListener(v -> {
-            record.set(new TestRecord(mContext));
+            record.get().stop();
         });
         mRootView.findViewById(R.id.test_record_start).setOnClickListener(v -> {
             record.get().startRecord();
@@ -68,6 +69,9 @@ public class RecordTestManager {
         });
         mRootView.findViewById(R.id.test_record_stop).setOnClickListener(v -> {
             record.get().stopRecord();
+        });
+        mRootView.findViewById(R.id.test_play_pcm).setOnClickListener(v -> {
+            record.get().play();
         });
         mWindowManager.addView(mRootView,params);
     }
