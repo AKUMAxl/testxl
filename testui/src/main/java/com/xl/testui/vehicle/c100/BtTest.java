@@ -1,6 +1,5 @@
 package com.xl.testui.vehicle.c100;
 
-import android.car.Car;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +20,8 @@ public class BtTest {
     private Context mContext;
 
     private boolean btServiceConnected;
+
+    private BluetoothManager mBluetoothManager;
 
     private BtTest() {
     }
@@ -49,7 +50,8 @@ public class BtTest {
             @Override
             public void onServiceConnected() {
                 btServiceConnected = true;
-                BluetoothManager.getInstance(mContext).setBluetoothListener(new BluetoothListener() {
+                mBluetoothManager = BluetoothManager.getInstance(mContext);
+                mBluetoothManager.setBluetoothListener(new BluetoothListener() {
                     @Override
                     public void onBluetoothStateChanged() {
                         Log.d(TAG, "onBluetoothStateChanged() called");
@@ -101,8 +103,18 @@ public class BtTest {
     }
 
     public void getBtInfo(){
-        String address = BluetoothManager.getInstance(mContext).getBtAddress();
-        Log.d("xLLL","address:"+address);
+        if (!btServiceConnected) {
+            Log.e(TAG, "getBtInfo: btServiceConnected is false");
+            return;
+        }
+        if (mBluetoothManager==null){
+            Log.e(TAG, "getBtInfo: mBluetoothManager==null");
+            return;
+        }
+        String address = mBluetoothManager.getBtAddress();
+        int hfpStatus = mBluetoothManager.getHfpConnectedStatus();
+        Log.d(TAG,"address:"+address);
+        Log.d(TAG,"hfpStatus:"+hfpStatus);
     }
 
 

@@ -11,10 +11,14 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 
 import com.xl.testui.R;
+import com.xl.testui.function.NaviDemo;
+import com.xl.testui.function.PhoneDemo;
+import com.xl.testui.function.TestUIControl;
+import com.xl.testui.vehicle.c100.BtTest;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
-public class VehicleTestManager {
+public class VehicleTestManager implements View.OnClickListener {
 
     private Context mContext;
     private WindowManager mWindowManager;
@@ -56,6 +60,33 @@ public class VehicleTestManager {
             intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
             mContext.startActivity(intent);
         });
+        mRootView.findViewById(R.id.test_vehicle_back).setOnClickListener(this::onClick);
+        mRootView.findViewById(R.id.test_vehicle_bt).setOnClickListener(this::onClick);
+        mRootView.findViewById(R.id.test_vehicle_bt_info).setOnClickListener(this::onClick);
         mWindowManager.addView(mRootView,params);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.test_vehicle_back:
+                mWindowManager.removeView(mRootView);
+                Intent intent = new Intent();
+                intent.setComponent(new ComponentName("com.xl.testui","com.xl.testui.MainActivity"));
+                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
+                break;
+            case R.id.test_vehicle_bt:
+                BtTest.getInstance().init(mContext);
+                BtTest.getInstance().initBt();
+                break;
+            case R.id.test_vehicle_bt_info:
+                BtTest.getInstance().getBtInfo();
+//        testUIControl.registerUIControl();
+//                testUIControl.registerListUIControl();
+                break;
+            default:
+                break;
+        }
     }
 }

@@ -12,16 +12,16 @@
         android:text="BACK"/>
 
     <Button
-        android:id="@+id/test_vehicle_navi"
+        android:id="@+id/test_vehicle_bt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="导航"/>
+        android:text="BT"/>
 
     <Button
-        android:id="@+id/test_vehicle_phone"
+        android:id="@+id/test_vehicle_bt_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="电话"/>
+        android:text="BT_INFO"/>
 
     <Button
         android:id="@+id/test_vehicle_ui_control"
