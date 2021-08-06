@@ -24,6 +24,12 @@
         android:text="电话"/>
 
     <Button
+        android:id="@+id/test_client_video"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="视频"/>
+
+    <Button
         android:id="@+id/test_client_ui_control"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

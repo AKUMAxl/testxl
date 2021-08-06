@@ -59,6 +59,7 @@ public class ClientTestManager implements View.OnClickListener{
         });
         mRootView.findViewById(R.id.test_client_navi).setOnClickListener(this::onClick);
         mRootView.findViewById(R.id.test_client_phone).setOnClickListener(this::onClick);
+        mRootView.findViewById(R.id.test_client_video).setOnClickListener(this::onClick);
         mRootView.findViewById(R.id.test_client_ui_control).setOnClickListener(this::onClick);
         mWindowManager.addView(mRootView,params);
 
@@ -72,6 +73,9 @@ public class ClientTestManager implements View.OnClickListener{
                 break;
             case R.id.test_client_phone:
                 PhoneDemo.getInstance().init(mContext);
+                break;
+            case R.id.test_client_video:
+                VideoDemo.getInstance().init(mContext);
                 break;
             case R.id.test_client_ui_control:
                 TestUIControl testUIControl = new TestUIControl();

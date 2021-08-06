@@ -82,8 +82,7 @@ public class VehicleTestManager implements View.OnClickListener {
                 break;
             case R.id.test_vehicle_bt_info:
                 BtTest.getInstance().getBtInfo();
-//        testUIControl.registerUIControl();
-//                testUIControl.registerListUIControl();
+
                 break;
             default:
                 break;

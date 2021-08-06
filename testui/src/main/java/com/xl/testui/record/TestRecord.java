@@ -174,8 +174,6 @@ public class TestRecord {
             mFis = new FileInputStream(file);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
         return true;
     }

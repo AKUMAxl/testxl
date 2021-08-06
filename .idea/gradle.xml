@@ -4,11 +4,9 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
-        <option name="testRunner" value="PLATFORM" />
-        <option name="disableWrapperSourceDistributionNotification" value="true" />
+        <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleJvm" value="1.8" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -22,6 +20,7 @@
             <option value="$PROJECT_DIR$/testlocaltion" />
             <option value="$PROJECT_DIR$/testqgspeech" />
             <option value="$PROJECT_DIR$/testui" />
+            <option value="$PROJECT_DIR$/voice_demo" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

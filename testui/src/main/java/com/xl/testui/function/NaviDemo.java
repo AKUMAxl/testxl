@@ -18,6 +18,7 @@ import com.qinggan.dcs.bean.nav.NavPOIBean;
 import com.qinggan.dcs.bean.restaurant.RestaurantQueryNluBean;
 import com.qinggan.dcs.bean.restaurant.detail.RestaurantDetailNluBean;
 import com.qinggan.dcs.bean.tourist.list.TourQueryNluBean;
+import com.qinggan.speech.VoiceAction;
 import com.qinggan.speech.VoiceActionID;
 import com.qinggan.speech.VoiceParam;
 import com.qinggan.speech.VoiceParamValue;
@@ -50,6 +51,8 @@ public class NaviDemo {
             VoiceActionID.ACTION_VOICE_IVOKA_NUMBER_TYPE,//第几个第几个
             VoiceActionID.ACTION_VOICE_CHARGING_STATION_QUERY,//充电桩相关
             VoiceActionID.ACTION_VOICE_CHARGING_STATION_DETAIL,//充电桩相关
+            VoiceActionID.ACTION_NAVI_CANCEL_MIDWAY_POINT,// 删除途经点
+
 
             // online & offline
             VoiceActionID.ACTION_DCS_ROUTELINE_NAV,//导航到where
@@ -99,6 +102,7 @@ public class NaviDemo {
                 Log.d(TAG, "onServiceDisconnect() called");
             }
         });
+        speakTTS("ActionProvider在单个组件中定义丰富的菜单交互协调动画，输入和绘图的时间。上下文包装器，允许您修改或替换包装上下文的主题。");
     }
 
 
@@ -109,16 +113,19 @@ public class NaviDemo {
                 Log.d(TAG, "onProcessResult() called with: message = [" + message.what + "]");
                 Bundle data = message.getData();
                 DcsDataWrapper wrapper = data.getParcelable(VoiceParam.VOICE_PARAM_DCS_DISPLAY);
-                NluBean nluBean = wrapper.getNluBean();
-                String sortType = wrapper.getSortType();
-                if (!TextUtils.isEmpty(sortType)){
-                    Log.d(TAG, "onProcessResult() called with: sortType = [" + sortType + "]");
+                NluBean nluBean = null;
+                if (wrapper!=null){
+                    nluBean = wrapper.getNluBean();
+                    String sortType = wrapper.getSortType();
+                    if (!TextUtils.isEmpty(sortType)){
+                        Log.d(TAG, "onProcessResult() called with: sortType = [" + sortType + "]");
+                    }
+                    String sort = wrapper.getSort();
+                    if (!TextUtils.isEmpty(sortType)){
+                        Log.d(TAG, "onProcessResult() called with: sort = [" + sort + "]");
+                    }
                 }
-                String sort = wrapper.getSort();
-                if (!TextUtils.isEmpty(sortType)){
-                    Log.d(TAG, "onProcessResult() called with: sort = [" + sort + "]");
-                }
-                boolean ret = false;
+                boolean ret = true;
                 switch (message.what) {
                     // online
                     case VoiceActionID.ACTION_DCS_RESTAURANT_NAV://美食相关
@@ -222,7 +229,7 @@ public class NaviDemo {
                     case VoiceActionID.ACTION_NAVI_QUERY:
                         // 到xx堵不堵
                         //终点
-                        Log.d(TAG, "ACTION_DCS_ROUTELINE_NAV  DcsDataWrapper = [" + wrapper.toString() + "]");
+//                        Log.d(TAG, "ACTION_DCS_ROUTELINE_NAV  DcsDataWrapper = [" + wrapper.toString() + "]");
                         if (nluBean instanceof NavNluBean){
                             NavNluBean navNluBean = (NavNluBean) nluBean;
                             parseNaviBean(navNluBean);
@@ -239,16 +246,20 @@ public class NaviDemo {
 //                            showRouteTrafficVr(trafficDirection, 2);
                         } else if (queryType.equals("remain_traffic")) {
 //                            showPoiTrafficVr(trafficDirection);
+                        }else if (queryType.equals("locate_road")){
+                            // 我现在在哪条路上
                         }
                         break;
                     case VoiceActionID.ACTION_NAVI_CONTROL:
                         // 还有多远、多久到
-                        Log.d(TAG, "ACTION_DCS_ROUTELINE_NAV  DcsDataWrapper = [" + wrapper.toString() + "]");
-                        if (nluBean instanceof NavNluBean){
-                            NavNluBean navNluBean = (NavNluBean) nluBean;
-                            parseNaviBean(navNluBean);
-                        }
+//                        Log.d(TAG, "ACTION_DCS_ROUTELINE_NAV  DcsDataWrapper = [" + wrapper.toString() + "]");
+//                        if (nluBean instanceof NavNluBean){
+//                            NavNluBean navNluBean = (NavNluBean) nluBean;
+//                            parseNaviBean(navNluBean);
+//                        }
                         String naviCommand = data.getString(VoiceParam.VOICE_PARAM_NAVI_COMMAND);
+                        Log.d(TAG, "ACTION_DCS_ROUTELINE_NAV  naviCommand = [" + naviCommand + "]");
+
                         switch (naviCommand) {
                             case VoiceParamValue.NAVI_COMMAND_REMAIN_DISTANCE:
                                 // 多远
@@ -270,6 +281,11 @@ public class NaviDemo {
                     case VoiceActionID.ACTION_DCS_TRAFFIC_NAV:
                         break;
                     case VoiceActionID.ACTION_NAVI_LOCATE:
+                        break;
+                    case VoiceActionID.ACTION_NAVI_CANCEL_MIDWAY_POINT:
+                        String poiName = data.getString(VoiceParam.VOICE_PARAM_NAVI_POI);
+                        String number = data.getString(VoiceParam.VOICE_PARAM_NAVI_MIDWAY_NUMBER);
+                        Log.d(TAG, "ACTION_NAVI_CANCEL_MIDWAY_POINT called poiName:"+poiName+" -- number:"+number);
                         break;
                     default:
                         break;

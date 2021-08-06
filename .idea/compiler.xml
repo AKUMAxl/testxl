@@ -30,6 +30,7 @@
       <module name="testxl.testlocaltion" target="11" />
       <module name="testxl.testqgspeech" target="11" />
       <module name="testxl.testui" target="11" />
+      <module name="testxl.voice_demo" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

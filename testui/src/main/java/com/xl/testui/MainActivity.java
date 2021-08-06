@@ -2,18 +2,32 @@ package com.xl.testui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatDrawableManager;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.BlurMaskFilter;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.renderscript.RenderScript;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.Toast;
 
 import com.xl.testui.databinding.ActivityMainBinding;
@@ -22,6 +36,7 @@ import com.xl.testui.function.LocateManager;
 import com.xl.testui.iflytek.IflytekTestManager;
 import com.xl.testui.record.RecordTestManager;
 import com.xl.testui.testui.UITestManager;
+import com.xl.testui.util.ImageUtil;
 import com.xl.testui.vehicle.VehicleTestManager;
 import com.xl.testui.voice.VoiceTestManager;
 
@@ -81,6 +96,38 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         checkWPermission();
+//        Animation animation = new TranslateAnimation(0,0,50,100);
+//        animation.setDuration(5000);
+//        animation.setInterpolator(new DecelerateInterpolator());
+//        mActivityMainBinding.tv2.setAnimation(animation);
+//        mActivityMainBinding.tv2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.d("xLLL","start anim");
+//                mActivityMainBinding.tv2.setAnimation(animation);
+//            }
+//        });
+//        blur();
+    }
+
+    private void blur(){
+//        RenderScript renderScript = new RenderScript()
+        @SuppressLint("RestrictedApi")
+        Drawable drawable = AppCompatDrawableManager.get().getDrawable(getApplicationContext(),R.drawable.bg_blur);
+//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.test_png_1);
+        Bitmap bitmap = Bitmap.createBitmap(100,100, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas();
+        Paint paint = new Paint();
+        paint.setMaskFilter(new BlurMaskFilter(50, BlurMaskFilter.Blur.NORMAL));
+        canvas.drawBitmap(bitmap,100,100,paint);
+        drawable.draw(canvas);
+//        Drawable drawable1 = new BitmapDrawable(getResources(),bitmap);
+//        mActivityMainBinding.tv2.setBackground(drawable);
+        Bitmap b = BitmapFactory.decodeResource(getResources(),R.drawable.bg_blur);
+        b = ImageUtil.gaussianBlur(getApplicationContext(),b);
+        Drawable drawable1 = new BitmapDrawable(b);
+//        mActivityMainBinding.tv2.setBackground(drawable1);
+//        mActivityMainBinding.tv2.setAlpha(1f);
     }
 
     @Override
