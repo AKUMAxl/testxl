@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <Button
+        android:id="@+id/test_socket_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BACK"/>
+
+    <Button
+        android:id="@+id/test_socket_start_service"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="start_service"/>
+
+    <Button
+        android:id="@+id/test_socket_service_send_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="service_send_msg"/>
+
+    <Button
+        android:id="@+id/test_socket_start_client"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="start_client"/>
+
+    <Button
+        android:id="@+id/test_socket_client_send_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="client_send_msg"/>
+
+</LinearLayout>

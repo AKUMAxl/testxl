@@ -3,9 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/code/testxl/testui/src/main/res/layout/activity_main.xml" value="0.171225937183384" />
-        <entry key="..\:/code/testxl/testui/src/main/res/layout/test_client_window.xml" value="0.10364583333333334" />
-        <entry key="..\:/code/testxl/testui/src/main/res/layout/test_ui_window.xml" value="0.171225937183384" />
+        <entry key="testui/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="testui/src/main/res/layout/test_locate_window.xml" value="0.1" />
+        <entry key="testui/src/main/res/layout/test_socket_window.xml" value="0.1" />
       </map>
     </option>
   </component>

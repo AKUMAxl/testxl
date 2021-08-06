@@ -35,6 +35,7 @@ import com.xl.testui.function.ClientTestManager;
 import com.xl.testui.function.LocateManager;
 import com.xl.testui.iflytek.IflytekTestManager;
 import com.xl.testui.record.RecordTestManager;
+import com.xl.testui.socket.SocketTestManager;
 import com.xl.testui.testui.UITestManager;
 import com.xl.testui.util.ImageUtil;
 import com.xl.testui.vehicle.VehicleTestManager;
@@ -59,75 +60,48 @@ public class MainActivity extends AppCompatActivity {
             finish();
         });
         mActivityMainBinding.btnTestClient.setOnClickListener(v -> {
-            if (checkPermission()){
-                ClientTestManager.getInstance().init(getApplicationContext(),mWindowManager);
+            if (checkPermission()) {
+                ClientTestManager.getInstance().init(getApplicationContext(), mWindowManager);
             }
         });
 
         mActivityMainBinding.btnTestRecord.setOnClickListener(v -> {
-            if (checkPermission()){
-                RecordTestManager.getInstance().init(getApplicationContext(),mWindowManager);
+            if (checkPermission()) {
+                RecordTestManager.getInstance().init(getApplicationContext(), mWindowManager);
             }
         });
 
         mActivityMainBinding.btnTestUi.setOnClickListener(v -> {
-            if (checkPermission()){
-                UITestManager.getInstance().init(getApplicationContext(),mWindowManager);
+            if (checkPermission()) {
+                UITestManager.getInstance().init(getApplicationContext(), mWindowManager);
             }
         });
         mActivityMainBinding.btnTestVoice.setOnClickListener(v -> {
-            if (checkPermission()){
-                VoiceTestManager.getInstance().init(getApplicationContext(),mWindowManager);
+            if (checkPermission()) {
+                VoiceTestManager.getInstance().init(getApplicationContext(), mWindowManager);
             }
         });
         mActivityMainBinding.btnTestVehicle.setOnClickListener(v -> {
-            if (checkPermission()){
-                VehicleTestManager.getInstance().init(getApplicationContext(),mWindowManager);
+            if (checkPermission()) {
+                VehicleTestManager.getInstance().init(getApplicationContext(), mWindowManager);
             }
         });
         mActivityMainBinding.btnTestIflytek.setOnClickListener(v -> {
-            if (checkPermission()){
-                IflytekTestManager.getInstance().init(getApplicationContext(),mWindowManager);
+            if (checkPermission()) {
+                IflytekTestManager.getInstance().init(getApplicationContext(), mWindowManager);
             }
         });
         mActivityMainBinding.btnTestLocate.setOnClickListener(v -> {
+            if (checkPermission()) {
+                LocateManager.getInstance().init(getApplicationContext(), mWindowManager);
+            }
+        });
+        mActivityMainBinding.btnTestSocket.setOnClickListener(v -> {
             if (checkPermission()){
-                LocateManager.getInstance().init(getApplicationContext(),mWindowManager);
+                SocketTestManager.getInstance().init(getApplicationContext(), mWindowManager);
             }
         });
         checkWPermission();
-//        Animation animation = new TranslateAnimation(0,0,50,100);
-//        animation.setDuration(5000);
-//        animation.setInterpolator(new DecelerateInterpolator());
-//        mActivityMainBinding.tv2.setAnimation(animation);
-//        mActivityMainBinding.tv2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.d("xLLL","start anim");
-//                mActivityMainBinding.tv2.setAnimation(animation);
-//            }
-//        });
-//        blur();
-    }
-
-    private void blur(){
-//        RenderScript renderScript = new RenderScript()
-        @SuppressLint("RestrictedApi")
-        Drawable drawable = AppCompatDrawableManager.get().getDrawable(getApplicationContext(),R.drawable.bg_blur);
-//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.test_png_1);
-        Bitmap bitmap = Bitmap.createBitmap(100,100, Bitmap.Config.ARGB_8888);
-        Canvas canvas = new Canvas();
-        Paint paint = new Paint();
-        paint.setMaskFilter(new BlurMaskFilter(50, BlurMaskFilter.Blur.NORMAL));
-        canvas.drawBitmap(bitmap,100,100,paint);
-        drawable.draw(canvas);
-//        Drawable drawable1 = new BitmapDrawable(getResources(),bitmap);
-//        mActivityMainBinding.tv2.setBackground(drawable);
-        Bitmap b = BitmapFactory.decodeResource(getResources(),R.drawable.bg_blur);
-        b = ImageUtil.gaussianBlur(getApplicationContext(),b);
-        Drawable drawable1 = new BitmapDrawable(b);
-//        mActivityMainBinding.tv2.setBackground(drawable1);
-//        mActivityMainBinding.tv2.setAlpha(1f);
     }
 
     @Override
