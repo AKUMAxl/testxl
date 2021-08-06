@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <Button
+        android:id="@+id/test_voice_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="back"/>
+
+    <Button
+        android:id="@+id/test_voice_start_ivoka"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="启动IVOKA"/>
+
+    <Button
+        android:id="@+id/test_voice_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="蓝牙"/>
+
+    <Button
+        android:id="@+id/test_voice_hard_key"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="模拟语音KEY"/>
+
+    <Button
+        android:id="@+id/test_voice_ign_on"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="IGN ON"/>
+
+    <Button
+        android:id="@+id/test_voice_ign_off"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="IGN OFF"/>
+
+</LinearLayout>

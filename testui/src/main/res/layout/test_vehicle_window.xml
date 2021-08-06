@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <Button
+        android:id="@+id/test_vehicle_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BACK"/>
+
+    <Button
+        android:id="@+id/test_vehicle_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BT"/>
+
+    <Button
+        android:id="@+id/test_vehicle_bt_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="BT_INFO"/>
+
+    <Button
+        android:id="@+id/test_vehicle_ui_control"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="UI_Control"/>
+
+</LinearLayout>

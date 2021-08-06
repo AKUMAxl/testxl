@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <Button
+        android:id="@+id/test_record_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="back"/>
+
+    <Button
+        android:id="@+id/test_record_init"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="初始化"/>
+
+    <Button
+        android:id="@+id/test_record_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="start"/>
+
+    <Button
+        android:id="@+id/test_record_stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="stop"/>
+
+    <Button
+        android:id="@+id/test_play_pcm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PLAY"/>
+
+</LinearLayout>

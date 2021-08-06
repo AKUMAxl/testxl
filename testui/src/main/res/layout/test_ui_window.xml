@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="预览图路径：\n/sdcard/pateo/testui/preview/"
+                android:textColor="#00ff00"/>
+
+            <Button
+                android:id="@+id/test_ui_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BACK"/>
+
+            <Button
+                android:id="@+id/test_ui_select"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="选择预览图"/>
+
+            <Button
+                android:id="@+id/test_ui_show"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="显示预览图"/>
+
+            <Button
+                android:id="@+id/test_ui_status_bar_blur"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="状态栏模糊"/>
+
+            <ImageView
+                android:id="@+id/test_ui_status_bar_iv"
+                android:layout_width="1280dp"
+                android:layout_height="1600dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+
+</LinearLayout>

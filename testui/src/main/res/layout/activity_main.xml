@@ -8,28 +8,73 @@
     android:gravity="center">
 
     <Button
-        android:id="@+id/btn_add_view"
+        android:id="@+id/btn_test_finish"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="UI_TEST"/>
+        android:text="finish"/>
+
+    <Button
+        android:id="@+id/btn_test_client"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="模拟其他应用"/>
 
     <Button
         android:id="@+id/btn_test_record"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="RECORD_TEST"/>
+        android:text="录音测试"/>
 
     <Button
-        android:id="@+id/btn_test_c100"
+        android:id="@+id/btn_test_ui"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="C100_TEST"/>
+        android:text="UI测试"/>
+
+    <Button
+        android:id="@+id/btn_test_voice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="语音功能测试"/>
 
     <Button
         android:id="@+id/btn_test_vehicle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="C100_TEST_VEHICLE"/>
+        android:text="车辆服务接口测试"/>
 
+    <Button
+        android:id="@+id/btn_test_iflytek"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="讯飞开放平台SDK测试"/>
+
+    <Button
+        android:id="@+id/btn_test_locate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="定位測試"/>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="1111"
+            android:textSize="26sp"/>
+
+        <!--<TextView
+            android:id="@+id/tv_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="26sp"
+            android:text="2222"
+            android:background="@drawable/test_png_1"
+            />-->
+
+    </FrameLayout>
 
 </LinearLayout>

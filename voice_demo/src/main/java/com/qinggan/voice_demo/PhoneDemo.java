@@ -16,6 +16,7 @@ import com.qinggan.speech.VuiServiceMgr;
 import com.qinggan.speech.VuiTtsObj;
 import com.qinggan.speech.internal.IVuiTtsProcessHandler;
 import com.qinggan.speech.internal.VuiTtsProcessHandler;
+import com.qinggan.util.TtsHelper;
 
 import java.util.ArrayList;
 
@@ -99,6 +100,7 @@ public class PhoneDemo {
         ttsObj.setSpeakContent(content);
 //        ttsObj.setDisplayText(content);
         mVuiServiceMgr.sendTtsNotify(ttsObj.toIntent(), iVuiTtsProcessHandler);
+
     }
 
     /**

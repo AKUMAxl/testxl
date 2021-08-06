@@ -96,8 +96,8 @@ public interface ISSErrors {
     public static final int ISS_ERROR_MVW_USER_DEF_RES              = 10137;     /* 0x2799 */        /* 加载自定义唤醒词资源失败，恢复至加载默认的唤醒词资源 */
     public static final int ISS_ERROR_BUILD_REPEAT_KEYWORD          = 10138;     /* 0x279A */        /* 存在重复唤醒词导致构建唤醒词失败 */
     public static final int ISS_ERROR_INVALID_CODING_FORMAT         = 10139;     /* 0x279B */        /* 错误的编码格式 */
-	public static final int ISS_ERROR_RES_NO_UPDATE					= 10140;     /* 0x279C */        /* 资源已经为最新 */
-	public static final int ISS_ERROR_RES_CHECK						= 10141;     /* 0x279D */        /* 校验资源失败 */
+    public static final int ISS_ERROR_RES_NO_UPDATE                 = 10140;     /* 0x279C */        /* 唤醒闭环，当前资源已经为最新的 */
+    public static final int ISS_ERROR_RES_CHECK                     = 10141;     /* 0x279D */        /* 唤醒闭环，校验资源是否有更新失败 */
 
 	/* Error codes of network 10200(0x27D8)*/
 	public static final int ISS_ERROR_NET_GENERAL                   = 10200;     /* 0x27D8 */   /* 网络一般错误 */
@@ -166,7 +166,7 @@ public interface ISSErrors {
 	public static final int ISS_ERROR_RES_HEAD                      = 10509;     /* 0x290D */   /* 资源头部错误 */
 	public static final int ISS_ERROR_RES_DATA                      = 10510;     /* 0x290E */   /* 数据出错 */
 	public static final int ISS_ERROR_RES_SKIP                      = 10511;     /* 0x290F */   /* 跳过 */
-    public static final int ISS_ERROR_RES_MISMATCH                  = 10512;     /* 0x2910 */   /* 资源不匹配 */
+	public static final int ISS_ERROR_RES_MISMATCH                  = 10512;     /* 0x2910 */   /* 资源不匹配 */
 
 	/* Error codes of TTS 10600(0x2968)*/
 	public static final int ISS_ERROR_TTS_GENERAL                   = 10600;     /* 0x2968 */   /* 合成一般错误  */
@@ -175,6 +175,7 @@ public interface ISSErrors {
 	public static final int ISS_ERROR_TTS_RESOURCE                  = 10603;     /* 0x296B */   /* 资源错误，请检查资源是否被破坏或资源版本错误 */
 	public static final int ISS_ERROR_TTS_RESOURCE_COUNT            = 10604;     /* 0x296C */   /* 合成资源个数错误，iflytek\res\tts路径下至少应有2个irf资源，其中一个必须是common.irf */
 	public static final int ISS_ERROR_TTS_COMMON_RESOURCE_MISSING   = 10605;     /* 0x296D */   /* common.irf资源丢失 */
+	public static final int ISS_ERROR_TTS_NET_TIMEOUT_OR_INTERRUPT  = 10606;     /* 0x296E */   /* 云端合成取音频过程出现网络中断或超时 */
 
 	/* Error codes of Recognizer 10700(0x29CC) */
 	public static final int ISS_ERROR_REC_GENERAL                   = 10700;     /* 0x29CC */   /* 一般错误 */
@@ -225,6 +226,12 @@ public interface ISSErrors {
 
 	/* Error codes of http 12000(0x2EE0) */
 	public static final int ISS_ERROR_HTTP_BASE                     = 12000;    /* 0x2EE0 */  /* HTTP错误基码 */
+	public static final int ISS_ERROR_HTTP_TIME_OUT					= 12001;	/* 0x2EE1 */  /* HTTP请求超时 */
+	public static final int ISS_ERROR_HTTP_DNS_FAIL					= 12002;	/* 0x2EE2 */  /* DNS解析错误 */
+	public static final int ISS_ERROR_HTTP_DNS_TIME_OUT				= 12003;	/* 0x2EE3 */  /* DNS解析超时 */
+	public static final int ISS_ERROR_HTTP_INVALID_RESPONSE			= 12004;	/* 0x2EE4 */  /* HTTP服务器响应格式不正确 */
+	public static final int ISS_ERROR_HTTP_INVALID_URL				= 12005;	/* 0x2EE5 */  /* HTTP无效URL */
+	public static final int ISS_ERROR_HTTP_REQUEST_FAIL				= 12006;	/* 0x2EE6 */  /* 服务器响应表明请求失败 */
 
 	/*Error codes of ISV */
 	public static final int ISS_ERROR_ISV_NO_USER                   = 13000;    /* 0x32C8 */    /* 用户不存在 */
@@ -262,28 +269,68 @@ public interface ISSErrors {
 	public static final int ISS_ERROR_CATA_IDX_IDX_EXIST            = 15022;   /**<Index already exists */
 	public static final int ISS_ERROR_CATA_IDX_ALREADY_INIT         = 15023;   /**<Already initialized */
 	public static final int ISS_ERROR_CATA_IDX_NOT_INIT             = 15024;   /**<Uninitialized */
-	public static final int ISS_ERROR_CATA_SRH_INST_SET_FULL        = 15025;   /**<Srh inst set is full */
-    public static final int ISS_ERROR_CATA_SRH_INST_CREATE_FAIL     = 15026;   /**<Srh inst create fail */
-	public static final int ISS_ERROR_CATA_SRH_INST_INVALID         = 15027;   /**<Srh inst is invalid */
-	public static final int ISS_ERROR_CATA_SRH_STACK_FULL           = 15028;   /**<Stack full */
-	public static final int ISS_ERROR_CATA_SRH_PARA_VALID           = 15029;   /**<Para is invalid*/
-	public static final int ISS_ERROR_CATA_SRH_SAME_PARAM           = 15030;   /**<Para is same*/
-	public static final int ISS_ERROR_CATA_SRH_ALIAS_RES_VALID      = 15031;
-	public static final int ISS_ERROR_CATA_SRH_PYFZY_RES_VALID      = 15032;
-	public static final int ISS_ERROR_CATA_SRH_NO_INDEX             = 15033;
-	public static final int ISS_ERROR_CATA_SRH_INDEX_VALID          = 15034;
-	public static final int ISS_ERROR_CATA_SRH_QUERYEXTEND_FAILD    = 15035;
-	public static final int ISS_ERROR_CATA_SRH_FUZZYEXTEND_FAILD    = 15036;
-	public static final int ISS_ERROR_CATA_SRH_RES_EXIST            = 15037;
-	public static final int ISS_ERROR_CATA_SRH_WAR_STACK_EMPTY      = 15038;
-	public static final int ISS_ERROR_CATA_SRH_WAR_NO_RESULT        = 15039;
-	public static final int ISS_ERROR_CATA_SRH_WAR_NO_ALIAS         = 15040;
-	public static final int ISS_ERROR_CATA_SRH_WAR_NO_FUZZY_RES     = 15041;
-	public static final int ISS_ERROR_CATA_SRH_ALREADY_INIT         = 15042;
-	public static final int ISS_ERROR_CATA_SRH_NOT_INIT             = 15043;
-    public static final int ISS_ERROR_CATA_IDX_JSON_PARAM_WRONG     = 15060;
+	public static final int ISS_ERROR_CATA_IDX_JSON_PARAM_WRONG     = 15025;   /**<Json param is wrong */
+	public static final int ISS_ERROR_CATA_IDX_INST_SET_FULL        = 15026;   /**<Idx inst set is full */
+
+	public static final int ISS_ERROR_CATA_SRH_INST_SET_FULL        = 16001;   /**<Srh inst set is full */
+    public static final int ISS_ERROR_CATA_SRH_INST_CREATE_FAIL     = 16002;   /**<Srh inst create fail */
+	public static final int ISS_ERROR_CATA_SRH_INST_INVALID         = 16003;   /**<Srh inst is invalid */
+	public static final int ISS_ERROR_CATA_SRH_STACK_FULL           = 16004;   /**<Stack full */
+	public static final int ISS_ERROR_CATA_SRH_PARA_VALID           = 16005;   /**<Para is invalid*/
+	public static final int ISS_ERROR_CATA_SRH_SAME_PARAM           = 16006;   /**<Para is same*/
+	public static final int ISS_ERROR_CATA_SRH_ALIAS_RES_VALID      = 16007;   /**<Alias res is invalid */
+	public static final int ISS_ERROR_CATA_SRH_PYFZY_RES_VALID      = 16008;   /**<Pinyin fuzzy res is invalid */
+	public static final int ISS_ERROR_CATA_SRH_LANG_RES_VALID       = 16009;   /**<Language res is invalid */
+	public static final int ISS_ERROR_CATA_SRH_CRC_CODE             = 16010;   /**<Check code error, generally indicates that the file is corrupt */
+	public static final int ISS_ERROR_CATA_SRH_NO_INDEX             = 16011;   /**<No index */
+	public static final int ISS_ERROR_CATA_SRH_WRONG_TYPE           = 16012;   /**<Wrong type */
+	public static final int ISS_ERROR_CATA_SRH_INDEX_VALID          = 16013;   /**<Index valid */
+	public static final int ISS_ERROR_CATA_SRH_QUERYEXTEND_FAILD    = 16014;   /**<Query extend fail */
+	public static final int ISS_ERROR_CATA_SRH_FUZZYEXTEND_FAILD    = 16015;   /**<Fuzzy extend fail */
+	public static final int ISS_ERROR_CATA_SRH_RES_EXIST            = 16016;   /**<Res exist */
+	public static final int ISS_ERROR_CATA_SRH_WAR_STACK_EMPTY      = 16017;   /**<Stack is empty */
+	public static final int ISS_ERROR_CATA_SRH_WAR_NO_RESULT        = 16018;   /**<No result */
+	public static final int ISS_ERROR_CATA_SRH_WAR_NO_ALIAS         = 16019;   /**<No alias */
+	public static final int ISS_ERROR_CATA_SRH_WAR_NO_FUZZY_RES     = 16020;   /**<No pinyin fuzzy res */
+	public static final int ISS_ERROR_CATA_SRH_ALREADY_INIT         = 16021;   /**<Already initialized */
+	public static final int ISS_ERROR_CATA_SRH_NOT_INIT             = 16022;   /**<Uninitialized */
+	public static final int ISS_ERROR_CATA_SRH_RES_UNTOUNCH         = 16023;   /**<Res untounch */
+	public static final int ISS_ERROR_CATA_SRH_RES_NAME_EMPTY       = 16024;   /**<Name empty */
+
+	/* Error code for  IvwOptimize */
+	public static final int ISS_ERROR_OPT_USERES_READONLY			= 17001;   /**< Resouce load fail, and load readonly resouce */
+	public static final int ISS_ERROR_OPT_USERES_RBACKUP			= 17002;   /**< Resouce load fail, and load backup resouce */
+	public static final int ISS_ERROR_OPT_NOUPDATE					= 17003;   /**< No Update for resouce */
 	
-	/* Error code of resource verify */		
-	public static final int ISS_ERROR_VERIFY_WRONG_RES              = 16000;
-	public static final int ISS_ERROR_VERIFY_NO_RES                 = 16001;
+	/* Error codes for SwEnc 30000 - 49999*/
+	public static final int ISS_ERROR_SWENC_FAIL_OFFSET             = 30000;   /**<SwEnc offset*/
+	public static final int ISS_ERROR_SWENC_SUCCESS_SOON_EXPIRED    = 30001;   /**<SwEnc will expried soon*/
+	/* SwEnc server error */
+	public static final int ISS_ERROR_SWENC_SERVER_VERSION_INFO_NOT_EXIST       = 33001;    /* 0xBB9 */   /* 版本信息不存在 */
+	public static final int ISS_ERROR_SWENC_SERVER_VERSION_FORBIDDEN            = 33002;    /* 0xBBA */   /* 版本被禁用 */
+	public static final int ISS_ERROR_SWENC_SERVER_DEVICE_NOT_ACTIVE            = 33003;    /* 0xBBB */   /* 设备未激活 */
+	public static final int ISS_ERROR_SWENC_SERVER_DEVICE_FORBIDDEN             = 33004;    /* 0xBBC */   /* 设备被禁用 */
+	public static final int ISS_ERROR_SWENC_SERVER_AUTHCODE_ERROR               = 33005;    /* 0xBBD */   /* 设备鉴权码错误 */
+	public static final int ISS_ERROR_SWENC_SERVER_CHECK_ERROR_INFO_FAIL        = 33006;    /* 0xBBE */   /* 添加鉴权异常信息失败 */
+	public static final int ISS_ERROR_SWENC_SERVER_HARDINFO_CHANGE_OUT_RANGE    = 33008;    /* 0xBC0 */   /* 硬件信息的变化超过允许的范围 */
+	public static final int ISS_ERROR_SWENC_SERVER_VERSION_USED_UP              = 33009;    /* 0xBC1 */   /* 版本没有剩余装机量 */
+	public static final int ISS_ERROR_SWENC_SERVER_HARDINFO_FIELD_ERROR         = 33010;    /* 0xBC2 */   /* 硬件信息FIELD错误 */
+	public static final int ISS_ERROR_SWENC_SERVER_ACTIVE_TIMES_USED_UP         = 33011;    /* 0xBC3 */   /* 设备激活次数受限 */
+	public static final int ISS_ERROR_SWENC_SERVER_ACTIVE_MISS_PARAM            = 33012;    /* 0xBC4 */   /* 激活缺少必要参数 */
+	public static final int ISS_ERROR_SWENC_SERVER_APP_DEFAULT_GOODS_ERROR      = 33017;    /* 0xBC9 */   /* 商品配置错误 */
+	public static final int ISS_ERROR_SWENC_SERVER_UPDATE_AUTH_CODE_ERROR       = 33018;    /* 0xBCA */   /* 设备授权码更新失败 */
+	/* SwEnc client error! In completed projects, client error should not occur*/
+	public static final int ISS_ERROR_SWENC_CLIENT_GENERAL                      = 40100;    /* 0x2774 */   /* 一般错误 */
+	public static final int ISS_ERROR_SWENC_CLIENT_FILE_NOT_FOUND               = 40102;    /* 0x2776 */   /* 授权文件不存在 */
+	public static final int ISS_ERROR_SWENC_CLIENT_INVALID_PARA                 = 40106;    /* 0x277A */   /* 无效的参数 */
+	public static final int ISS_ERROR_SWENC_CLIENT_INVALID_DATA                 = 40109;    /* 0x277D */   /* 无效的解析数据 */
+	public static final int ISS_ERROR_SWENC_CLIENT_NO_LICENSE                   = 40110;    /* 0x277E */   /* 鉴权失败 */
+	public static final int ISS_ERROR_SWENC_CLIENT_NOT_INIT                     = 40111;    /* 0x277F */   /* 未初始化 */
+	public static final int ISS_ERROR_SWENC_CLIENT_TIME_OUT                     = 40114;    /* 0x2782 */   /* 网络连接超时 */
+	public static final int ISS_ERROR_SWENC_CLIENT_OPEN_FILE                    = 40115;    /* 0x2783 */   /* 打开文件错误 */
+	public static final int ISS_ERROR_SWENC_CLIENT_NO_DATA                      = 40118;    /* 0x2786 */   /* 无数据 */
+	public static final int ISS_ERROR_SWENC_CLIENT_VERSION_CHECK                = 40125;    /* 0x278D */   /* 无效的appid */
+	public static final int ISS_ERROR_SWENC_CLIENT_INVALID_DEVICEINFO           = 40134;    /* 0x2796 */   /* 硬件信息为空或不是正确的json格式 */
+	public static final int ISS_ERROR_SWENC_CLIENT_FILE_BREAK                   = 40135;    /* 0x2797 */   /* 授权文件损坏 */
+	public static final int ISS_ERROR_SWENC_CLIENT_WRITE_FILE_FAILED            = 40136;    /* 0x2798 */   /* 写文件错误 */
 }

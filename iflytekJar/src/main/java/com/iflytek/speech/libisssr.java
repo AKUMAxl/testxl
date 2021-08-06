@@ -11,22 +11,33 @@ public class libisssr {
 		System.loadLibrary("iFlyNLI");
 		System.loadLibrary("cataIndex");
 		System.loadLibrary("cata");
+		System.loadLibrary("isscata");
+		System.loadLibrary("issauth");
 		System.loadLibrary("SpWord");
-        System.loadLibrary("w_esr");
+        System.loadLibrary("w_ivw");
+		System.loadLibrary("websockets");
+		System.loadLibrary("issmvw");
         System.loadLibrary("namext");
         System.loadLibrary("aiui");
-		
-		System.loadLibrary("isssr");
-		
-		System.loadLibrary("issauth");
 		System.loadLibrary("hardinfo");
 		System.loadLibrary("lesl");
+		System.loadLibrary("w_esr");
+		System.loadLibrary("isssr");
 	}
 
 	//language
 	final public static int ISS_SR_ACOUS_LANG_VALUE_MANDARIN = 0;  //mandarin
 	final public static int ISS_SR_ACOUS_LANG_VALUE_ENGLISH = 1;   //english
 	final public static int ISS_SR_ACOUS_LANG_VALUE_CANTONESE = 2; //cantonese
+	final public static int ISS_SR_ACOUS_LANG_VALUE_JAPANESE = 3;
+	final public static int ISS_SR_ACOUS_LANG_VALUE_RUSSIAN = 4;
+	final public static int ISS_SR_ACOUS_LANG_VALUE_SPANISH = 5;
+	final public static int ISS_SR_ACOUS_LANG_VALUE_ARABIC = 6;
+	final public static int ISS_SR_ACOUS_LANG_VALUE_SICHUAN = 7;
+	final public static int ISS_SR_ACOUS_LANG_VALUE_THAI = 8;
+	final public static int ISS_SR_ACOUS_LANG_VALUE_MALAY = 9;
+	final public static int ISS_SR_ACOUS_LANG_VALUE_INDONESIAN = 10;
+    final public static int ISS_SR_ACOUS_LANG_VALUE_SHANGHAI = 11;
 
 	//sr scene
 	final public static String ISS_SR_SCENE_ALL = "all";                                    ///< All scene
@@ -38,6 +49,7 @@ public class libisssr {
 	final public static String ISS_SR_SCENE_CMDLIST_WITHALL = "cmdlist_withall";            ///< Abandon
 
 	final public static String ISS_SR_SCENE_STKS = "stks";                                  ///< short time keyword select
+	final public static String ISS_SR_SCENE_ONESHOT = "oneshot";                            ///< OneShot scene
 
 	final public static String ISS_SR_SCENE_SELECTLIST_POI = "selectlist_poi";              ///< only win32 and android, manadarin support
 	final public static String ISS_SR_SCENE_SELECTLIST_CONTACTS = "selectlist_contacts";    ///< not support yet
@@ -45,12 +57,22 @@ public class libisssr {
 	final public static String ISS_SR_SCENE_MUSIC = "music";                                ///< Misic scene
 	final public static String ISS_SR_SCENE_HIMALAYAFM = "himalayaFM";                      ///< HiMaLaYa scene
 
+	///< For the select scene of the multiple awakening realizations, the utterances can be: the first, the second, the third, the fourth, the fifth, the sixth, the last, cancel.
+	final public static String ISS_SR_SCENE_SELECT_MVW = "select_mvw";
+	///< For the confirm scene of the multiple awakening realizations, the utterances can be: confirm, cancel.
+	final public static String ISS_SR_SCENE_CONFIRM_MVW = "confirm_mvw";
+	///< For the answering calls scene of the multiple awakening realizations, the utterances can be: answer, hang up, cancel.
+	final public static String ISS_SR_SCENE_ANSWER_CALL_MVW = "answer_call_mvw";
+	///< For the multi-scenario scene of the multiple awakening realizations,the utterances is the words of build.
+	final public static String ISS_SR_SCENE_BUILD_GRM_MVW = "build_grm_mvw";
+
 	//sr mode
 	final public static int ISS_SR_MODE_CLOUD_REC = 0;              ///< Pure network recognition
 	final public static int ISS_SR_MODE_LOCAL_REC = 1;              ///< Pure local recognition
 	final public static int ISS_SR_MODE_MIX_REC = 2;                ///< Cloud and terminal mixed recognition
 	final public static int ISS_SR_MODE_LOCAL_CMDLIST = 3;          ///< Pure local command word (abandoned)
 	final public static int ISS_SR_MODE_LOCAL_NLP = 4;              ///< Pure local semantics
+	final public static int ISS_SR_MODE_LOCAL_MVW = 5;              ///< Abandon
 
 	//sr parameter , parameter value
 	final public static String ISS_SR_ENABLE_CONTINUOUS_MODEL = "EnableContinuousModel";
@@ -113,6 +135,13 @@ public class libisssr {
 	// Log FileName
 	final public static int ISS_SR_PARAM_LOG_FILE_NAME = (0X00000508);
 
+	final public static String ISS_SRMM_PARAM_PURPOSE_SWITCH = "SRMMPurposeSwitch";
+	final public static String ISS_SRMM_VALUE_PURPOSE_OPEN = "OPEN";
+	final public static String ISS_SRMM_VALUE_PURPOSE_CLOSE = "CLOSE";
+	
+	final public static String ISS_SRMM_PARAM_WORKMODE = "SRMMWorkMode";
+	final public static String ISS_SRMM_VALUE_WAKEMODE = "wakeMode";
+	final public static String ISS_SRMM_VALUE_AVVADMODE = "avvadMode";
 
 	final public static int ISS_SR_UPLOAD_TO_LOCAL_AND_CLOUD = 0;
 	final public static int ISS_SR_UPLOAD_TO_CLOUD = 1;
@@ -140,6 +169,7 @@ public class libisssr {
 	final public static int ISS_SR_MSG_Res_Update_End = 20020;
 	final public static int ISS_SR_MSG_WaitingForLocalResult = 20021;
 	final public static int ISS_SR_MSG_STKS_Result = 20022;
+	final public static int ISS_SR_MSG_ONESHOT_MVWResult = 20023;
 	final public static int ISS_SR_MSG_LOCAL_RECG_END = 20024;
 	final public static int ISS_SR_MSG_UpLoadDataToCloudStatus = 20050;
     final public static int ISS_SR_MSG_CloudResult = 20051;
@@ -149,15 +179,22 @@ public class libisssr {
 	final public static int ISS_SR_MSG_SRResult = 20055;
 	final public static int ISS_SR_MSG_TPPResult = 20056;
 	final public static int ISS_SR_MSG_TransResult = 20057;
-	final public static int ISS_SR_MSG_SwEncResult = 20058;
+	final public static int ISS_SR_MSG_CheckAuthorityResult = 20058;
+
+	final public static int ISS_SRMM_MSG_VolumeLevel = 21058;
+	final public static int ISS_SRMM_MSG_SpeechStart = 21059;
+	final public static int ISS_SRMM_MSG_SpeechEnd = 21060;
+	final public static int ISS_SRMM_MSG_SpeechTimeOut = 21061;
+	final public static int ISS_SRMM_MSG_ResponseTimeout = 21062;
+	final public static int ISS_SRMM_MSG_Purpose = 21063;
+	final public static int ISS_SRMM_MSG_Result = 21064;
+	final public static int ISS_SRMM_MSG_Error = 21065;
+	final public static int ISS_SRMM_MSG_CloudInitStatus = 21066;
+	final public static int ISS_SRMM_MSG_UpLoadDictStatus = 21067;
+	final public static int ISS_SRMM_MSG_UpLoadDataStatus = 21068;
+	final public static int ISS_SRMM_MSG_SRResult = 21069;  //MMSR PGS
 
 	public static native int setMachineCode(String code);
-
-	public static native int setSerialNumber(String serialNumber);
-
-	public static native int getActiveKey(String resDir);
-
-	public static native int activate(String resDir);
 
 	public static native int create(String resDir, ISRListener iSRListener);
 
@@ -182,10 +219,23 @@ public class libisssr {
 	public static native int endAudioData();
 
 	public static native int stop();
+	
+	public static native int mmStart(String szScene, int iMode, String szCmd);  // start Multi-modal recognizing,  param szScene:only support ISS_SR_SCENE_ALL, param iMode: reserved, param szCmd: reserved.
+	
+	public static native int mmAppendAudioData(byte[] audioBuffer, int nNumOfByte);  // appendAudioData of Multi-modal recognizing
+	
+	public static native int mmAppendVideoData(byte[] videoBuffer, int nNumOfByte);  // Reserved, not supported
+	
+	public static native int mmEndAudioData();  //endAudioData of Multi-modal recognizing
+	
+	public static native int mmStop();  // stop Multi-modal recognizing
 
 	public static native int destroy();
 
 	public static native String mspSearch(String szText, String szExternParam);
 	public static native String localNli(String szText, String szScene);
+    public static native int setMvwKeyWords(int nMvwScene, String szKeyWords);
+	public static native int setLogCfgParam(int nParamID, String szParamValue);
+	public static native int checkGrmBuilding(String szDictName, String szGrmId);
 
 }
