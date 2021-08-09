@@ -13,12 +13,7 @@ import android.view.WindowManager;
 import com.xl.testui.R;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.Inet4Address;
-import java.net.InetAddress;
 import java.net.ServerSocket;
-import java.net.Socket;
-import java.net.SocketAddress;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
@@ -29,8 +24,8 @@ public class SocketTestManager {
     private WindowManager mWindowManager;
     private View mRootView;
 
-    private ServerSocket serverSocket;
-
+    private ServiceMessager mServiceMessager;
+    private ClientMessager mClientMessager;
 
     private SocketTestManager() {
     }
@@ -62,6 +57,7 @@ public class SocketTestManager {
         params.gravity = Gravity.TOP | Gravity.END;
         params.y = 260;
         mRootView = LayoutInflater.from(mContext).inflate(R.layout.test_socket_window, null);
+        mWindowManager.addView(mRootView,params);
         mRootView.findViewById(R.id.test_socket_back).setOnClickListener(v -> {
             mWindowManager.removeView(mRootView);
             Intent intent = new Intent();
@@ -105,29 +101,13 @@ public class SocketTestManager {
 
     private void startService(){
 
-        try {
-            serverSocket = new ServerSocket();
-            ServiceReceiver serviceReceiver = new ServiceReceiver(serverSocket);
-            serviceReceiver.start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        mServiceMessager = new ServiceMessager();
+        mServiceMessager.start();
     }
 
     private void startClient(){
-        Socket socket = null;
-        try {
-            socket = new Socket("10.10.76.40",7200);
-            OutputStream outputStream = socket.getOutputStream();
-            outputStream.write(123);
-            outputStream.close();
-            outputStream.flush();
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        mClientMessager= new ClientMessager();
+        mClientMessager.start();
     }
 
     private void serviceSendMsg(){
@@ -135,7 +115,7 @@ public class SocketTestManager {
     }
 
     private void clientSendMsg(){
-
+        mClientMessager.sendMsg();
     }
 
 }

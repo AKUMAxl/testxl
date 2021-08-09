@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                 SocketTestManager.getInstance().init(getApplicationContext(), mWindowManager);
             }
         });
-        checkWPermission();
+//        checkWPermission();
     }
 
     @Override
