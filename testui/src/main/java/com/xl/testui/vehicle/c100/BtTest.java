@@ -7,10 +7,16 @@ import android.view.View;
 import com.faw.hqzl3.hqdatastatussdk.HQDataStatusManager;
 import com.faw.hqzl3.hqvehicleproxy.ActivityEntryManager;
 import com.faw.hqzl3.hqvehicleproxy.BluetoothManager;
+import com.faw.hqzl3.hqvehicleproxy.Constants;
 import com.faw.hqzl3.hqvehicleproxy.HQVehicleProxy;
 import com.faw.hqzl3.hqvehicleproxy.Interfaces.BluetoothListener;
 import com.faw.hqzl3.hqvehicleproxy.Interfaces.IVehicleServiceListener;
+import com.faw.hqzl3.hqvehicleproxy.data.BtAddressBook;
+import com.qinggan.speech.adapter.obj.BluetoothInfo;
+import com.qinggan.speech.adapter.obj.SyncContactInfo;
 import com.xl.testui.util.CarForegroundAppUtils;
+
+import java.util.List;
 
 
 public class BtTest {
@@ -90,6 +96,10 @@ public class BtTest {
                     @Override
                     public void onPhoneBookDownloadStatusChange(int i) {
                         Log.d(TAG, "onPhoneBookDownloadStatusChange() called with: i = [" + i + "]");
+                        if (i== Constants.PHONEBOOK_DOWNLOAD_COMPLETED){
+                            getBtInfo();
+                        }
+
                     }
                 });
 
@@ -112,9 +122,22 @@ public class BtTest {
             return;
         }
         String address = mBluetoothManager.getBtAddress();
+        String addressHfp = mBluetoothManager.getBtAddressForHfp();
         int hfpStatus = mBluetoothManager.getHfpConnectedStatus();
         Log.d(TAG,"address:"+address);
+        Log.d(TAG,"addressHfp:"+addressHfp);
         Log.d(TAG,"hfpStatus:"+hfpStatus);
+        List<BtAddressBook> list = mBluetoothManager.getBtAddressBook();
+        if (list != null && list.size() > 0){
+            for (BtAddressBook btAddressBook : list){
+                Log.i(TAG,"contactName:"+btAddressBook.getContactName()+" -- number:"+btAddressBook.getNumber()+ " -- numberType:"+btAddressBook.getPhoneType());
+                SyncContactInfo syncContactInfo = new SyncContactInfo();
+                syncContactInfo.setContactName(btAddressBook.getContactName());
+                syncContactInfo.setNumber(btAddressBook.getNumber());
+                syncContactInfo.setNumberType(String.valueOf(btAddressBook.getPhoneType()));
+                syncContactInfo.setSource("content://" + "com.android.contacts");
+            }
+        }
     }
 
 
@@ -126,6 +149,7 @@ public class BtTest {
     public void saveCompanyLocation(double lon,double lat){
 //        HQDataStatusManager.getInstance().setSystemData("companyLon",String.valueOf(lon));
 //        HQDataStatusManager.getInstance().setSystemData("companyLat",String.valueOf(lat));
+
     }
 
     public void getForegroundAppInfo(){

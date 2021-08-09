@@ -6,8 +6,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 
 public class ClientMessager extends Thread {
+
+    private static final String HOST = "10.10.76.160";
+//    private static final String HOST = "10.10.76.116";
+//    private static final String HOST = "172.20.4.3";
+    private static final int PORT = 10086;
 
     private final String TAG = ClientMessager.class.getSimpleName();
 
@@ -22,23 +28,24 @@ public class ClientMessager extends Thread {
 
 
     public void closeClient() {
-        try {
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            socket.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     public void sendMsg() {
-        if (socket == null) {
-            return;
-        }
+
         new Thread(() -> {
             try {
-                outputStream = socket.getOutputStream();
-                outputStream.write(123);
-                outputStream.close();
-                outputStream.flush();
+                if (outputStream == null) {
+                    return;
+                }
+
+                outputStream.write("123".getBytes(StandardCharsets.UTF_8));
+//                outputStream.close();
+//                outputStream.flush();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -51,8 +58,12 @@ public class ClientMessager extends Thread {
     public void run() {
         super.run();
         try {
-            socket = new Socket("10.10.76.160", 7200);
+            if (socket!=null){
+                return;
+            }
+            socket = new Socket(HOST, PORT);
             inputStream = socket.getInputStream();
+            outputStream = socket.getOutputStream();
             while (true) {
                 byte[] headerBuffer = new byte[]{};
                 int ret = inputStream.read(headerBuffer);
