@@ -12,9 +12,6 @@ import android.view.WindowManager;
 
 import com.xl.testui.R;
 
-import java.io.IOException;
-import java.net.ServerSocket;
-
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 public class SocketTestManager {
@@ -68,13 +65,25 @@ public class SocketTestManager {
         mRootView.findViewById(R.id.test_socket_start_service).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startService();
+                serviceStart();
             }
         });
         mRootView.findViewById(R.id.test_socket_start_client).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startClient();
+                clientStart();
+            }
+        });
+        mRootView.findViewById(R.id.test_socket_close_service).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                serviceClose();
+            }
+        });
+        mRootView.findViewById(R.id.test_socket_close_client).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clientClose();
             }
         });
         mRootView.findViewById(R.id.test_socket_service_send_msg).setOnClickListener(new View.OnClickListener() {
@@ -99,23 +108,40 @@ public class SocketTestManager {
      *
      */
 
-    private void startService(){
-
+    private void serviceStart(){
         mServiceMessager = new ServiceMessager();
         mServiceMessager.start();
-    }
+    };
 
-    private void startClient(){
-        mClientMessager= new ClientMessager();
+    private void clientStart(){
+        mClientMessager = new ClientMessager();
         mClientMessager.start();
-    }
+    };
 
     private void serviceSendMsg(){
-        mServiceMessager.sendMsg();
+        if (mServiceMessager!=null){
+            mServiceMessager.sendMsg();
+        }
     }
 
     private void clientSendMsg(){
-        mClientMessager.sendMsg();
+        if (mClientMessager!=null){
+            mClientMessager.sendMsg();
+        }
+    }
+
+
+
+    private void serviceClose(){
+        if (mServiceMessager!=null){
+            mServiceMessager.closeService();
+        }
+    }
+
+    private void clientClose(){
+//        if (mClientMessager!=null){
+//            mClientMessager.closeClient();
+//        }
     }
 
 }

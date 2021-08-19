@@ -9,6 +9,7 @@ import java.net.Inet4Address;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ServiceMessager extends Thread{
@@ -32,14 +33,23 @@ public class ServiceMessager extends Thread{
         }
     }
 
-    public void sendMsg() {
-        if (socket == null) {
-            return;
+    public void closeService() {
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+    }
+
+    public void sendMsg() {
+
         new Thread(() -> {
             try {
+                if (socket == null) {
+                    return;
+                }
                 outputStream = socket.getOutputStream();
-                outputStream.write(123);
+                outputStream.write("123".getBytes(StandardCharsets.UTF_8));
                 outputStream.close();
                 outputStream.flush();
             } catch (IOException e) {

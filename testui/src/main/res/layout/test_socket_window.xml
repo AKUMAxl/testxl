@@ -18,6 +18,12 @@
         android:text="start_service"/>
 
     <Button
+        android:id="@+id/test_socket_close_service"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="close_service"/>
+
+    <Button
         android:id="@+id/test_socket_service_send_msg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,6 +34,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="start_client"/>
+
+    <Button
+        android:id="@+id/test_socket_close_client"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="close_client"/>
 
     <Button
         android:id="@+id/test_socket_client_send_msg"
