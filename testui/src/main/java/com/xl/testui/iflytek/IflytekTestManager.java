@@ -149,6 +149,25 @@ public class IflytekTestManager {
         appList.add("美食详情");
         appList.add("景点详情");
         appList.add("酒店详情");
+        appList.add("全局免唤醒");
+        appList.add("音乐内免唤醒");
+        appList.add("导航内免唤醒");
+        appList.add("有声内免唤醒");
+        appList.add("视频内免唤醒");
+        appList.add("新闻内免唤醒");
+        appList.add("音乐");
+        appList.add("电台");
+        appList.add("新闻");
+        appList.add("视频");
+        appList.add("电话");
+        appList.add("车机系统控制");
+        appList.add("天气");
+        appList.add("美食");
+        appList.add("景点");
+        appList.add("酒店");
+        appList.add("导航");
+        appList.add("电子手册");
+
         mAppAdapter = new SpeechTextAdapter(mContext,appList);
         mAppAdapter.setOnClickListener(new SpeechTextAdapter.OnClickListener() {
             @Override
@@ -156,11 +175,11 @@ public class IflytekTestManager {
                 String data = appList.get(position);
                 updateData(data);
                 uploadBackground();
-                if (position%3 ==0){
+                if (appList.get(position).contains("美食")){
                     mCurForegroundApp = AppStatusConstant.NaviAppName.RESTAURANT;
-                }else if (position%3 == 1){
+                }else if (appList.get(position).contains("景点")){
                     mCurForegroundApp = AppStatusConstant.NaviAppName.SCENIC_SPOT;
-                }else if (position%3 == 2){
+                }else if (appList.get(position).contains("酒店")){
                     mCurForegroundApp = AppStatusConstant.NaviAppName.HOTEL;
                 }
 
@@ -263,6 +282,60 @@ public class IflytekTestManager {
                 break;
             case "景点详情":
                 arrayList.addAll(SpeechContentProvider.jdContentDetail);
+                break;
+            case "全局免唤醒":
+                arrayList.addAll(SpeechContentProvider.inGlobleSpeechContent);
+                break;
+            case "音乐内免唤醒":
+                arrayList.addAll(SpeechContentProvider.inMusicSpeechContent);
+                break;
+            case "导航内免唤醒":
+                arrayList.addAll(SpeechContentProvider.inNaviSpeechContent);
+                break;
+            case "有声内免唤醒":
+                arrayList.addAll(SpeechContentProvider.inRadioSpeechContent);
+                break;
+            case "视频内免唤醒":
+                arrayList.addAll(SpeechContentProvider.inVideoSpeechContent);
+                break;
+            case "新闻内免唤醒":
+                arrayList.addAll(SpeechContentProvider.inNewsSpeechContent);
+                break;
+            case "音乐":
+                arrayList.addAll(SpeechContentProvider.musicContent);
+                break;
+            case "电台":
+                arrayList.addAll(SpeechContentProvider.radioContent);
+                break;
+            case "新闻":
+                arrayList.addAll(SpeechContentProvider.newsContent);
+                break;
+            case "视频":
+                arrayList.addAll(SpeechContentProvider.videoContent);
+                break;
+            case "电话":
+                arrayList.addAll(SpeechContentProvider.telContent);
+                break;
+            case "车机系统控制":
+                arrayList.addAll(SpeechContentProvider.systemContent);
+                break;
+            case "天气":
+                arrayList.addAll(SpeechContentProvider.weatherContent);
+                break;
+            case "美食冒烟测试":
+                arrayList.addAll(SpeechContentProvider.foodContent);
+                break;
+            case "景点冒烟测试":
+                arrayList.addAll(SpeechContentProvider.spotContent);
+                break;
+            case "酒店冒烟测试":
+                arrayList.addAll(SpeechContentProvider.hotelContent);
+                break;
+            case "导航":
+                arrayList.addAll(SpeechContentProvider.naviContent);
+                break;
+            case "电子手册":
+                arrayList.addAll(SpeechContentProvider.eleContent);
                 break;
             default:
                 break;

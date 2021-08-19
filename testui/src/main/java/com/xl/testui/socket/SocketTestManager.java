@@ -111,7 +111,7 @@ public class SocketTestManager {
     }
 
     private void serviceSendMsg(){
-
+        mServiceMessager.sendMsg();
     }
 
     private void clientSendMsg(){

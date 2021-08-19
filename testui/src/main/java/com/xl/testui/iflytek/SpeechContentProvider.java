@@ -15,6 +15,26 @@ public class SpeechContentProvider {
     public static ArrayList<String> msContentDetail = new ArrayList<>();
     public static ArrayList<String> jdContentDetail = new ArrayList<>();
     public static ArrayList<String> jddContentDetail = new ArrayList<>();
+
+    public static ArrayList<String> inGlobleSpeechContent = new ArrayList<>();
+    public static ArrayList<String> inMusicSpeechContent = new ArrayList<>();
+    public static ArrayList<String> inNaviSpeechContent = new ArrayList<>();
+    public static ArrayList<String> inRadioSpeechContent = new ArrayList<>();
+    public static ArrayList<String> inVideoSpeechContent = new ArrayList<>();
+    public static ArrayList<String> inNewsSpeechContent = new ArrayList<>();
+    public static ArrayList<String> musicContent = new ArrayList<>();
+    public static ArrayList<String> radioContent = new ArrayList<>();
+    public static ArrayList<String> newsContent = new ArrayList<>();
+    public static ArrayList<String> videoContent = new ArrayList<>();
+    public static ArrayList<String> telContent = new ArrayList<>();
+    public static ArrayList<String> systemContent = new ArrayList<>();
+    public static ArrayList<String> weatherContent = new ArrayList<>();
+    public static ArrayList<String> foodContent = new ArrayList<>();
+    public static ArrayList<String> spotContent = new ArrayList<>();
+    public static ArrayList<String> hotelContent = new ArrayList<>();
+    public static ArrayList<String> naviContent = new ArrayList<>();
+    public static ArrayList<String> eleContent = new ArrayList<>();
+
     static {
 //        按POI参考点检索周边的美食
         msContent.add("附近有什么好吃的");
@@ -284,6 +304,258 @@ public class SpeechContentProvider {
         jddContentDetail.add("适合情侣吗");
         jddContentDetail.add("有早餐吗");
         jddContentDetail.add("这家酒店有游泳池吗");
+
+
+        inGlobleSpeechContent.add("下一首");
+        inGlobleSpeechContent.add("上一首");
+        inGlobleSpeechContent.add("打开电台");
+        inGlobleSpeechContent.add("声音大一点");
+        inGlobleSpeechContent.add("声音小一点");
+        inGlobleSpeechContent.add("暂停播放");
+        inGlobleSpeechContent.add("继续播放");
+        inGlobleSpeechContent.add("打开导航");
+        inGlobleSpeechContent.add("关闭导航");
+        inGlobleSpeechContent.add("屏幕亮一点");
+        inGlobleSpeechContent.add("屏幕暗一点");
+        inGlobleSpeechContent.add("查看帮助");
+        inGlobleSpeechContent.add("打开屏幕");
+        inGlobleSpeechContent.add("嗨，红旗 ");
+        inGlobleSpeechContent.add("回首页");
+
+        inMusicSpeechContent.add("上一曲");
+        inMusicSpeechContent.add("添加收藏");
+        inMusicSpeechContent.add("第3首");
+        inMusicSpeechContent.add("关闭播放列表");
+        inMusicSpeechContent.add("回到上一页");
+        inMusicSpeechContent.add("返回播放器");
+        inMusicSpeechContent.add("关闭音乐");
+        inMusicSpeechContent.add("暂停音乐");
+
+        inNaviSpeechContent.add("关闭路况");
+        inNaviSpeechContent.add("打开路况");
+        inNaviSpeechContent.add("车头朝上 ");
+        inNaviSpeechContent.add("放大地图");
+        inNaviSpeechContent.add("缩小地图");
+        inNaviSpeechContent.add("2D模式");
+        inNaviSpeechContent.add("第3个");
+        inNaviSpeechContent.add("避开拥堵");
+        inNaviSpeechContent.add("高速优先");
+        inNaviSpeechContent.add("不走高速");
+        inNaviSpeechContent.add("开始导航");
+        inNaviSpeechContent.add("查看全程");
+
+        inRadioSpeechContent.add("加入收藏");
+        inRadioSpeechContent.add("重新搜台");
+        inRadioSpeechContent.add("加入订阅");
+        inRadioSpeechContent.add("播放列表");
+        inRadioSpeechContent.add("上一个节目");
+        inRadioSpeechContent.add("倍速播放");
+        inRadioSpeechContent.add("第2个");
+        inRadioSpeechContent.add("最后一个");
+        inRadioSpeechContent.add("关闭播放列表");
+        inRadioSpeechContent.add("倒数第1个");
+        inRadioSpeechContent.add("收起播放列表");
+        inRadioSpeechContent.add("返回上一页");
+        inRadioSpeechContent.add("回到播放器");
+        inRadioSpeechContent.add("关闭电台");
+        inRadioSpeechContent.add("暂停电台");
+
+        inVideoSpeechContent.add("全屏播放");
+        inVideoSpeechContent.add("退出全屏");
+        inVideoSpeechContent.add("暂停视频");
+        inVideoSpeechContent.add("继续播放视频");
+        inVideoSpeechContent.add("下一集");
+        inVideoSpeechContent.add("取消收藏");
+        inVideoSpeechContent.add("关闭视频");
+        inVideoSpeechContent.add("快进播放");
+        inVideoSpeechContent.add("倒退一点");
+        inVideoSpeechContent.add("第3集");
+        inVideoSpeechContent.add("收起播放列表");
+
+        inNewsSpeechContent.add("播放列表");
+        inNewsSpeechContent.add("上一条新闻");
+        inNewsSpeechContent.add("新闻暂停");
+        inNewsSpeechContent.add("回到播放器");
+        inNewsSpeechContent.add("继续播放新闻");
+        inNewsSpeechContent.add("关闭新闻");
+
+        musicContent.add("播放周杰伦的歌");
+        musicContent.add("我要听<时间都去哪了>");
+        musicContent.add("邓丽君的《甜蜜蜜》");
+        musicContent.add("我想听邓紫棋的专辑喜欢你");
+        musicContent.add("周杰伦和蔡依林合唱过什么歌？");
+        musicContent.add("我想听Eson奶茶谭校长的歌 ");
+        musicContent.add("打开音乐");
+        musicContent.add("播放蓝牙音乐");
+        musicContent.add("播放U盘音乐");
+        musicContent.add("我想听收藏的音乐");
+        musicContent.add("音乐暂停");
+        musicContent.add("继续播放");
+        musicContent.add("收藏这首歌");
+        musicContent.add("从头播放");
+
+        radioContent.add("打开收音机");
+        radioContent.add("打开AM");
+        radioContent.add("打开FM");
+        radioContent.add("调频<104.3>");
+        radioContent.add("播放FM<104.3>");
+        radioContent.add("帮我扫描电台");
+        radioContent.add("播放郭德纲的济公传");
+        radioContent.add("我想听百家讲坛");
+        radioContent.add("播放我的订阅");
+        radioContent.add("上个频道");
+        radioContent.add("上个台");
+        radioContent.add("下一台");
+        radioContent.add("换个台");
+        radioContent.add("暂停电台");
+        radioContent.add("暂停节目播放");
+
+        newsContent.add("上一条新闻");
+        newsContent.add("下一条新闻");
+        newsContent.add("换一条新闻 ");
+        newsContent.add("暂停新闻");
+        newsContent.add("继续播放新闻");
+
+        videoContent.add("我想看视频");
+        videoContent.add("我想看周星驰相关的视频");
+        videoContent.add("我想看综艺视频");
+        videoContent.add("帮我找一下有没有大S的综艺节目");
+        videoContent.add("我想看那个最近超火的小视频");
+        videoContent.add("给我推荐点最近比较火的综艺节目");
+        videoContent.add("帮我播放甄嬛传第二十集 ");
+        videoContent.add("我要看甄嬛传");
+        videoContent.add("继续播放西游记");
+        videoContent.add("继续播放上次的视频");
+        videoContent.add("播放USB里的视频");
+        videoContent.add("播放在线视频");
+        videoContent.add("播放我收藏的视频");
+        videoContent.add("上一个视频");
+        videoContent.add("下一个视频");
+        videoContent.add("把视频暂停了");
+        videoContent.add("帮我从头播放这个视频");
+        videoContent.add("播放我收藏的视频");
+        videoContent.add("视频快放");
+        videoContent.add("视频快进5分钟");
+        videoContent.add("视频往回看一点");
+
+        telContent.add("给陈辰打电话");
+        telContent.add("打电话给妈妈");
+        telContent.add("给15998326940打电话");
+        telContent.add("帮我联系下中国移动");
+        telContent.add("帮我重拨号码");
+        telContent.add("帮我回拨一下电话");
+        telContent.add("我的通话记录");
+        telContent.add("看一下妈妈的号码");
+
+        systemContent.add("打开播放列表");
+        systemContent.add("看一下我的收藏");
+        systemContent.add("今天几号");
+        systemContent.add("现在几点");
+        systemContent.add("音量大一点");
+        systemContent.add("减小音量");
+        systemContent.add("调高通话音量");
+        systemContent.add("调小语音音量");
+        systemContent.add("调小多媒体音量");
+        systemContent.add("调小系统音量");
+        systemContent.add("静音");
+        systemContent.add("取消静音");
+        systemContent.add("返回首页");
+        systemContent.add("打开音乐");
+        systemContent.add("打开收音机");
+        systemContent.add("打开视频");
+        systemContent.add("打开新闻");
+        systemContent.add("关闭音乐");
+        systemContent.add("退出音乐");
+        systemContent.add("关闭收音机");
+        systemContent.add("退出收音机");
+        systemContent.add("关闭网络电台");
+        systemContent.add("退出网络电台");
+        systemContent.add("关闭视频");
+        systemContent.add("退出视频");
+        systemContent.add("关闭新闻");
+        systemContent.add("退出新闻");
+        systemContent.add("看看系统版本");
+        systemContent.add("打开WiFi");
+        systemContent.add("关闭WiFi");
+        systemContent.add("打开AP热点");
+        systemContent.add("关闭蓝牙 ");
+        systemContent.add("打开移动数据");
+        systemContent.add("关闭移动数据");
+        systemContent.add("调高屏幕亮度");
+        systemContent.add("打开屏幕");
+        systemContent.add("关掉屏幕");
+        systemContent.add("换一个主题");
+        systemContent.add("查看帮助");
+
+        weatherContent.add("明天天气怎么样");
+        weatherContent.add("南京天气怎么样");
+        weatherContent.add("长春后天的天气怎么样");
+        weatherContent.add("明天会不会下雨");
+        weatherContent.add("现在多少度");
+        weatherContent.add("明天有空气污染吗");
+        weatherContent.add("今天适合洗车吗");
+
+        foodContent.add("附近有什么好吃的");
+        foodContent.add("在水游城商场内给我找个中餐。");
+        foodContent.add("我想去吃小龙虾");
+        foodContent.add("看看奥体大厦边上人均200左右的餐厅");
+        foodContent.add("评价5分的");
+        foodContent.add("水游城商场内的.");
+        foodContent.add("默认排序");
+        foodContent.add("帮我导航去这儿");
+        foodContent.add("打电话给这家");
+        foodContent.add("上一页");
+        foodContent.add("第一个");
+        foodContent.add("第三页");
+        foodContent.add("返回");
+        foodContent.add("取消");
+
+        spotContent.add("推荐点附近的景点玩玩");
+        spotContent.add("上海有什么景点推荐");
+        spotContent.add("5公里范围内的景点推荐");
+        spotContent.add("找找10min能到的。");
+        spotContent.add("下一页");
+        spotContent.add("第三页");
+        spotContent.add("第3个");
+        spotContent.add("返回");
+        spotContent.add("取消");
+
+        hotelContent.add("在附近找一家桔子水晶精选酒店。");
+        hotelContent.add("我要去上海徐家汇，有没有推荐的酒店");
+        hotelContent.add("看一下北京首都大酒店");
+        hotelContent.add("帮我看看美罗附近两公里以内的连锁酒店。");
+        hotelContent.add("我要价格200到300之间的。");
+        hotelContent.add("按价格排序");
+        hotelContent.add("现在导航去第*家");
+        hotelContent.add("我要打电话去第*家");
+        hotelContent.add("上一页");
+        hotelContent.add("下一页");
+        hotelContent.add("第一个");
+        hotelContent.add("第三页");
+        hotelContent.add("返回");
+        hotelContent.add("取消");
+
+        naviContent.add("现在去南京大学要多久 ");
+        naviContent.add("几点能到南京航空航天大学");
+        naviContent.add("距离还有多远");
+        naviContent.add("还有多少公里");
+        naviContent.add("剩多少公里");
+        naviContent.add("还有多远能到");
+        naviContent.add("带我中途去一下龙华路地铁站");
+        naviContent.add("去石榴财智中心");
+        naviContent.add("去石头城路6号");
+        naviContent.add("附近的加油站");
+        naviContent.add("我要去公司");
+        naviContent.add("我要回家");
+        naviContent.add("打开路况");
+        naviContent.add("关闭路况");
+        naviContent.add("打开电子警察");
+        naviContent.add("关闭电子警察");
+
+        eleContent.add("介绍下抬头显示");
+        eleContent.add("空气净化在哪");
+        eleContent.add("如何使用后视镜加热");
+        eleContent.add("刹车液怎么加");
 
     }
 
