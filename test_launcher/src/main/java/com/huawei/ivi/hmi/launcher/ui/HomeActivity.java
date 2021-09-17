@@ -35,21 +35,21 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate() called with: savedInstanceState = [" + savedInstanceState + "]");
         setContentView(R.layout.activity_main);
-        showFragment();
-        startFreeForm(getApplicationContext());
+//        showFragment();
+//        startFreeForm(getApplicationContext());
 //        PackageManager packageManager =
         appWidgetManager = AppWidgetManager.getInstance(getApplicationContext());
-//        ComponentName componentName = new ComponentName("com.huawei.ivi.hmi.aiavm","com.huawei.ivi.hmi.aiavm.AiavmWidgetProvider");
-//        boolean allow = appWidgetManager.bindAppWidgetIdIfAllowed(0,componentName);
-//        Log.d("xLLL", "onCreate: allow"+allow);
-//        if (!allow){
-//            Intent intent = new Intent(AppWidgetManager.ACTION_APPWIDGET_BIND);
-//            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 11);
-//            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_PROVIDER, componentName);
+        ComponentName componentName = new ComponentName("com.huawei.ivi.hmi.aiavm","com.huawei.ivi.hmi.aiavm.AiavmWidgetProvider");
+        boolean allow = appWidgetManager.bindAppWidgetIdIfAllowed(0,componentName);
+        Log.d("xLLL", "onCreate: allow"+allow);
+        if (!allow){
+            Intent intent = new Intent(AppWidgetManager.ACTION_APPWIDGET_BIND);
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, 11);
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_PROVIDER, componentName);
 // This is the options bundle discussed above
 //            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_OPTIONS, options);
-//            startActivityForResult(intent, 100);
-//        }
+            startActivityForResult(intent, 100);
+        }
     }
 
     private void startFreeForm(Context context){
