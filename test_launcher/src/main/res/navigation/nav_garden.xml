@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/main_fragment">
+
+    <fragment
+        android:id="@+id/main_fragment"
+        android:name="com.huawei.ivi.hmi.launcher.ui.MainFragment">
+
+        <action
+            android:id="@+id/action_main_to_server"
+            app:destination="@id/server_fragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"/>
+
+        <action
+            android:id="@+id/action_main_to_control"
+            app:destination="@id/control_fragment"
+            app:enterAnim="@anim/slide_in_top"
+            app:exitAnim="@anim/slide_out_bottom"
+            app:popEnterAnim="@anim/slide_in_bottom"
+            app:popExitAnim="@anim/slide_out_top"
+             />
+
+        <action
+            android:id="@+id/action_main_to_task"
+            app:destination="@id/task_fragment"
+            app:enterAnim="@anim/slide_in_bottom"
+            app:exitAnim="@anim/slide_out_top"
+            app:popEnterAnim="@anim/slide_in_top"
+            app:popExitAnim="@anim/slide_out_bottom"
+            />
+
+
+    </fragment>
+
+    <fragment android:id="@+id/server_fragment"
+        android:name="com.huawei.ivi.hmi.launcher.ui.ServerFragment">
+
+
+    </fragment>
+
+    <fragment android:id="@+id/control_fragment"
+        android:name="com.huawei.ivi.hmi.launcher.ui.ControlFragment">
+
+    </fragment>
+
+    <fragment android:id="@+id/task_fragment"
+        android:name="com.huawei.ivi.hmi.launcher.ui.TaskFragment">
+
+    </fragment>
+
+
+    <action android:id="@+id/action_global_mainFragment"
+        app:destination="@id/main_fragment">
+        <argument
+            android:name="index"
+            app:argType="integer"
+            android:defaultValue="-1"
+            />
+    </action>
+
+</navigation>

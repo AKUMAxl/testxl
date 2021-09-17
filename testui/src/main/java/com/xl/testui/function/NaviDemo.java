@@ -47,7 +47,7 @@ public class NaviDemo {
             VoiceActionID.ACTION_DCS_COMMON_SHOW_HOTEL_DETAIL,//酒店详情
             VoiceActionID.ACTION_VOICE_IVOKA_HOTEL_CANCEL,//保留
             VoiceActionID.ACTION_VOICE_RESTAURANT_DETAIL,//美食详情
-            VoiceActionID.ACTION_TOURIS_TATTRACTION_DETAIL,//景点相关
+            VoiceActionID.ACTION_TOURIS_TATTRACTION_DETAIL,//景点详情
             VoiceActionID.ACTION_VOICE_IVOKA_NUMBER_TYPE,//第几个第几个
             VoiceActionID.ACTION_VOICE_CHARGING_STATION_QUERY,//充电桩相关
             VoiceActionID.ACTION_VOICE_CHARGING_STATION_DETAIL,//充电桩相关

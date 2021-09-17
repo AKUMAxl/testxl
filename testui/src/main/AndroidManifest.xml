@@ -44,11 +44,22 @@
         android:theme="@style/Theme.Testxl"
         android:hardwareAccelerated="true">
         <activity android:name=".MainActivity"
+            android:exported="true"
             android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name=" android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".FreeFormActivity"
+            android:exported="true"
+            android:launchMode="singleInstance">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name=" android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
     </application>

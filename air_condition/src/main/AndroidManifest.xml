@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.air_condition">
+    package="com.huawei.ivi.hmi.aircondition">
 
     <application
         android:allowBackup="true"

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="clickFreeForm"
+            type="android.view.View.OnClickListener" />
+        <variable
+            name="clickServer"
+            type="android.view.View.OnClickListener" />
+        <variable
+            name="clickTask"
+            type="android.view.View.OnClickListener" />
+        <variable
+            name="clickControl"
+            type="android.view.View.OnClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/btn_to_free_form"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="96dp"
+            android:text="FREE_FORM"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:onClick="@{clickFreeForm}"/>
+
+        <Button
+            android:id="@+id/btn_to_server"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="204dp"
+            android:onClick="@{clickServer}"
+            android:text="TO_SERVER"
+            app:layout_constraintHorizontal_bias="0.506"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_to_control"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TO_CONTROL"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/btn_to_task"
+            app:layout_constraintHorizontal_bias="0.561"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/btn_to_task"
+            app:layout_constraintTop_toBottomOf="@+id/btn_to_task"
+            android:onClick="@{clickControl}"/>
+
+        <Button
+            android:id="@+id/btn_to_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="188dp"
+            android:text="TO_TASK"
+            app:layout_constraintEnd_toEndOf="@+id/btn_to_server"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/btn_to_server"
+            app:layout_constraintTop_toBottomOf="@+id/btn_to_server"
+            android:onClick="@{clickTask}"/>
+
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="20dp"
+            android:layout_height="100dp"
+            android:background="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

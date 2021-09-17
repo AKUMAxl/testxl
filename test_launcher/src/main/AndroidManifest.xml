@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.huawei.ivi.hmi.launcher"
+    android:compileSdkVersion="30"
+    android:compileSdkVersionCodename="11"
+    >
+
+    <!--android:sharedUserId="android.uid.system"-->
+
+    <application
+        android:allowBackup="true"
+        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+        android:extractNativeLibs="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Launcher">
+        <activity
+            android:name="com.huawei.ivi.hmi.launcher.ui.HomeActivity"
+            android:exported="true"
+            android:screenOrientation="landscape"
+            android:stateNotNeeded="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.HOME" />
+            </intent-filter>
+        </activity>
+
+
+        <service
+            android:name="com.huawei.ivi.hmi.launcher.LaunchService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="dsv.launcher.permission.LAUNCH_SERVICE">
+            <intent-filter>
+                <action android:name="dsv.launcher.action.init" />
+                <action android:name="dsv.launcher.action.launch" />
+                <action android:name="dsv.launcher.action.enter" />
+            </intent-filter>
+        </service>
+    </application>
+
+    <permission
+        android:name="dsv.launcher.permission.LAUNCH_SERVICE"
+        android:protectionLevel="normal" />
+    <permission
+        android:name="dsv.launcher.permission.PLAY_SOUND"
+        android:protectionLevel="normal" />
+    <permission
+        android:name="dsv.launcher.permission.LOG_SERVICE"
+        android:protectionLevel="normal" />
+
+    <permission
+        android:name="dsv.tbox.permission.CALL"
+        android:protectionLevel="normal" />
+
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+    <uses-permission android:name="android.permission.INTERNAL_SYSTEM_WINDOW" />
+    <uses-permission android:name="android.permission.STATUS_BAR_SERVICE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="dsv.systemui.permission.CHILLER_SERVICE" />
+    <uses-permission android:name="ohos.permission.vehicle.CUSTOM_BUTTON" />
+    <uses-permission android:name="ohos.permission.vehicle.STEERING_WHEEL_INFO" />
+    <uses-permission android:name="ohos.permission.vehicle.DRIVING_MODE_INFO" />
+    <uses-permission android:name="ohos.permission.vehicle.CONTROL_DRIVING_MODE" />
+    <uses-permission android:name="ohos.permission.vehicle.PARKING_ASSIST_INFO" />
+    <uses-permission android:name="ohos.permission.vehicle.CONTROL_PARKING_ASSIST" />
+    <uses-permission android:name="ohos.permission.vehicle.TBOX_INFO" />
+    <uses-permission android:name="ohos.permission.vehicle.CONTROL_TBOX_XCALL" />
+    <uses-permission android:name="ohos.permission.vehicle.DOORS_INFO" />
+    <uses-permission android:name="ohos.permission.vehicle.CONTROL_DOORS" />
+
+    <uses-permission android:name="dsv.launcher.permission.LOG_SERVICE" />
+</manifest>
