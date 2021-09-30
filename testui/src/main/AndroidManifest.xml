@@ -74,6 +74,16 @@
                 <action android:name="android.net.wifi.p2p.DISCOVERY_STATE_CHANGE"/>
             </intent-filter>
         </receiver>
+        <receiver android:name=".BootReceiver">
+            <intent-filter android:priority="999">
+                <!-- 开机完成✅ 启动完成✅  开机是危险的行为，需要权限 -->
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <!-- 关机 -->
+                <action android:name="android.intent.action.ACTION_SHUTDOWN" />
+                <!-- 测试 -->
+                <action android:name="com.test.test"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

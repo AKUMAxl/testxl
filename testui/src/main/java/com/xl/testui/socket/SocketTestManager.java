@@ -22,12 +22,10 @@ import com.google.gson.reflect.TypeToken;
 import com.xl.testui.R;
 import com.xl.testui.bean.Device;
 import com.xl.testui.bean.MessageBean;
-import com.xl.testui.util.MacConfigUtil;
+import com.xl.testui.util.DeviceConfigUtil;
 
 import java.lang.reflect.Type;
-import java.net.NetworkInterface;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -194,37 +192,8 @@ public class SocketTestManager implements P2pInfoListener, MessageCallback {
             @Override
             public void onClick(View v) {
 //                p2pConnectDevices();
-
-                for (Device device : MacConfigUtil.getDevicesInfo()) {
-                    Log.d(TAG, "onClick() called with: device = [" + device.toString() + "]");
-                }
-                try {
-                    List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
-                    Log.d(TAG, "onClick() called with: v = [" + all.size() + "]");
-                    for (NetworkInterface nif : all) {
-//                        if (!nif.getName().equalsIgnoreCase("wlan0")) {
-//                            continue;
-//                        }
-                        byte[] macBytes = nif.getHardwareAddress();
-                        if (macBytes == null) {
-                            Log.d(TAG, "NetworkInterface called with: "+nif.getName()+" [macBytes is null]");
-                            continue;
-                        }
-
-                        StringBuilder res1 = new StringBuilder();
-                        for (byte b : macBytes) {
-                            res1.append(String.format("%02X:", b));
-                        }
-                        if (res1.length() > 0) {
-                            res1.deleteCharAt(res1.length() - 1);
-                        }
-                        Log.d(TAG, "NetworkInterface called with: "+nif.getName()+" [" + res1.toString() + "]");
-//return res1.toString();
-                    }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-
+//                MacConfigUtil.getP2pIp();
+                DeviceConfigUtil.getIMEI();
             }
         });
         mRootView.findViewById(R.id.test_p2p_cancel_connect).setOnClickListener(new View.OnClickListener() {
@@ -430,14 +399,19 @@ public class SocketTestManager implements P2pInfoListener, MessageCallback {
                 case RECEIVE_MSG:
                     Log.d(TAG, "handleMessage() called with: msg = RECEIVE_MSG");
                     String msgStr = (String) msg.obj;
+                    Log.d(TAG, "handleMessage() called with: jsonStr = "+msgStr);
                     Gson gson = new Gson();
                     Type type = new TypeToken<MessageBean<Device>>() {}.getType();
-                    MessageBean messageBean = gson.fromJson(msgStr,type);
-                    Log.d(TAG, "handleMessage() called with: "+messageBean.getData().toString());
-                    if (messageBean.getType()==1){
-                        Log.d(TAG, "handleMessage() called with: getLength = [" + messageBean.getLength() + "]");
-                        Device device = (Device) messageBean.getData();
-                        Log.d(TAG, "handleMessage() called with: getLength = [" + device.getName() + "]");
+                    try {
+                        MessageBean messageBean = gson.fromJson(msgStr,type);
+                        Log.d(TAG, "handleMessage() called with: "+messageBean.getData().toString());
+                        if (messageBean.getType()==1){
+                            Log.d(TAG, "handleMessage() called with: getLength = [" + messageBean.getLength() + "]");
+                            Device device = (Device) messageBean.getData();
+                            Log.d(TAG, "handleMessage() called with: getLength = [" + device.getName() + "]");
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
                     }
                     break;
                 default:

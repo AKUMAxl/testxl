@@ -7,8 +7,9 @@ import android.net.wifi.p2p.WifiP2pManager;
 
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
+import com.xl.testui.socket.P2pManager;
 import com.xl.testui.socket.P2pReceiver;
-import com.xl.testui.util.MacConfigUtil;
+import com.xl.testui.util.DeviceConfigUtil;
 
 public class App extends Application {
 
@@ -31,8 +32,16 @@ public class App extends Application {
         intentFilter.addAction(WifiP2pManager.WIFI_P2P_DISCOVERY_CHANGED_ACTION);
         registerReceiver(p2pReceiver, intentFilter);
 
-        MacConfigUtil.initMacConfig(getApplicationContext());
+        BootReceiver bootReceiver = new BootReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.intent.action.BOOT_COMPLETED");
+        filter.addAction("com.android.internal.intent.action.REQUEST_SHUTDOWN");
+        filter.addAction("com.test.test");
+        getApplicationContext().registerReceiver(bootReceiver,filter);
 
+        DeviceConfigUtil.initMacConfig(getApplicationContext());
 
+        P2pManager.getInstance().init(getApplicationContext());
+        P2pManager.getInstance().startP2pService();
     }
 }

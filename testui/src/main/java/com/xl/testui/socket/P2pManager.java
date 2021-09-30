@@ -2,7 +2,6 @@ package com.xl.testui.socket;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.net.wifi.WifiManager;
 import android.net.wifi.WpsInfo;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
@@ -12,7 +11,6 @@ import android.net.wifi.p2p.WifiP2pInfo;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.net.wifi.p2p.nsd.WifiP2pDnsSdServiceInfo;
 import android.net.wifi.p2p.nsd.WifiP2pDnsSdServiceRequest;
-import android.net.wifi.p2p.nsd.WifiP2pServiceInfo;
 import android.net.wifi.p2p.nsd.WifiP2pUpnpServiceInfo;
 import android.net.wifi.p2p.nsd.WifiP2pUpnpServiceRequest;
 import android.os.Handler;
@@ -27,17 +25,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
 import androidx.annotation.NonNull;
+
+import com.xl.testui.util.DeviceConfigUtil;
 
 public class P2pManager {
 
     private static final String TAG = P2pManager.class.getSimpleName();
 
     public static final String THREAD_NAME = "NET_THREAD";
-
+    public static final String DNSSD_INSTANCE_NAME = "QI_RUI";
     private static final int MSG_START_SERVICE = 1;
     private static final int MSG_SCAN_DEVICE = 2;
     private static final int MSG_STOP_SERVICE = 3;
@@ -59,7 +60,9 @@ public class P2pManager {
         public void onDnsSdTxtRecordAvailable(
                 String fullDomain, Map record, WifiP2pDevice device) {
             Log.d(TAG, "serviceAvailable onDnsSdTxtRecordAvailable() called with: fullDomain = [" + fullDomain + "], record = [" + record + "], device = [" + device + "]");
-
+            if (fullDomain.contains(DNSSD_INSTANCE_NAME.toLowerCase(Locale.ROOT))){
+                connectDevice(device);
+            }
         }
     };
     private WifiP2pManager.DnsSdServiceResponseListener mDnsSdServiceResponseListener = new WifiP2pManager.DnsSdServiceResponseListener() {
@@ -67,6 +70,7 @@ public class P2pManager {
         public void onDnsSdServiceAvailable(String instanceName, String registrationType,
                                             WifiP2pDevice resourceType) {
             Log.d(TAG, "serviceAvailable onDnsSdServiceAvailable() called with: instanceName = [" + instanceName + "], registrationType = [" + registrationType + "], resourceType = [" + resourceType + "]");
+
         }
     };
     private WifiP2pManager.UpnpServiceResponseListener mUpnpServiceResponseListener = new WifiP2pManager.UpnpServiceResponseListener() {
@@ -125,62 +129,92 @@ public class P2pManager {
         if (mWifiP2pManager == null) {
             return;
         }
-        //可加入以下键值信息广播给其他人
-        Map record = new HashMap();
-        record.put("listenport", String.valueOf(8888));
-        record.put("buddyname", "John Doe" + (int) (Math.random() * 1000));
-        record.put("available", "visible");
-//        WifiP2pDnsSdServiceInfo serviceInfo = WifiP2pDnsSdServiceInfo.newInstance("XLTEST", "_ipp._tcp", record);
+        startDnssdService();
+//        startUpnpService();
+    }
+
+
+    @SuppressLint("MissingPermission")
+    private void startUpnpService() {
         String uuid = UUID.randomUUID().toString();
-        Log.d(TAG, "startP2pService() called uuid:"+uuid);
-        WifiP2pUpnpServiceInfo serviceInfo = WifiP2pUpnpServiceInfo.newInstance(uuid, "_ipp._tcp", new ArrayList<>());
-        mWifiP2pManager.addLocalService(mChannel, serviceInfo, new WifiP2pManager.ActionListener() {
+        Log.d(TAG, "startP2pService() called uuid:" + uuid);
+        WifiP2pUpnpServiceInfo serviceInfoUpnp = WifiP2pUpnpServiceInfo.newInstance(uuid, "_ipp._tcp", new ArrayList<>());
+        mWifiP2pManager.addLocalService(mChannel, serviceInfoUpnp, new WifiP2pManager.ActionListener() {
             @Override
             public void onSuccess() {
-                Log.d(TAG, "addLocalService onSuccess() called");
+                Log.d(TAG, "upnp addLocalService onSuccess() called");
             }
 
             @Override
             public void onFailure(int arg0) {
-                Log.d(TAG, "addLocalService onFailure() called with: arg0 = [" + arg0 + "]");
+                Log.d(TAG, "upnp addLocalService onFailure() called with: arg0 = [" + arg0 + "]");
             }
         });
-
     }
 
+    @SuppressLint("MissingPermission")
+    private void startDnssdService(){
+        Map data = new HashMap();
+        data.put("service_port", String.valueOf(37000));
+        data.put("p2p_mac", DeviceConfigUtil.getP2pMac());
 
+        WifiP2pDnsSdServiceInfo serviceInfoDnssd = WifiP2pDnsSdServiceInfo.newInstance(DNSSD_INSTANCE_NAME,"_ipp._tcp", data);
+        mWifiP2pManager.addLocalService(mChannel, serviceInfoDnssd, new WifiP2pManager.ActionListener() {
+            @Override
+            public void onSuccess() {
+                Log.d(TAG, "Dnssd addLocalService onSuccess() called");
+            }
+
+            @Override
+            public void onFailure(int arg0) {
+                Log.d(TAG, "Dnssd addLocalService onFailure() called with: arg0 = [" + arg0 + "]");
+            }
+        });
+    }
 
     @SuppressLint("MissingPermission")
     public void discoverService() {
-//        mWifiP2pManager.setDnsSdResponseListeners(mChannel, mDnsSdServiceResponseListener, mDnsSdTxtRecordListener);
-//        WifiP2pDnsSdServiceRequest dnsSdServiceRequest = WifiP2pDnsSdServiceRequest.newInstance();
-//        mWifiP2pManager.addServiceRequest(mChannel, dnsSdServiceRequest, new WifiP2pManager.ActionListener() {
-//            @Override
-//            public void onSuccess() {
-//                Log.d(TAG, "dnsSd addServiceRequest onSuccess() called");
-//                mWifiP2pManager.discoverServices(mChannel, new WifiP2pManager.ActionListener() {
-//                    @Override
-//                    public void onSuccess() {
-//                        Log.d(TAG, "discoverServices onSuccess() called");
-//                    }
-//
-//                    @Override
-//                    public void onFailure(int reason) {
-//                        Log.d(TAG, "discoverServicesonFailure() called with: reason = [" + reason + "]");
-//                        parseActionListenerOnFailure(reason);
-//                    }
-//                });
-//            }
-//
-//            @Override
-//            public void onFailure(int reason) {
-//                Log.d(TAG, "dnsSd addServiceRequest onFailure() called with: reason = [" + reason + "]");
-//                parseActionListenerOnFailure(reason);
-//            }
-//        });
+        discoverDnssdService();
+//        discoverUpnpService();
+//        mWifiP2pManager.setServiceResponseListener(mChannel,mServiceResponseListener);
+
+    }
+
+    private void discoverDnssdService(){
+        mWifiP2pManager.setDnsSdResponseListeners(mChannel, mDnsSdServiceResponseListener, mDnsSdTxtRecordListener);
+        WifiP2pDnsSdServiceRequest dnsSdServiceRequest = WifiP2pDnsSdServiceRequest.newInstance();
+        mWifiP2pManager.addServiceRequest(mChannel, dnsSdServiceRequest, new WifiP2pManager.ActionListener() {
+            @SuppressLint("MissingPermission")
+            @Override
+            public void onSuccess() {
+                Log.d(TAG, "dnsSd addServiceRequest onSuccess() called");
+                mWifiP2pManager.discoverServices(mChannel, new WifiP2pManager.ActionListener() {
+                    @Override
+                    public void onSuccess() {
+                        Log.d(TAG, "discoverServices onSuccess() called");
+                    }
+
+                    @Override
+                    public void onFailure(int reason) {
+                        Log.d(TAG, "discoverServicesonFailure() called with: reason = [" + reason + "]");
+                        parseActionListenerOnFailure(reason);
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(int reason) {
+                Log.d(TAG, "dnsSd addServiceRequest onFailure() called with: reason = [" + reason + "]");
+                parseActionListenerOnFailure(reason);
+            }
+        });
+    }
+
+    private void discoverUpnpService(){
         mWifiP2pManager.setUpnpServiceResponseListener(mChannel,mUpnpServiceResponseListener);
         WifiP2pUpnpServiceRequest upnpServiceRequest = WifiP2pUpnpServiceRequest.newInstance();
         mWifiP2pManager.addServiceRequest(mChannel, upnpServiceRequest, new WifiP2pManager.ActionListener() {
+            @SuppressLint("MissingPermission")
             @Override
             public void onSuccess() {
                 Log.d(TAG, "Upnp addServiceRequest onSuccess() called");
@@ -204,8 +238,6 @@ public class P2pManager {
                 parseActionListenerOnFailure(reason);
             }
         });
-//        mWifiP2pManager.setServiceResponseListener(mChannel,mServiceResponseListener);
-
     }
 
     @SuppressLint("MissingPermission")
@@ -283,6 +315,7 @@ public class P2pManager {
 
     @SuppressLint("MissingPermission")
     public void connectDevice(WifiP2pDevice wifiP2pDevice) {
+        Log.d(TAG, "connectDevice() called with: wifiP2pDevice = [" + wifiP2pDevice.deviceName + "]");
         WifiP2pConfig config = new WifiP2pConfig();
         config.deviceAddress = wifiP2pDevice.deviceAddress;
         config.wps.setup = WpsInfo.PBC;
@@ -290,7 +323,7 @@ public class P2pManager {
             @Override
             public void onSuccess() {
                 Log.d(TAG, "connectDevice onSuccess() called");
-                requestConnectedDeviceInfo();
+//                requestConnectedDeviceInfo();
                 mWifiP2pManager.stopPeerDiscovery(mChannel, new WifiP2pManager.ActionListener() {
                     @Override
                     public void onSuccess() {
@@ -364,7 +397,6 @@ public class P2pManager {
                 for (WifiP2pDevice device : group.getClientList()) {
                     Log.d(TAG, "onGroupInfoAvailable() called with: client device = [" + device.toString() + "] is group owner:" + device.isGroupOwner());
                     Log.d(TAG, "onGroupInfoAvailable() called with: client device deviceAddress = [" + device.deviceAddress + "]");
-
                     Pair<String, String> macAndDeviceName = new Pair<>(device.deviceAddress, device.deviceName);
                     macAndDevicesName.add(macAndDeviceName);
                 }
