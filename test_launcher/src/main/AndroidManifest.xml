@@ -19,7 +19,6 @@
         <activity
             android:name="com.huawei.ivi.hmi.launcher.ui.HomeActivity"
             android:exported="true"
-            android:screenOrientation="landscape"
             android:stateNotNeeded="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
