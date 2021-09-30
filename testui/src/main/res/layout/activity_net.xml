@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+        <Button
+            android:id="@+id/btn_start_dnssd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="启动DNSSD服务"/>
+
+        <Button
+            android:id="@+id/btn_close_dnssd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="关闭DNSSD服务"/>
+
+        <Button
+            android:id="@+id/btn_discover_dnssd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="查找DNSSD服务"/>
+        <Button
+            android:id="@+id/btn_stop_discover"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="停止查找DNSSD服务"/>
+        <Button
+            android:id="@+id/btn_create_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="创建群组"/>
+
+        <Button
+            android:id="@+id/btn_exit_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="退出群组"/>
+
+        <Button
+            android:id="@+id/btn_scan_device"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="扫描设备"/>
+
+        <Button
+            android:id="@+id/btn_stop_scan_device"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="停止扫描"/>
+
+        <Button
+            android:id="@+id/btn_query_client"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="查找客户端"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_p2p_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="P2PClient设备："/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_client_devices"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="P2P设备："/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_devices"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </LinearLayout>
+
+</LinearLayout>

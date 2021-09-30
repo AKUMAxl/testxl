@@ -172,6 +172,21 @@ public class P2pManager {
         });
     }
 
+    public void closeDnssdUpnpService(){
+        mWifiP2pManager.clearLocalServices(mChannel, new WifiP2pManager.ActionListener() {
+            @Override
+            public void onSuccess() {
+                Log.d(TAG, "closeDnssdUpnpService onSuccess() called");
+            }
+
+            @Override
+            public void onFailure(int reason) {
+                Log.d(TAG, "closeDnssdUpnpService onFailure() called with: reason = [" + reason + "]");
+                parseActionListenerOnFailure(reason);
+            }
+        });
+    }
+
     @SuppressLint("MissingPermission")
     public void discoverService() {
         discoverDnssdService();
@@ -240,6 +255,21 @@ public class P2pManager {
         });
     }
 
+    public void stopDiscoverService(){
+        mWifiP2pManager.clearServiceRequests(mChannel, new WifiP2pManager.ActionListener() {
+            @Override
+            public void onSuccess() {
+                Log.d(TAG, "stopDiscoverService onSuccess() called");
+            }
+
+            @Override
+            public void onFailure(int reason) {
+                Log.d(TAG, "stopDiscoverService onFailure() called with: reason = [" + reason + "]");
+                parseActionListenerOnFailure(reason);
+            }
+        });
+    }
+
     @SuppressLint("MissingPermission")
     public void createGroup() {
         if (mWifiP2pManager == null) {
@@ -263,7 +293,21 @@ public class P2pManager {
                 }
             }
         });
+    }
 
+    public void exitGroup(){
+        mWifiP2pManager.removeGroup(mChannel, new WifiP2pManager.ActionListener() {
+            @Override
+            public void onSuccess() {
+                Log.d(TAG, "exitGroup onSuccess() called");
+            }
+
+            @Override
+            public void onFailure(int reason) {
+                Log.d(TAG, "exitGroup onFailure() called with: reason = [" + reason + "]");
+                parseActionListenerOnFailure(reason);
+            }
+        });
     }
 
     /**
@@ -309,6 +353,20 @@ public class P2pManager {
                     devices.add(device);
                 }
                 mP2pInfoListener.onDevicesUpdate(devices);
+            }
+        });
+    }
+
+    public void stopRequestPeer(){
+        mWifiP2pManager.stopPeerDiscovery(mChannel, new WifiP2pManager.ActionListener() {
+            @Override
+            public void onSuccess() {
+                Log.d(TAG, "stopRequestPeer onSuccess() called");
+            }
+
+            @Override
+            public void onFailure(int reason) {
+                Log.d(TAG, "stopRequestPeer onFailure() called with: reason = [" + reason + "]");
             }
         });
     }

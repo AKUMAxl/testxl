@@ -3,6 +3,7 @@ package com.xl.testui;
 import android.app.Application;
 import android.content.IntentFilter;
 import android.net.wifi.p2p.WifiP2pManager;
+import android.util.Log;
 
 
 import com.iflytek.cloud.SpeechConstant;
@@ -40,8 +41,6 @@ public class App extends Application {
         getApplicationContext().registerReceiver(bootReceiver,filter);
 
         DeviceConfigUtil.initMacConfig(getApplicationContext());
-
-        P2pManager.getInstance().init(getApplicationContext());
-        P2pManager.getInstance().startP2pService();
+        Log.d("xLLL","application onCreate");
     }
 }

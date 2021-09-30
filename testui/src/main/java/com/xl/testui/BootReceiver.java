@@ -29,7 +29,8 @@ public class BootReceiver extends BroadcastReceiver {
 
     private void startP2pService(Context context){
         P2pManager.getInstance().init(context);
-        P2pManager.getInstance().startP2pService();
+//        P2pManager.getInstance().startP2pService();
+        P2pManager.getInstance().discoverPeer();
     }
 
 }

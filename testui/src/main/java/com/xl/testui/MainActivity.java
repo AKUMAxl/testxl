@@ -97,21 +97,35 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         mActivityMainBinding.btnTestSocket.setOnClickListener(v -> {
-            if (checkPermission()){
+//            if (checkPermission()){
+//                requestPermission();
+//                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//                    // TODO: Consider calling
+//                    //    ActivityCompat#requestPermissions
+//                    // here to request the missing permissions, and then overriding
+//                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//                    //                                          int[] grantResults)
+//                    // to handle the case where the user grants the permission. See the documentation
+//                    // for ActivityCompat#requestPermissions for more details.
+//                    Log.d("xLLL", "checkSelfPermission ACCESS_FINE_LOCATION not grant");
+//                    return;
+//                }
+//                SocketTestManager.getInstance().init(this, mWindowManager);
+//            }
+//
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
                 requestPermission();
-                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    Log.d("xLLL", "checkSelfPermission ACCESS_FINE_LOCATION not grant");
-                    return;
-                }
-                SocketTestManager.getInstance().init(this, mWindowManager);
+                Log.d("xLLL", "checkSelfPermission ACCESS_FINE_LOCATION not grant");
+                return;
             }
+            startActivity(new Intent(this,NetActivity.class));
         });
 //        checkWPermission();
     }
