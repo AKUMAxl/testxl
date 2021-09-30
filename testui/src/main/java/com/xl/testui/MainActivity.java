@@ -98,7 +98,19 @@ public class MainActivity extends AppCompatActivity {
         });
         mActivityMainBinding.btnTestSocket.setOnClickListener(v -> {
             if (checkPermission()){
-                SocketTestManager.getInstance().init(getApplicationContext(), mWindowManager);
+                requestPermission();
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    // TODO: Consider calling
+                    //    ActivityCompat#requestPermissions
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    Log.d("xLLL", "checkSelfPermission ACCESS_FINE_LOCATION not grant");
+                    return;
+                }
+                SocketTestManager.getInstance().init(this, mWindowManager);
             }
         });
 //        checkWPermission();
@@ -129,6 +141,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private final static int REQ_CODE = 100;
+    private static final String[] permissions = {
+            Manifest.permission.ACCESS_FINE_LOCATION
+    };
+
+    private void requestPermission(){
+        requestPermissions(permissions,REQ_CODE);
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -144,6 +165,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivityForResult(intent, 1);
+                return false;
             }else {
                 Log.d("xLLL","has voerlay permission");
             }

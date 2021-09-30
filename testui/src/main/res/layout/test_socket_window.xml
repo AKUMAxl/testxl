@@ -1,50 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center">
 
-    <Button
-        android:id="@+id/test_socket_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="BACK"/>
+    <LinearLayout
+        android:layout_width="100dp"
+        android:layout_height="400dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_p2p_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="P2PClient设备："/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_client_devices"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="100dp"
+        android:layout_height="400dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="P2P设备："/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_devices"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/test_socket_start_service"
+    <ScrollView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="start_service"/>
+        android:layout_height="400dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/test_socket_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BACK"/>
 
-    <Button
-        android:id="@+id/test_socket_close_service"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="close_service"/>
+            <Button
+                android:id="@+id/test_socket_start_service"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="启动服务端"/>
 
-    <Button
-        android:id="@+id/test_socket_service_send_msg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="service_send_msg"/>
+            <Button
+                android:id="@+id/test_socket_close_service"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="关闭服务端"/>
 
-    <Button
-        android:id="@+id/test_socket_start_client"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="start_client"/>
+            <Button
+                android:id="@+id/test_socket_service_send_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="服务端发送消息"/>
 
-    <Button
-        android:id="@+id/test_socket_close_client"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="close_client"/>
+            <Button
+                android:id="@+id/test_socket_start_client"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="启动客户端"/>
 
-    <Button
-        android:id="@+id/test_socket_client_send_msg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="client_send_msg"/>
+            <Button
+                android:id="@+id/test_socket_close_client"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="关闭客户端"/>
+
+            <Button
+                android:id="@+id/test_socket_client_send_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="客户端发送消息"/>
+
+            <Button
+                android:id="@+id/test_p2p_service_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="启动P2P服务"/>
+
+            <Button
+                android:id="@+id/test_p2p_create_group"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="创建p2p群组"/>
+
+            <Button
+                android:id="@+id/test_p2p_group_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="p2p群组信息"/>
+
+            <Button
+                android:id="@+id/test_p2p_scan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="扫描P2P设备"/>
+
+            <Button
+                android:id="@+id/test_p2p_connect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="加入群组"/>
+
+            <Button
+                android:id="@+id/test_p2p_cancel_connect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="退出群组"/>
+
+            <Button
+                android:id="@+id/test_p2p_service_stop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="停止P2P"/>
+
+            <Button
+                android:id="@+id/test_p2p_search_service"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="搜索P2P服务"/>
+        </LinearLayout>
+
+    </ScrollView>
+
 
 </LinearLayout>

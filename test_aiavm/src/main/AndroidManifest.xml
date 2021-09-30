@@ -1,23 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.huawei.ivi.hmi.aiavm">
 
     <application
+        android:resizeableActivity="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:resizeableActivity="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:documentLaunchMode="always"
+        android:excludeFromRecents="true"
+        android:launchMode="singleTask"
         android:theme="@style/Theme.Testxl">
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:launchMode="singleInstance"
+            android:taskAffinity=""
+            android:configChanges="screenSize|smallestScreenSize
+      |screenLayout|orientation">
+            <layout
+                android:defaultHeight="200dp"
+                android:defaultWidth="200dp"
+                android:gravity="top|start"
+                android:minWidth="20dp"
+                android:minHeight="20dp" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".AiavmActivity"
+            android:exported="true"
+            android:launchMode="singleInstance"
+            android:documentLaunchMode="always"
+            android:excludeFromRecents="true"
+            android:theme="@style/Taskbar.InvisibleActivity"
+            android:taskAffinity="com.xl"
+            >
+
+            <!--android:theme="@style/Taskbar.InvisibleActivity"-->
+            <!--<layout
+                android:gravity="top|start"
+                android:defaultHeight="560dp"
+                android:defaultWidth="960dp"
+                android:minWidth="960dp"
+                android:minHeight="560dp"
+                tools:targetApi="n"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                />-->
         </activity>
         <receiver android:name=".AiavmWidgetProvider"
             android:exported="true">
