@@ -16,6 +16,10 @@ public class BaseMessager extends Thread{
         this.mMessageCallback = null;
     }
 
+    public void sendMsg(String jsonStr,String destName){
+
+    }
+
     public void callbackMessage(String content){
         if (mMessageCallback!=null){
             mMessageCallback.receiveMsg(content);

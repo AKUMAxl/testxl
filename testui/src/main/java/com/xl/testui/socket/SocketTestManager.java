@@ -301,7 +301,7 @@ public class SocketTestManager implements P2pInfoListener, MessageCallback {
             messageBean.setData(device);
             messageBean.setType(1);
             messageBean.setLength(123);
-            mClientMessager.sendMsg(gson.toJson(messageBean));
+//            mClientMessager.sendMsg(gson.toJson(messageBean));
         }
     }
 

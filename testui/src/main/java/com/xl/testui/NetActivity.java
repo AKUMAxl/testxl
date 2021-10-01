@@ -1,11 +1,17 @@
 package com.xl.testui;
 
+import static com.xl.testui.socket.DeviceConstant.HW_HOST;
+import static com.xl.testui.socket.DeviceConstant.HW_REAR;
+import static com.xl.testui.socket.DeviceConstant.LANTU;
+
 import android.app.Activity;
 import android.net.wifi.p2p.WifiP2pDevice;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
@@ -21,13 +27,17 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.xl.testui.bean.Device;
 import com.xl.testui.bean.MessageBean;
+import com.xl.testui.socket.BaseMessager;
+import com.xl.testui.socket.ClientMessager;
 import com.xl.testui.socket.IPMapping;
 import com.xl.testui.socket.MessageCallback;
 import com.xl.testui.socket.P2pClientDevicesAdapter;
 import com.xl.testui.socket.P2pDevicesAdapter;
-import com.xl.testui.socket.P2pInfoListener;
+import com.xl.testui.socket.P2pInfoListener;import com.xl.testui.socket.SocketTestManager;
 import com.xl.testui.socket.P2pManager;
+import com.xl.testui.socket.ServiceMessager;
 import com.xl.testui.socket.SocketTestManager;
+import com.xl.testui.util.DeviceConfigUtil;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -52,13 +62,20 @@ public class NetActivity extends Activity implements P2pInfoListener, MessageCal
             btnExitGroup,
             btnScanDevice,
             btnStopScanDevice,
-            btnQueryClient;
+            btnQueryClient,
+            btnCloseSocket,
+            btnSendMsgLt,
+            btnSendMsgHwHost,
+            btnSendMsgHwRear;
 
     private RecyclerView mDevicesRv, mClientDevicesRv;
     private P2pDevicesAdapter mDevicesAdapter;
     private P2pClientDevicesAdapter mClientDevicesAdapter;
 
     private UIHandler mHandler;
+
+    private ServiceMessager mServiceMessager;
+    private ClientMessager mClientMessager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,7 +93,10 @@ public class NetActivity extends Activity implements P2pInfoListener, MessageCal
         btnScanDevice = findViewById(R.id.btn_scan_device);
         btnStopScanDevice = findViewById(R.id.btn_stop_scan_device);
         btnQueryClient = findViewById(R.id.btn_query_client);
-
+        btnCloseSocket = findViewById(R.id.btn_close_socket);
+        btnSendMsgLt = findViewById(R.id.btn_send_msg_lt);
+        btnSendMsgHwHost = findViewById(R.id.btn_send_msg_hw_host);
+        btnSendMsgHwRear = findViewById(R.id.btn_send_msg_hw_rear);
 
         mDevicesRv = findViewById(R.id.rv_devices);
         mDevicesRv.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -147,13 +167,38 @@ public class NetActivity extends Activity implements P2pInfoListener, MessageCal
         btnStopScanDevice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                P2pManager.getInstance().stopRequestPeer();
+                P2pManager.getInstance().stopDiscoverPeer();
             }
         });
         btnQueryClient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 P2pManager.getInstance().requestGroupInfo();
+            }
+        });
+        btnCloseSocket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                serviceClose();
+                clientClose();
+            }
+        });
+        btnSendMsgLt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendMsg(LANTU,"test message lttt");
+            }
+        });
+        btnSendMsgHwHost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendMsg(HW_HOST,"test message hw_host");
+            }
+        });
+        btnSendMsgHwRear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendMsg(HW_REAR,"test message hw_rear");
             }
         });
     }
@@ -199,6 +244,95 @@ public class NetActivity extends Activity implements P2pInfoListener, MessageCal
         mHandler.sendMessage(msg);
     }
 
+    /**
+     * Socket是TCP客户端API，通常用于connect到远程主机。
+     * ServerSocket是TCP服务器API，通常来自客户端套接字的accept连接。
+     * DatagramSocket是UDP端点API，用于send和receive datagram packets 。
+     * MulticastSocket是处理多播组时使用的DatagramSocket的子类。
+     */
+    private void serviceStart() {
+        if (mServiceMessager == null) {
+            mServiceMessager = new ServiceMessager();
+            mServiceMessager.registerMessageCallback(this);
+            mServiceMessager.start();
+        }
+    }
+
+    ;
+
+    private void clientStart(String hostIp) {
+        if (mClientMessager == null) {
+            mClientMessager = new ClientMessager(hostIp);
+            mClientMessager.registerMessageCallback(this);
+            mClientMessager.start();
+            sendMsg(HW_HOST,null);
+        }
+    }
+
+    ;
+
+//    private void serviceSendMsg(String content, String destMacAddress) {
+//        if (mServiceMessager != null) {
+//            mServiceMessager.sendMsg(content, destMacAddress);
+//        }
+//    }
+
+    private void sendMsg(String destName,String content){
+        String macP2p = DeviceConfigUtil.getP2pMac();
+        Log.d(TAG, "sendMsg: "+macP2p);
+        String senderName = DeviceConfigUtil.getDeviceName();
+        BaseMessager messager;
+        if (DeviceConfigUtil.isSocketService(senderName)){
+            messager = mServiceMessager;
+        }else {
+            messager = mClientMessager;
+        }
+        if (messager != null) {
+            Gson gson = new Gson();
+            if (TextUtils.isEmpty(content)){
+                Device device = new Device();
+                device.setName(Build.DEVICE);
+                device.setP2pmac(DeviceConfigUtil.getP2pMac());
+                MessageBean<Device> messageBean = new MessageBean<>();
+                messageBean.setType(MessageBean.TYPE_DEVICE_INFO);
+                messageBean.setLength(321);
+                messageBean.setSenderName(senderName);
+                messageBean.setReceiverName(destName);
+                Type type = new TypeToken<MessageBean<Device>>() {}.getType();
+                String jsonStr = gson.toJson(messageBean,type);
+                messager.sendMsg(jsonStr,destName);
+            }else {
+                MessageBean<String> messageBean = new MessageBean<>();
+                messageBean.setType(MessageBean.TYPE_DATA);
+                messageBean.setLength(321);
+                messageBean.setSenderName(senderName);
+                messageBean.setReceiverName(destName);
+                messageBean.setData(content);
+                Type type = new TypeToken<MessageBean<Device>>() {}.getType();
+                String jsonStr = gson.toJson(messageBean,type);
+                messager.sendMsg(jsonStr,destName);
+            }
+        }
+    }
+
+
+    private void serviceClose() {
+        if (mServiceMessager != null) {
+            mServiceMessager.closeService();
+            mServiceMessager.cleanClient();
+            mServiceMessager.unregisterMessageCallback();
+            mServiceMessager = null;
+        }
+    }
+
+    private void clientClose() {
+        if (mClientMessager != null) {
+            mClientMessager.closeClient();
+            mClientMessager.unregisterMessageCallback();
+            mClientMessager = null;
+        }
+    }
+
     private void showMsg(String content) {
         Toast.makeText(getApplicationContext(), content, Toast.LENGTH_SHORT).show();
     }
@@ -217,11 +351,11 @@ public class NetActivity extends Activity implements P2pInfoListener, MessageCal
             switch (msg.what) {
                 case P2P_SERVICE_START:
                     Log.d(TAG, "handleMessage() called with: msg = P2P_SERVICE_START");
-
+                    serviceStart();
                     break;
                 case P2P_CLIENT_START:
                     Log.d(TAG, "handleMessage() called with: msg = P2P_CLIENT_START");
-
+                    clientStart((String) msg.obj);
                     break;
                 case P2P_DEVICES_UPDATE:
                     Log.d(TAG, "handleMessage() called with: msg = P2P_DEVICES_UPDATE");
@@ -239,18 +373,15 @@ public class NetActivity extends Activity implements P2pInfoListener, MessageCal
                 case RECEIVE_MSG:
                     Log.d(TAG, "handleMessage() called with: msg = RECEIVE_MSG");
                     String msgStr = (String) msg.obj;
-                    Log.d(TAG, "handleMessage() called with: jsonStr = "+msgStr);
+                    Log.d(TAG, "handleMessage() called with: jsonStr = " + msgStr);
                     Gson gson = new Gson();
-                    Type type = new TypeToken<MessageBean<Device>>() {}.getType();
+                    Type type = new TypeToken<MessageBean<String>>() {
+                    }.getType();
                     try {
-                        MessageBean messageBean = gson.fromJson(msgStr,type);
-                        Log.d(TAG, "handleMessage() called with: "+messageBean.getData().toString());
-                        if (messageBean.getType()==1){
-                            Log.d(TAG, "handleMessage() called with: getLength = [" + messageBean.getLength() + "]");
-                            Device device = (Device) messageBean.getData();
-                            Log.d(TAG, "handleMessage() called with: getLength = [" + device.getName() + "]");
-                        }
-                    }catch (Exception e){
+                        MessageBean<String> messageBean = gson.fromJson(msgStr, type);
+                        Log.d(TAG, "handleMessage() called with: " + messageBean.getData().toString());
+                        showMsg("from:"+messageBean.getSenderName()+" -- to:"+messageBean.getReceiverName()+" data:"+messageBean.getData());
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                     break;

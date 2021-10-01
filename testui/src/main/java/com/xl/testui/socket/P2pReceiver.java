@@ -16,11 +16,13 @@ public class P2pReceiver extends BroadcastReceiver {
 
     public static final String TAG = P2pReceiver.class.getSimpleName();
 
+
+
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
         Log.d(TAG, "onReceive() called with: context = [" + context + "], action = [" + action + "]");
-
+        P2pManager.getInstance().init(context);
         if (WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION.equals(action)) {
             // p2p状态
             Log.d(TAG, "P2P 状态改变：");
@@ -28,14 +30,16 @@ public class P2pReceiver extends BroadcastReceiver {
             if (state == WifiP2pManager.WIFI_P2P_STATE_ENABLED) {
                 // Wifi P2P is enabled
                 Log.d(TAG, "P2P 状态改变 ——> 可用");
+                P2pManager.getInstance().notifyP2pEnableState(true);
             } else {
                 // Wi-Fi P2P is not enabled
                 Log.d(TAG, "P2P 状态改变 ——> 不可用");
+                P2pManager.getInstance().notifyP2pEnableState(false);
             }
         } else if (WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION.equals(action)) {
             // p2p设备变化监听
             Log.d(TAG, "P2P 设备列表改变 --> 获取P2P设备");
-            P2pManager.getInstance().requestPeers();
+            P2pManager.getInstance().notifyP2pPeerChange();
         }else if (WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION.equals(action)){
             // p2p设备连接
             Log.d(TAG, "P2P 连接设备状态改变 --> 获取连接设备信息，开启Socket");
@@ -43,18 +47,16 @@ public class P2pReceiver extends BroadcastReceiver {
             WifiP2pInfo wifiP2pInfo = intent.getParcelableExtra(WifiP2pManager.EXTRA_WIFI_P2P_INFO);
             Log.d(TAG, "P2P 连接设备状态改变 --> "+networkInfo.toString());
             Log.d(TAG, "P2P 连接设备状态改变 --> "+wifiP2pInfo.toString());
-            if (networkInfo.isConnected()){
-                P2pManager.getInstance().requestConnectedDeviceInfo();
-                P2pManager.getInstance().requestGroupInfo();
-            }
+            P2pManager.getInstance().notifyConnectStateChange(networkInfo,wifiP2pInfo);
         }else if (WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION.equals(action)){
             Log.d(TAG, "P2P 本机状态改变 -->");
             WifiP2pDevice wifiP2pDevice = intent.getParcelableExtra(WifiP2pManager.EXTRA_WIFI_P2P_DEVICE);
             Log.d(TAG, "wifiP2pDevice deviceName:"+wifiP2pDevice.deviceName);
-            Log.d(TAG, "wifiP2pDevice deviceAddress:"+wifiP2pDevice.deviceAddress);
+            Log.d(TAG, "wifiP2pDevionGroupInfoAvailablece deviceAddress:"+wifiP2pDevice.deviceAddress);
             Log.d(TAG, "wifiP2pDevice primaryDeviceType:"+wifiP2pDevice.primaryDeviceType);
             Log.d(TAG, "wifiP2pDevice secondaryDeviceType:"+wifiP2pDevice.secondaryDeviceType);
             Log.d(TAG, "wifiP2pDevice status:"+stateConvert(wifiP2pDevice.status));
+            P2pManager.getInstance().notifyDeviceStateChange(wifiP2pDevice);
             /*
               public static final int CONNECTED   = 0;
               public static final int INVITED     = 1;
@@ -67,9 +69,11 @@ public class P2pReceiver extends BroadcastReceiver {
             int state = intent.getIntExtra(WifiP2pManager.EXTRA_DISCOVERY_STATE,0);
             if (state==WIFI_P2P_DISCOVERY_STOPPED){
                 Log.d(TAG, "P2P 扫描状态 --> STOPPED");
+                P2pManager.getInstance().notifyScanStateChange(false);
             }
             if (state==WIFI_P2P_DISCOVERY_STARTED){
                 Log.d(TAG, "P2P 扫描状态 --> STARTED");
+                P2pManager.getInstance().notifyScanStateChange(true);
             }
         }
     }

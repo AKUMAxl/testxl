@@ -3,9 +3,15 @@ package com.xl.testui.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class MessageBean<T> implements Parcelable {
+public class MessageBean<T> implements Parcelable{
+
+    public static final int TYPE_DEVICE_INFO = 1;
+    public static final int TYPE_DATA = 2;
+
     private int type;
     private int length;
+    private String senderName;
+    private String receiverName;
     private T data;
 
     public MessageBean(){
@@ -15,7 +21,10 @@ public class MessageBean<T> implements Parcelable {
     protected MessageBean(Parcel in) {
         type = in.readInt();
         length = in.readInt();
+        senderName = in.readString();
+        receiverName = in.readString();
     }
+
 
     public static final Creator<MessageBean> CREATOR = new Creator<MessageBean>() {
         @Override
@@ -45,6 +54,22 @@ public class MessageBean<T> implements Parcelable {
         this.length = length;
     }
 
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
+    }
+
+    public String getReceiverName() {
+        return receiverName;
+    }
+
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
+    }
+
     public T getData() {
         return data;
     }
@@ -58,9 +83,12 @@ public class MessageBean<T> implements Parcelable {
         return "MessageBean{" +
                 "type=" + type +
                 ", length=" + length +
+                ", senderName=" + senderName +
+                ", receiverName=" + receiverName +
                 ", data=" + data +
                 '}';
     }
+
 
     @Override
     public int describeContents() {
@@ -71,5 +99,7 @@ public class MessageBean<T> implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(type);
         dest.writeInt(length);
+        dest.writeString(senderName);
+        dest.writeString(receiverName);
     }
 }

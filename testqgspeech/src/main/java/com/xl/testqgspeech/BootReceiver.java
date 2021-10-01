@@ -16,7 +16,7 @@ public class BootReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
-        Log.d("xLLL", "action:"+action);
+        Log.e("xLLL", "action:"+action);
         if (Intent.ACTION_BOOT_COMPLETED.equals(action)) {
             startVoiceService(context);
             Log.d("xLLL", "Android操作系统开机了，运行中.......");
@@ -24,6 +24,8 @@ public class BootReceiver extends BroadcastReceiver {
             Log.d("xLLL", "Android操作系统关机了.......");
         } else if ("com.test.test".equals(action)){
             startVoiceService(context);
+        }else if ("android.intent.action.FIRST_BOOT_COMPLETED".equals(action)){
+
         }
     }
 
