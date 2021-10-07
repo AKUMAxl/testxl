@@ -1,8 +1,11 @@
 package com.xl.testui.util;
 
 import static com.xl.testui.socket.DeviceConstant.HW_HOST;
+import static com.xl.testui.socket.DeviceConstant.HW_HOST_HOST;
 import static com.xl.testui.socket.DeviceConstant.HW_REAR;
+import static com.xl.testui.socket.DeviceConstant.HW_REAR_HOST;
 import static com.xl.testui.socket.DeviceConstant.LANTU;
+import static com.xl.testui.socket.DeviceConstant.LANTU_HOST;
 import static com.xl.testui.socket.DeviceConstant.P2P_GROUP_OWNER_NAME;
 
 import android.content.Context;
@@ -131,11 +134,11 @@ njpateo-222
 F0501H-MX8Q
 f0501h
 */
-        if (Build.HOST.equals("cn-east-hcd-4a-79deed25c1627552150890-779bf7d57-bn6gz")) {
+        if (Build.HOST.equals(HW_HOST_HOST)) {
             return HW_HOST;
-        } else if (Build.HOST.equals("cn-central-hcd-2a-21345952e1629685408656-7f665fc9fd-jzhpd")) {
+        } else if (Build.HOST.equals(HW_REAR_HOST)) {
             return HW_REAR;
-        } else if (Build.HOST.equals("njpateo-222")) {
+        } else if (Build.HOST.equals(LANTU_HOST)) {
             return LANTU;
         }
         return LANTU;

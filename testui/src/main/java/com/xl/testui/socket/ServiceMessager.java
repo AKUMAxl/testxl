@@ -1,12 +1,10 @@
 package com.xl.testui.socket;
 
-import static com.xl.testui.socket.DeviceConstant.HW_HOST;
 
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.xl.testui.bean.Device;
 import com.xl.testui.bean.MessageBean;
@@ -84,6 +82,7 @@ public class ServiceMessager extends BaseMessager {
         }
     }
 
+    @Override
     public void sendMsg(String jsonStr, String clientName) {
         ThreadPoolUtil.getInstance().execute(() -> {
             try {

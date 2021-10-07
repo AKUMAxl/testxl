@@ -15,9 +15,7 @@ import android.net.wifi.p2p.nsd.WifiP2pDnsSdServiceRequest;
 import android.net.wifi.p2p.nsd.WifiP2pUpnpServiceInfo;
 import android.net.wifi.p2p.nsd.WifiP2pUpnpServiceRequest;
 import android.os.Handler;
-import android.os.HandlerThread;
 import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
 import android.util.Pair;
 
@@ -30,7 +28,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
-import androidx.annotation.NonNull;
 
 import com.xl.testui.util.DeviceConfigUtil;
 
@@ -40,28 +37,17 @@ public class P2pManager {
 
     private static final int RETRY_COUNT = 5;
 
-    public static final String THREAD_NAME = "NET_THREAD";
     public static final String DNSSD_INSTANCE_NAME = "QI_RUI";
-    private static final int MSG_START_SERVICE = 1;
-    private static final int MSG_SCAN_DEVICE = 2;
-    private static final int MSG_STOP_SERVICE = 3;
 
     private Context mContext;
     private WifiP2pManager mWifiP2pManager;
     private WifiP2pManager.Channel mChannel;
 
-    private HandlerThread mHandlerThread;
-    private NetHandler mNetHandler;
-
-    private WifiP2pDevice mWifiP2pDevice;
-
     private P2pInfoListener mP2pInfoListener;
 
     private boolean mP2pEnable;
-    private boolean mIsConnected;
 
     private int mCreateGroupRetryCount = 0;
-    private int mConnectRetryCount = 0;
 
     private WifiP2pManager.DnsSdTxtRecordListener mDnsSdTxtRecordListener = new WifiP2pManager.DnsSdTxtRecordListener() {
         @Override
@@ -113,9 +99,6 @@ public class P2pManager {
             return;
         }
         this.mContext = context;
-        mHandlerThread = new HandlerThread(THREAD_NAME);
-        mHandlerThread.start();
-        mNetHandler = new NetHandler(mHandlerThread.getLooper());
         mWifiP2pManager = (WifiP2pManager) mContext.getSystemService(Context.WIFI_P2P_SERVICE);
         mChannel = mWifiP2pManager.initialize(mContext, Looper.getMainLooper(), () -> {
             Log.d(TAG, "init() called with: context = [" + context + "]");
@@ -334,7 +317,7 @@ public class P2pManager {
                 }
                 mCreateGroupRetryCount++;
                 exitGroup();
-                mNetHandler.postDelayed(new Runnable() {
+                new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         createGroup();
@@ -478,7 +461,6 @@ public class P2pManager {
                     }
                     Log.i(TAG, "address " + address.getHostAddress());
                     Log.d(TAG, "onConnectionInfoAvailable() called with: info.isGroupOwner = [" + info.isGroupOwner + "]");
-                    mIsConnected = true;
                     if (info.isGroupOwner) {
                         if (mP2pInfoListener!=null){
                             mP2pInfoListener.onServiceConnected();
@@ -595,18 +577,5 @@ public class P2pManager {
         }
     }
 
-
-    static class NetHandler extends Handler {
-
-        public NetHandler(Looper looper) {
-            super(looper);
-        }
-
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
-            Log.d(TAG, "handleMessage() called with: msg = [" + msg + "]");
-        }
-    }
 
 }
