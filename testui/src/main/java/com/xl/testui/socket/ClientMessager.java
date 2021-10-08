@@ -52,15 +52,16 @@ public class ClientMessager extends BaseMessager {
 
     }
 
+
     @Override
-    public void sendMsg(String jsonStr,String destName) {
+    void sendMsg(byte[] data, String destDeviceNam) {
         ThreadPoolUtil.getInstance().execute(() -> {
             try {
                 if (outputStream == null) {
                     Log.e(TAG, "sendMsg: outputStream is null");
                     return;
                 }
-                outputStream.write(jsonStr.getBytes(StandardCharsets.UTF_8));
+                outputStream.write(data);
             } catch (IOException e) {
                 e.printStackTrace();
             }

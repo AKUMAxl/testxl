@@ -137,7 +137,7 @@ public class P2pManager {
     public void notifyConnectStateChange(NetworkInfo networkInfo,WifiP2pInfo wifiP2pInfo){
         if (networkInfo.isConnected()){
             this.requestConnectedDeviceInfo();
-            this.requestGroupInfo();
+//            this.requestGroupInfo();
         }
     }
 

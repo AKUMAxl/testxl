@@ -15,13 +15,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Type;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import java.net.NetworkInterface;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ServiceMessager extends BaseMessager {
@@ -82,18 +79,19 @@ public class ServiceMessager extends BaseMessager {
         }
     }
 
+
     @Override
-    public void sendMsg(String jsonStr, String clientName) {
+    void sendMsg(byte[] data, String destDeviceNam) {
         ThreadPoolUtil.getInstance().execute(() -> {
             try {
-                if (!TextUtils.isEmpty(clientName)) {
-                    if (mClientSocketMap.containsKey(clientName)) {
-                        Socket socket = mClientSocketMap.get(clientName);
+                if (!TextUtils.isEmpty(destDeviceNam)) {
+                    if (mClientSocketMap.containsKey(destDeviceNam)) {
+                        Socket socket = mClientSocketMap.get(destDeviceNam);
                         if (socket == null) {
                             return;
                         }
                         OutputStream outputStream = socket.getOutputStream();
-                        outputStream.write(jsonStr.getBytes(StandardCharsets.UTF_8));
+                        outputStream.write(data);
                     }
                 }
             } catch (IOException e) {
@@ -115,26 +113,6 @@ public class ServiceMessager extends BaseMessager {
             mServiceSocket.setSoTimeout(ACCEPT_TIMEOUT);
             while (mRunning) {
                 Socket clientSocket = mServiceSocket.accept();
-                String clientIpAddress = clientSocket.getInetAddress().getHostAddress();
-                InetAddress inetAddress = clientSocket.getLocalAddress();
-                byte[] mac = NetworkInterface.getByInetAddress(inetAddress).getHardwareAddress();
-                Log.d(TAG, "current accept client ip mac:" + mac);
-                Log.d(TAG, "current accept client ip mac:" + macBytes2String(mac));
-                byte[] macAddress = clientSocket.getInetAddress().getAddress();
-                byte[] localMacAddress = clientSocket.getLocalAddress().getAddress();
-                Log.d(TAG, "current accept client ip address:" + clientIpAddress);
-                String clientMacAddress = macBytes2String(macAddress);
-                Log.d(TAG, "current accept client mac address:" + clientMacAddress);
-                Log.d(TAG, "current accept client mac address:" + macAddress);
-                String clientLocalMacAddress = macBytes2String(localMacAddress);
-                Log.d(TAG, "current accept client local mac address:" + clientLocalMacAddress);
-                Log.d(TAG, "current accept client local mac address:" + localMacAddress);
-                Log.d(TAG, "current accept client getLocalSocketAddress:" + clientSocket.getLocalSocketAddress().toString());
-                Log.d(TAG, "current accept client getRemoteSocketAddress:" + clientSocket.getRemoteSocketAddress().toString());
-                if (mClientSocketMap.containsKey(clientMacAddress)) {
-                    removeClient(clientMacAddress);
-                }
-                mClientSocketMap.put(clientMacAddress, clientSocket);
                 ThreadPoolUtil.getInstance().execute(new ReceiveMsgRunnable(clientSocket));
             }
         } catch (IOException e) {
@@ -161,8 +139,6 @@ public class ServiceMessager extends BaseMessager {
         public void run() {
             try {
                 while (mRunning) {
-                    sleep(500);
-
                     byte[] receiveBytes = new byte[inputStream.available()];
                     int length = inputStream.read(receiveBytes);
                     String data;
@@ -199,7 +175,6 @@ public class ServiceMessager extends BaseMessager {
                             }
                         }
                     }
-
                 }
                 inputStream.close();
             } catch (Exception e) {
