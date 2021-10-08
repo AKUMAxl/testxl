@@ -22,6 +22,7 @@ import com.xl.testui.socket.MessageCallback;
 import com.xl.testui.socket.MessagerManager;
 import com.xl.testui.socket.P2pInfoListener;
 import com.xl.testui.socket.P2pManager;
+import com.xl.testui.util.DeviceConfigUtil;
 
 import java.lang.reflect.Type;
 import java.util.List;
@@ -58,6 +59,11 @@ public class P2pService extends Service implements P2pInfoListener, MessageCallb
         mHandler = new UIHandler(mHandlerThread.getLooper());
         P2pManager.getInstance().init(getApplicationContext());
         P2pManager.getInstance().registerP2pInfoListener(this);
+        if (DeviceConfigUtil.isSocketService()){
+            P2pManager.getInstance().createGroup();
+        }else {
+            P2pManager.getInstance().discoverPeer();
+        }
         MessagerManager.getInstance().registerMessageCallback(this);
     }
 
@@ -70,7 +76,24 @@ public class P2pService extends Service implements P2pInfoListener, MessageCallb
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
+        Log.d(TAG, "onBind() called with: intent = [" + intent + "]");
+        if (mINetInterface==null){
+            Log.d(TAG, "onBind() called with: intent = [null]");
+            mINetInterface = new INetInterfaceImpl(getApplicationContext());
+        }
         return mINetInterface;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (DeviceConfigUtil.isSocketService()){
+            P2pManager.getInstance().exitGroup();
+            MessagerManager.getInstance().serviceClose();
+        }else {
+            P2pManager.getInstance().cancelConnect();
+            MessagerManager.getInstance().clientClose();
+        }
     }
 
     private void startForeground(){
@@ -154,6 +177,7 @@ public class P2pService extends Service implements P2pInfoListener, MessageCallb
                 case P2P_CREATE_GROUP_RESULT:
                     Log.d(TAG, "handleMessage() called with: msg = P2P_CREATE_GROUP_RESULT");
 //                    showMsg("创建群组" + (((boolean) msg.obj) ? "成功" : "失败"));
+
                     break;
                 case P2P_CLIENT_UPDATE:
                     Log.d(TAG, "handleMessage() called with: msg = P2P_CLIENT_UPDATE");
@@ -170,7 +194,7 @@ public class P2pService extends Service implements P2pInfoListener, MessageCallb
                         MessageBean<String> messageBean = gson.fromJson(msgStr, type);
                         Log.d(TAG, "handleMessage() called with: " + messageBean.getData().toString());
 //                        showMsg("from:"+messageBean.getSenderName()+" -- to:"+messageBean.getReceiverName()+" data:"+messageBean.getData());
-                        mINetInterface.callbackMessageReceive(messageBean.getData());
+                        mINetInterface.callbackMessageReceive("",messageBean.getData());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

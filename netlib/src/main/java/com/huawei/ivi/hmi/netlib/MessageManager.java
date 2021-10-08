@@ -30,6 +30,8 @@ public class MessageManager {
 
     private Context mContext;
 
+    private NetConnectListener mNetConnectListener;
+
     private INetInterface mINetInterface;
 
     private ScheduledExecutorService scheduledExecutorService;
@@ -61,7 +63,9 @@ public class MessageManager {
             try {
                 mINetInterface = INetInterface.Stub.asInterface(iBinder);
                 iBinder.linkToDeath(mDeathRecipient, 0);
-                mINetInterface.init();
+                if (mNetConnectListener!=null){
+                    mNetConnectListener.onNetConnected();
+                }
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
@@ -69,7 +73,9 @@ public class MessageManager {
 
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
-
+            if (mNetConnectListener!=null){
+                mNetConnectListener.onNetDisconnected();
+            }
         }
     };
 
@@ -80,16 +86,21 @@ public class MessageManager {
                 mINetInterface.asBinder().unlinkToDeath(mDeathRecipient, 0);
                 mINetInterface = null;
             }
+            if (mNetConnectListener!=null){
+                mNetConnectListener.onNetDisconnected();
+            }
             retryBindService();
         }
     };
 
-    public void init(Context context) {
+    public void init(Context context,NetConnectListener netConnectListener) {
         if (context == null) {
             Log.e(TAG, "init error context is null");
             return;
         }
+        Log.d(TAG, "init() called with: context = [" + context + "]");
         this.mContext = context;
+        this.mNetConnectListener = netConnectListener;
         bindNetService();
     }
 
@@ -98,8 +109,9 @@ public class MessageManager {
             Log.e(TAG, "mINetInterface is null");
             return;
         }
+        Log.d(TAG, "registerINetCallback() called with: iNetCallback = [" + iNetCallback + "]");
         try {
-            mINetInterface.registerNetCallback(iNetCallback);
+            mINetInterface.registerNetCallback(iNetCallback,mContext.getPackageName());
         } catch (RemoteException e) {
             e.printStackTrace();
         }
@@ -110,6 +122,7 @@ public class MessageManager {
             Log.e(TAG, "mINetInterface is null");
             return;
         }
+        Log.d(TAG, "unregisterINetCallback() called with: iNetCallback = [" + iNetCallback + "]");
         try {
             mINetInterface.unregisterNetCallback(iNetCallback);
         } catch (RemoteException e) {
@@ -117,7 +130,15 @@ public class MessageManager {
         }
     }
 
+    /**
+     * 发送消息
+     *
+     * @param destDevice 目标设备 {@link DeviceConstant}
+     * @param destAppPackageName 目标包名
+     * @param content 内容
+     */
     public void sendMessage(String destDevice, String destAppPackageName, String content) {
+        Log.d(TAG, "sendMessage() called with: destDevice = [" + destDevice + "], destAppPackageName = [" + destAppPackageName + "], content = [" + content + "]");
         if (mINetInterface == null) {
             Log.e(TAG, "mINetInterface is null");
             return;
@@ -135,6 +156,7 @@ public class MessageManager {
         ComponentName componentName = new ComponentName(PACKAGE_NAME, SERVICE_NAME);
         intent.setComponent(componentName);
         boolean ret = mContext.bindService(intent, mServiceConnection, Context.BIND_AUTO_CREATE);
+        Log.d(TAG, "bindNetService: "+ret);
         if (!ret) {
             mIsBinding = true;
             retryBindService();

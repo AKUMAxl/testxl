@@ -282,7 +282,7 @@ public class NetActivity extends Activity implements P2pInfoListener, MessageCal
         Log.d(TAG, "sendMsg: "+macP2p);
         String senderName = DeviceConfigUtil.getDeviceName();
         BaseMessager messager;
-        if (DeviceConfigUtil.isSocketService(senderName)){
+        if (DeviceConfigUtil.isSocketService()){
             messager = mServiceMessager;
         }else {
             messager = mClientMessager;

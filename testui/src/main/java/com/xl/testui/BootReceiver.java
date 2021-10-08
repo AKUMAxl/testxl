@@ -52,7 +52,7 @@ public class BootReceiver extends BroadcastReceiver {
 
     public void startP2p(Context context){
         P2pManager.getInstance().init(context);
-        if (DeviceConfigUtil.isSocketService(DeviceConfigUtil.getDeviceName())){
+        if (DeviceConfigUtil.isSocketService()){
             P2pManager.getInstance().createGroup();
         }else {
             P2pManager.getInstance().discoverPeer();

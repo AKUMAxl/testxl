@@ -74,6 +74,12 @@
                 <category android:name=" android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <service android:name=".P2pService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.test.p2pservice"/>
+            </intent-filter>
+        </service>
         <receiver android:name=".socket.P2pReceiver">
             <intent-filter>
                 <action android:name="android.net.wifi.p2p.STATE_CHANGED"/>

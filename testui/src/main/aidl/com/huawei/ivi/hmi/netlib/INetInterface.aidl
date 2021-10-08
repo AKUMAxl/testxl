@@ -5,9 +5,7 @@ import com.huawei.ivi.hmi.netlib.INetCallback;
 
 interface INetInterface {
 
-    void init();
-
-    void registerNetCallback(in INetCallback netCallback);
+    void registerNetCallback(in INetCallback netCallback,in String packageName);
 
     void unregisterNetCallback(in INetCallback netCallback);
 

@@ -144,8 +144,8 @@ f0501h
         return LANTU;
     }
 
-    public static boolean isSocketService(String deviceName){
-        return deviceName.equals(LANTU);
+    public static boolean isSocketService(){
+        return getDeviceName().equals(HW_HOST);
     }
 
     public static boolean isP2pGroupOwner(String p2pDeviceName){

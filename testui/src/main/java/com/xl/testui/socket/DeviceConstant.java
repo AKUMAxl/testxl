@@ -10,6 +10,12 @@ public class DeviceConstant {
     public static final String HW_REAR_HOST = "cn-central-hcd-2a-21345952e1629685408656-7f665fc9fd-jzhpd";
     public static final String LANTU_HOST = "njpateo-222";
 
-    public static final String P2P_GROUP_OWNER_NAME = "岚图FREE";
+
+    /**
+     * P2p Device Name:
+     * 岚图FREE
+     * HUAWEI Mate 40 Pro
+     */
+    public static final String P2P_GROUP_OWNER_NAME = "HUAWEI Mate 40 Pro";
 
 }

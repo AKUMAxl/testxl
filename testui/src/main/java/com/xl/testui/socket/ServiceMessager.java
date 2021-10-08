@@ -191,7 +191,7 @@ public class ServiceMessager extends BaseMessager {
                         String clientName = devicesMessage.getSenderName();
                         mClientSocketMap.put(clientName,socket);
                     }else {
-                        if (!DeviceConfigUtil.isSocketService(messageBean.getReceiverName())){
+                        if (!DeviceConfigUtil.isSocketService()){
                             sendMsg(data,messageBean.getReceiverName());
                         }else {
                             if (!TextUtils.isEmpty(data)) {
