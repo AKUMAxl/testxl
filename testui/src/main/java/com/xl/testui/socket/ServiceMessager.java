@@ -1,6 +1,8 @@
 package com.xl.testui.socket;
 
 
+import static com.xl.testui.socket.DeviceConstant.LANTU;
+
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -167,7 +169,7 @@ public class ServiceMessager extends BaseMessager {
                         String clientName = devicesMessage.getSenderName();
                         mClientSocketMap.put(clientName,socket);
                     }else {
-                        if (!DeviceConfigUtil.isSocketService()){
+                        if (!messageBean.getReceiverName().equals(LANTU)){
                             sendMsg(data,messageBean.getReceiverName());
                         }else {
                             if (!TextUtils.isEmpty(data)) {

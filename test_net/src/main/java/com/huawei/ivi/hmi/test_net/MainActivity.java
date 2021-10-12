@@ -8,6 +8,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.huawei.ivi.hmi.netlib.DeviceConstant;
@@ -18,15 +19,19 @@ import com.huawei.ivi.hmi.netlib.NetConnectListener;
 
 public class MainActivity extends AppCompatActivity {
 
+    private TextView mTv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mTv = findViewById(R.id.state);
         Log.d("xLLL","onCreate");
         MessageManager.getInstance().init(getApplicationContext(), new NetConnectListener() {
             @Override
             public void onNetConnected() {
                 Log.d("xLLL", "onNetConnected() called");
+                mTv.setText("service connected");
                 MessageManager.getInstance().registerINetCallback(new MessageCallback() {
                     @Override
                     public void onMessageReceived(String s) {
@@ -48,6 +53,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onNetAvailableChange(boolean b) {
                 Log.d("xLLL", "onNetAvailableChange() called with: b = [" + b + "]");
+                if (b){
+                    new Handler(Looper.getMainLooper()).post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mTv.setText("service p2p connected");
+//                            Toast.makeText(getApplicationContext(),"service p2p connected",Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+                }
             }
         });
 

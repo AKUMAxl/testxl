@@ -8,6 +8,14 @@
     android:orientation="vertical"
     android:gravity="center">
 
+
+    <TextView
+        android:id="@+id/state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="state"
+        android:textColor="@color/black"
+        android:textSize="24sp"/>
     <Button
         android:id="@+id/send_smg_to_lantu"
         android:layout_width="wrap_content"

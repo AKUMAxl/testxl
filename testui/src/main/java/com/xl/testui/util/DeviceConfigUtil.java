@@ -98,7 +98,7 @@ public class DeviceConfigUtil {
         Log.d(TAG, "getIMEI: " + Build.BOARD);
         Log.d(TAG, "getIMEI: " + Build.BRAND);
         Log.d(TAG, "getIMEI: " + Build.HARDWARE);
-        Log.d(TAG, "getIMEI: " + Build.HOST);
+        Log.d(TAG, "HOST: " + Build.HOST);
         Log.d(TAG, "getIMEI: " + Build.ID);
         Log.d(TAG, "getIMEI: " + Build.MODEL);
         Log.d(TAG, "getIMEI: " + Build.PRODUCT);
@@ -145,10 +145,13 @@ f0501h
     }
 
     public static boolean isSocketService(){
-        return getDeviceName().equals(HW_HOST);
+        return getDeviceName().equals(LANTU);
     }
 
     public static boolean isP2pGroupOwner(String p2pDeviceName){
-        return p2pDeviceName.equals(P2P_GROUP_OWNER_NAME);
+        boolean isOwner = p2pDeviceName.equals(P2P_GROUP_OWNER_NAME);
+        Log.d(TAG, "isP2pGroupOwner() called with: p2pDeviceName = [" + p2pDeviceName + "]");
+        Log.d(TAG, "isP2pGroupOwner() called with: isOwner = [" + isOwner + "]");
+        return isOwner;
     }
 }

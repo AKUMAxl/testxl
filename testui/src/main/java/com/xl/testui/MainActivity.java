@@ -37,6 +37,7 @@ import com.xl.testui.iflytek.IflytekTestManager;
 import com.xl.testui.record.RecordTestManager;
 import com.xl.testui.socket.SocketTestManager;
 import com.xl.testui.testui.UITestManager;
+import com.xl.testui.util.DeviceConfigUtil;
 import com.xl.testui.util.ImageUtil;
 import com.xl.testui.vehicle.VehicleTestManager;
 import com.xl.testui.voice.VoiceTestManager;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DeviceConfigUtil.getIMEI();
         mActivityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(mActivityMainBinding.getRoot());
 
@@ -157,11 +159,13 @@ public class MainActivity extends AppCompatActivity {
 
     private final static int REQ_CODE = 100;
     private static final String[] permissions = {
-            Manifest.permission.ACCESS_FINE_LOCATION
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_BACKGROUND_LOCATION
     };
 
     private void requestPermission(){
         requestPermissions(permissions,REQ_CODE);
+
     }
 
     @Override

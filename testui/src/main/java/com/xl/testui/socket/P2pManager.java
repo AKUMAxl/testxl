@@ -396,6 +396,7 @@ public class P2pManager {
                     Log.d(TAG, "Device primaryDeviceType:" + device.primaryDeviceType);
                     Log.d(TAG, "Device secondaryDeviceType:" + device.secondaryDeviceType);
                     Log.d(TAG, "Device status:" + device.status);
+                    Log.d(TAG, "mCurConnectState:" + mCurConnectState);
                     devices.add(device);
                     if (DeviceConfigUtil.isP2pGroupOwner(device.deviceName)&&mCurConnectState==DISCONNECT){
                         mCurConnectState = CONNECTING;
@@ -478,13 +479,17 @@ public class P2pManager {
                 try {
                     if (info.groupOwnerAddress == null) {
                         Log.e(TAG, "groupOwnerAddress is null");
+                        mCurConnectState = DISCONNECT;
                         retryDiscoverPeer();
+//                        retryRequestConnectedDeviceInfo();
                         return;
                     }
                     InetAddress address = InetAddress.getByName(info.groupOwnerAddress.getHostAddress());
                     if (address == null) {
                         Log.e(TAG, "address is null");
+                        mCurConnectState = DISCONNECT;
                         retryDiscoverPeer();
+//                        retryRequestConnectedDeviceInfo();
                         return;
                     }
                     Log.i(TAG, "address " + address.getHostAddress());
@@ -597,7 +602,16 @@ public class P2pManager {
             public void run() {
                 discoverPeer();
             }
-        },30*1000);
+        },10*1000);
+    }
+
+    private void retryRequestConnectedDeviceInfo(){
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                requestConnectedDeviceInfo();
+            }
+        },10*1000);
     }
 
     private void parseActionListenerOnFailure(int reason) {
