@@ -118,6 +118,7 @@ public class P2pService extends Service implements P2pInfoListener, MessageCallb
 
     @Override
     public void onClientConnect(String hostIp, String macAddress) {
+        Log.d(TAG, "onClientConnect: ");
         notifyMsg(P2P_CLIENT_START, hostIp);
     }
 
@@ -164,10 +165,12 @@ public class P2pService extends Service implements P2pInfoListener, MessageCallb
                 case P2P_SERVICE_START:
                     Log.d(TAG, "handleMessage() called with: msg = P2P_SERVICE_START");
                     MessagerManager.getInstance().serviceStart();
+                    mINetInterface.callbackP2pAvailable(true);
                     break;
                 case P2P_CLIENT_START:
                     Log.d(TAG, "handleMessage() called with: msg = P2P_CLIENT_START");
                     MessagerManager.getInstance().clientStart((String) msg.obj);
+                    mINetInterface.callbackP2pAvailable(true);
                     break;
                 case P2P_DEVICES_UPDATE:
                     Log.d(TAG, "handleMessage() called with: msg = P2P_DEVICES_UPDATE");

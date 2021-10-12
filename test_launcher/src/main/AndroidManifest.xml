@@ -3,6 +3,7 @@
     package="com.huawei.ivi.hmi.launcher"
     android:compileSdkVersion="30"
     android:compileSdkVersionCodename="11"
+    android:sharedUserId="android.uid.system"
     >
 
     <!--android:sharedUserId="android.uid.system"-->

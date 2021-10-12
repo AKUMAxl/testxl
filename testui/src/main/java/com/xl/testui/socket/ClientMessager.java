@@ -94,11 +94,12 @@ public class ClientMessager extends BaseMessager {
                 byte[] receiveBytes = new byte[inputStream.available()];
                 int length = inputStream.read(receiveBytes);
                 String data;
-                data = new String(receiveBytes, 0, length, Charset.defaultCharset());
-                if (!TextUtils.isEmpty(data)){
-                    Log.d(TAG, "client receive data:" + data);
-                    callbackMessage(data);
+                data = new String(receiveBytes, receiveBytes.length>22?22:0, receiveBytes.length>22?length-22:length, Charset.defaultCharset());
+                if (TextUtils.isEmpty(data)){
+                    continue;
                 }
+                Log.d(TAG, "receive data:"+data);
+                callbackMessage(data);
             }
         } catch (IOException e) {
             e.printStackTrace();

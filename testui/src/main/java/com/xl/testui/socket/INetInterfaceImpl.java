@@ -56,4 +56,20 @@ public class INetInterfaceImpl extends INetInterface.Stub {
         mINetCallbackList.finishBroadcast();
     }
 
+    public void callbackP2pAvailable(boolean available){
+        int size = mINetCallbackList.beginBroadcast();
+        for (int i = 0; i < size; i++) {
+            try {
+                String broadcastCookie = (String) mINetCallbackList.getBroadcastCookie(i);
+                String registeredCallbackCookie = (String) mINetCallbackList.getRegisteredCallbackCookie(i);
+                Log.d(TAG, "callbackMessageReceive: broadcastCookie"+broadcastCookie);
+                Log.d(TAG, "callbackMessageReceive: registeredCallbackCookie"+registeredCallbackCookie);
+                mINetCallbackList.getBroadcastItem(i).onP2pConnectStateChange(available);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+        mINetCallbackList.finishBroadcast();
+    }
+
 }

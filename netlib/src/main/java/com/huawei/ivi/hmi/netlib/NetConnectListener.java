@@ -2,8 +2,10 @@ package com.huawei.ivi.hmi.netlib;
 
 public interface NetConnectListener {
 
-    public void onNetConnected();
+    void onNetConnected();
 
-    public void onNetDisconnected();
+    void onNetDisconnected();
+
+    void onNetAvailableChange(boolean available);
 
 }

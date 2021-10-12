@@ -152,7 +152,7 @@ public class ServiceMessager extends BaseMessager {
 //                        }
 //                        data = sb.toString();
 //                    }
-                    data = new String(receiveBytes, 0, length, Charset.defaultCharset());
+                    data = new String(receiveBytes, receiveBytes.length>22?22:0, receiveBytes.length>22?length-22:length, Charset.defaultCharset());
                     if (TextUtils.isEmpty(data)){
                         continue;
                     }

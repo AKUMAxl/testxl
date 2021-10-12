@@ -34,6 +34,8 @@ public class MessageManager {
 
     private INetInterface mINetInterface;
 
+    private INetCallbackImpl mINetCallbackImpl;
+
     private ScheduledExecutorService scheduledExecutorService;
 
     private int mRetryCount;
@@ -66,6 +68,7 @@ public class MessageManager {
                 if (mNetConnectListener!=null){
                     mNetConnectListener.onNetConnected();
                 }
+                mINetInterface.registerNetCallback(mINetCallbackImpl,mContext.getPackageName());
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
@@ -101,33 +104,27 @@ public class MessageManager {
         Log.d(TAG, "init() called with: context = [" + context + "]");
         this.mContext = context;
         this.mNetConnectListener = netConnectListener;
+        this.mINetCallbackImpl = new INetCallbackImpl();
+        mINetCallbackImpl.registerNetConnectListener(mNetConnectListener);
         bindNetService();
     }
 
-    public void registerINetCallback(INetCallbackImpl iNetCallback) {
+    public void registerINetCallback(MessageCallback messageCallback) {
         if (mINetInterface == null) {
             Log.e(TAG, "mINetInterface is null");
             return;
         }
-        Log.d(TAG, "registerINetCallback() called with: iNetCallback = [" + iNetCallback + "]");
-        try {
-            mINetInterface.registerNetCallback(iNetCallback,mContext.getPackageName());
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+        Log.d(TAG, "registerINetCallback() called with: messageCallback = [" + messageCallback + "]");
+        mINetCallbackImpl.addMessageCallback(messageCallback);
     }
 
-    public void unregisterINetCallback(INetCallbackImpl iNetCallback) {
+    public void unregisterINetCallback(MessageCallback messageCallback) {
         if (mINetInterface == null) {
             Log.e(TAG, "mINetInterface is null");
             return;
         }
-        Log.d(TAG, "unregisterINetCallback() called with: iNetCallback = [" + iNetCallback + "]");
-        try {
-            mINetInterface.unregisterNetCallback(iNetCallback);
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+        Log.d(TAG, "unregisterINetCallback() called with: messageCallback = [" + messageCallback + "]");
+        mINetCallbackImpl.removeMessageCallback(messageCallback);
     }
 
     /**

@@ -30,7 +30,9 @@ public abstract class BaseMessager extends Thread{
         byte[] data = jsonStr.getBytes(StandardCharsets.UTF_8);
         long length = data.length;
         byte[] dataLength = long2bytes(length);
-        byte[] allData = new byte[header.length+data.length];
+        byte[] allData = new byte[header.length+ dataLength.length+data.length];
+        Log.d(TAG, "header length: "+header.length);
+        Log.d(TAG, "dataLength length: "+dataLength.length);
         System.arraycopy(header,0,allData,0,header.length);
         System.arraycopy(dataLength,0,allData,header.length,dataLength.length);
         System.arraycopy(data,0,allData,header.length+dataLength.length,data.length);
