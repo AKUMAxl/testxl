@@ -75,7 +75,6 @@ public class MessagerManager {
             device.setP2pmac(DeviceConfigUtil.getP2pMac());
             MessageBean<Device> messageBean = new MessageBean<>();
             messageBean.setType(MessageBean.TYPE_DEVICE_INFO);
-            messageBean.setLength(321);
             messageBean.setSenderName(senderName);
             messageBean.setReceiverName(destName);
 
@@ -86,7 +85,6 @@ public class MessagerManager {
         } else {
             MessageBean<String> messageBean = new MessageBean<>();
             messageBean.setType(MessageBean.TYPE_DATA);
-            messageBean.setLength(321);
             messageBean.setSenderName(senderName);
             messageBean.setReceiverName(destName);
             messageBean.setData(content);

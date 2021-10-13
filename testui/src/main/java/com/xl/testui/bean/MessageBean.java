@@ -9,7 +9,6 @@ public class MessageBean<T> implements Parcelable{
     public static final int TYPE_DATA = 2;
 
     private int type;
-    private int length;
     private String senderName;
     private String receiverName;
     private T data;
@@ -20,7 +19,6 @@ public class MessageBean<T> implements Parcelable{
 
     protected MessageBean(Parcel in) {
         type = in.readInt();
-        length = in.readInt();
         senderName = in.readString();
         receiverName = in.readString();
     }
@@ -44,14 +42,6 @@ public class MessageBean<T> implements Parcelable{
 
     public void setType(int type) {
         this.type = type;
-    }
-
-    public int getLength() {
-        return length;
-    }
-
-    public void setLength(int length) {
-        this.length = length;
     }
 
     public String getSenderName() {
@@ -82,7 +72,6 @@ public class MessageBean<T> implements Parcelable{
     public String toString() {
         return "MessageBean{" +
                 "type=" + type +
-                ", length=" + length +
                 ", senderName=" + senderName +
                 ", receiverName=" + receiverName +
                 ", data=" + data +
@@ -98,7 +87,6 @@ public class MessageBean<T> implements Parcelable{
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(type);
-        dest.writeInt(length);
         dest.writeString(senderName);
         dest.writeString(receiverName);
     }

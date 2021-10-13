@@ -59,7 +59,12 @@ public class ClientMessager extends BaseMessager {
             try {
                 if (outputStream == null) {
                     Log.e(TAG, "sendMsg: outputStream is null");
-                    return;
+                    if (socket!=null){
+                        outputStream = socket.getOutputStream();
+                    }else {
+                        Log.e(TAG, "sendMsg: socket is null");
+                        return;
+                    }
                 }
                 outputStream.write(data);
             } catch (IOException e) {

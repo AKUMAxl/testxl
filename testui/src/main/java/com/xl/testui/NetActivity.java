@@ -295,7 +295,6 @@ public class NetActivity extends Activity implements P2pInfoListener, MessageCal
                 device.setP2pmac(DeviceConfigUtil.getP2pMac());
                 MessageBean<Device> messageBean = new MessageBean<>();
                 messageBean.setType(MessageBean.TYPE_DEVICE_INFO);
-                messageBean.setLength(321);
                 messageBean.setSenderName(senderName);
                 messageBean.setReceiverName(destName);
                 Type type = new TypeToken<MessageBean<Device>>() {}.getType();
@@ -304,7 +303,6 @@ public class NetActivity extends Activity implements P2pInfoListener, MessageCal
             }else {
                 MessageBean<String> messageBean = new MessageBean<>();
                 messageBean.setType(MessageBean.TYPE_DATA);
-                messageBean.setLength(321);
                 messageBean.setSenderName(senderName);
                 messageBean.setReceiverName(destName);
                 messageBean.setData(content);

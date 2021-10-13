@@ -600,7 +600,11 @@ public class P2pManager {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                discoverPeer();
+                if (mCurConnectState==DISCONNECT){
+                    discoverPeer();
+                }else {
+                    Log.e(TAG, "retryDiscoverPeer not disconnect");
+                }
             }
         },10*1000);
     }

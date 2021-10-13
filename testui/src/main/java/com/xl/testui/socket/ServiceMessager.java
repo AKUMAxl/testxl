@@ -1,6 +1,7 @@
 package com.xl.testui.socket;
 
 
+import static com.xl.testui.socket.DeviceConstant.HW_HOST;
 import static com.xl.testui.socket.DeviceConstant.LANTU;
 
 import android.text.TextUtils;
@@ -169,7 +170,7 @@ public class ServiceMessager extends BaseMessager {
                         String clientName = devicesMessage.getSenderName();
                         mClientSocketMap.put(clientName,socket);
                     }else {
-                        if (!messageBean.getReceiverName().equals(LANTU)){
+                        if (!messageBean.getReceiverName().equals(HW_HOST)){
                             sendMsg(data,messageBean.getReceiverName());
                         }else {
                             if (!TextUtils.isEmpty(data)) {
