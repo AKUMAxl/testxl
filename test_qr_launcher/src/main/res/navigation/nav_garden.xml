@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/main_fragment">
+
+    <fragment
+        android:id="@+id/main_fragment"
+        android:name="com.huawei.android.launcher.ui.MainFragment">
+
+        <action
+            android:id="@+id/action_main_to_app_list"
+            app:destination="@id/app_list_fragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/app_list_fragment"
+        android:name="com.huawei.android.launcher.ui.AppListFragment">
+
+    </fragment>
+
+
+    <action android:id="@+id/action_global_mainFragment"
+        app:destination="@id/main_fragment">
+        <argument
+            android:name="index"
+            app:argType="integer"
+            android:defaultValue="-1"
+            />
+    </action>
+
+</navigation>

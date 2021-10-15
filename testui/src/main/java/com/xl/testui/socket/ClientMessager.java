@@ -28,6 +28,7 @@ public class ClientMessager extends BaseMessager {
     private boolean mRunning = true;
 
     public ClientMessager(String hostIp) {
+        super();
         this.mHost = hostIp;
     }
 

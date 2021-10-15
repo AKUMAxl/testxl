@@ -48,6 +48,15 @@
             />
 
 
+        <Button
+            android:id="@+id/btn_app_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="应用列表"
+            />
+
         <TextView
             android:id="@+id/tv_vr_text"
             android:layout_width="wrap_content"

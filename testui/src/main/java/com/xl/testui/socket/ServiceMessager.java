@@ -22,6 +22,7 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ServiceMessager extends BaseMessager {
@@ -34,6 +35,7 @@ public class ServiceMessager extends BaseMessager {
 
 
     public ServiceMessager() {
+        super();
     }
 
 
@@ -142,37 +144,35 @@ public class ServiceMessager extends BaseMessager {
         public void run() {
             try {
                 while (mRunning) {
+                    Log.d(TAG, "receive msg called");
+//                    byte[] receiveBytes = new byte[BUFFER_SIZE];
+//                    while (inputStream.read(receiveBytes, 0, receiveBytes.length) != -1) {
+//                        handleReceiveMsg(receiveBytes);
+//                    }
+//                    handleReceiveMsg(receiveBytes);
+
                     byte[] receiveBytes = new byte[inputStream.available()];
                     int length = inputStream.read(receiveBytes);
                     String data;
-//                    if (length<=BUFFER_SIZE){
-//                        data = new String(receiveBytes, 0, length, StandardCharsets.UTF_8);
-//                    }else {
-//                        StringBuffer sb = new StringBuffer();
-//                        int len = 0;
-//                        while ((len = inputStream.read(receiveBytes, 0, receiveBytes.length)) != -1) {
-//                            sb.append(receiveBytes);
-//                        }
-//                        data = sb.toString();
-//                    }
-                    data = new String(receiveBytes, receiveBytes.length>22?22:0, receiveBytes.length>22?length-22:length, Charset.defaultCharset());
-                    if (TextUtils.isEmpty(data)){
+                    data = new String(receiveBytes, receiveBytes.length > 22 ? 22 : 0, receiveBytes.length > 22 ? length - 22 : length, Charset.defaultCharset());
+                    if (TextUtils.isEmpty(data)) {
                         continue;
                     }
-                    Log.d(TAG, "receive data:"+data);
+                    Log.d(TAG, "receive data:" + data);
                     Gson gson = new Gson();
                     Type type = new TypeToken<MessageBean<Object>>() {
                     }.getType();
                     MessageBean<Object> messageBean = gson.fromJson(data, type);
-                    if (messageBean.getType()==MessageBean.TYPE_DEVICE_INFO){
-                        Type t = new TypeToken<MessageBean<Device>>(){}.getType();
-                        MessageBean<Device> devicesMessage = gson.fromJson(data,t);
+                    if (messageBean.getType() == MessageBean.TYPE_DEVICE_INFO) {
+                        Type t = new TypeToken<MessageBean<Device>>() {
+                        }.getType();
+                        MessageBean<Device> devicesMessage = gson.fromJson(data, t);
                         String clientName = devicesMessage.getSenderName();
-                        mClientSocketMap.put(clientName,socket);
-                    }else {
-                        if (!messageBean.getReceiverName().equals(HW_HOST)){
-                            sendMsg(data,messageBean.getReceiverName());
-                        }else {
+                        mClientSocketMap.put(clientName, socket);
+                    } else {
+                        if (!messageBean.getReceiverName().equals(HW_HOST)) {
+                            sendMsg(data, messageBean.getReceiverName());
+                        } else {
                             if (!TextUtils.isEmpty(data)) {
                                 callbackMessage(data);
                             }

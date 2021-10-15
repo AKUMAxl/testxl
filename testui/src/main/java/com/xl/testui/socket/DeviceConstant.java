@@ -8,7 +8,8 @@ public class DeviceConstant {
 
 //    public static final String HW_HOST_HOST = "cn-east-hcd-4a-79deed25c1627552150890-779bf7d57-bn6gz"; // meta 40
     public static final String HW_HOST_HOST = "cn-central-hcd-2a-407f5d32a1622213767141-6d8757b875-4bdbh"; // p40
-    public static final String HW_REAR_HOST = "cn-central-hcd-2a-21345952e1629685408656-7f665fc9fd-jzhpd";
+    public static final String HW_REAR_HOST = "cn-east-hcd-4a-8e084313b1633946504022-66b88cf9c8-nl22k"; // HUAWEU x1 cpu2
+//    public static final String HW_REAR_HOST = "cn-central-hcd-2a-21345952e1629685408656-7f665fc9fd-jzhpd";
     public static final String LANTU_HOST = "njpateo-222";
 
 
@@ -19,6 +20,7 @@ public class DeviceConstant {
      */
 //    public static final String P2P_GROUP_OWNER_NAME = "HUAWEI Mate 40 Pro";
     public static final String P2P_GROUP_OWNER_NAME = "HUAWEI P40 Pro";
+//    public static final String P2P_GROUP_OWNER_NAME = "ICSA";
 //    public static final String P2P_GROUP_OWNER_NAME = "岚图FREE";
 
 }

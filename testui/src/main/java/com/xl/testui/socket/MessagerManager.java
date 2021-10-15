@@ -77,7 +77,6 @@ public class MessagerManager {
             messageBean.setType(MessageBean.TYPE_DEVICE_INFO);
             messageBean.setSenderName(senderName);
             messageBean.setReceiverName(destName);
-
             Type type = new TypeToken<MessageBean<Device>>() {
             }.getType();
             String jsonStr = gson.toJson(messageBean, type);
