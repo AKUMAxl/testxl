@@ -21,13 +21,21 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.7">
+      <module name="testxl.air_condition" target="11" />
       <module name="testxl.animtion" target="11" />
       <module name="testxl.app" target="11" />
       <module name="testxl.c100_ivoka" target="11" />
       <module name="testxl.DynamicFeature" target="11" />
       <module name="testxl.iflytekJar" target="11" />
+      <module name="testxl.netlib" target="11" />
       <module name="testxl.test-complier" target="1.8" />
+      <module name="testxl.test_aiavm" target="11" />
+      <module name="testxl.test_launcher" target="11" />
+      <module name="testxl.test_net" target="11" />
+      <module name="testxl.test_opengl" target="11" />
+      <module name="testxl.test_qr_launcher" target="11" />
       <module name="testxl.testlocaltion" target="11" />
+      <module name="testxl.testplayer" target="11" />
       <module name="testxl.testqgspeech" target="11" />
       <module name="testxl.testui" target="11" />
       <module name="testxl.voice_demo" target="11" />
