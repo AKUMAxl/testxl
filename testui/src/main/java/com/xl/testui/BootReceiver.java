@@ -15,7 +15,6 @@ import android.util.Log;
 import android.util.Pair;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

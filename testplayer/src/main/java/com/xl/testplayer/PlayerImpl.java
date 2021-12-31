@@ -52,6 +52,7 @@ public class PlayerImpl implements PlayerInterface{
         @Override
         public void onPrepared(MediaPlayer mediaPlayer) {
             mMediaPlayer.start();
+            mMediaPlayer.setVolume(0,0);
         }
     };
 }

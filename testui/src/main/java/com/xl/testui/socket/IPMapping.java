@@ -9,6 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class IPMapping {
 
+
     private static ConcurrentHashMap<String,String> mMacDeviceNameMapping = new ConcurrentHashMap<>();
 
     public static void addDevice(String macAddress,String deviceName){

@@ -43,6 +43,7 @@
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -63,6 +64,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".NetActivity"
+            android:exported="true"
+            android:launchMode="singleInstance">
+
+        </activity>
+        <activity android:name=".AwareActivity"
             android:exported="true"
             android:launchMode="singleInstance">
 

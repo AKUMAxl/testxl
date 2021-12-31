@@ -157,7 +157,7 @@ public class IflytekTestManager {
         appList.add("新闻内免唤醒");
         appList.add("音乐");
         appList.add("电台");
-        appList.add("新闻");
+//        appList.add("新闻");
         appList.add("视频");
         appList.add("电话");
         appList.add("车机系统控制");
