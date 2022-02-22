@@ -1,0 +1,84 @@
+plugins {
+    id 'com.android.application'
+}
+
+def releaseTime() {
+    return new Date().format("yyyyMMddHHmm", TimeZone.getDefault())
+}
+
+android {
+    compileSdk 31
+
+    signingConfigs {
+        defalut {
+            storeFile file('test.jks')
+            storePassword '000000'
+            keyAlias = 'key0'
+            keyPassword '000000'
+        }
+
+    }
+
+    defaultConfig {
+//        applicationId "com.huawei.ivi.hmi.netbus"
+        applicationId "com.huawei.ivi.hmi.netbus"
+        minSdk 21
+        targetSdk 31
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        flavorDimensions ""
+    }
+
+    buildTypes {
+        debug{
+            signingConfig signingConfigs.defalut
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    productFlavors{
+        auto{
+            buildConfigField "int","devicesId","0"
+        }
+        hw_host{
+            buildConfigField "int","devicesId","1"
+        }
+        lantu{
+            buildConfigField "int","devicesId","2"
+        }
+        hw_pad_left{
+            buildConfigField "int","devicesId","3"
+        }
+        hw_pad_right{
+            buildConfigField "int","devicesId","4"
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    android.applicationVariants.all {
+        variant ->
+            variant.outputs.all {
+                outputFileName = "NetBus_" + productFlavors.name + "-${releaseTime()}.apk"
+            }
+    }
+}
+
+dependencies {
+    implementation project(path: ':MessageAdapter')
+    implementation fileTree(dir:'libs',includes: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.3.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    implementation 'com.tencent:mmkv-static:1.2.10'
+}

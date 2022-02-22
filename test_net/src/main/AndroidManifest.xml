@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.huawei.ivi.hmi.test_net">
+
+    <!--获取当前wifi状态 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.OVERRIDE_WIFI_CONFIG" />
+    <!--定位信息是敏感信息，可通过Setting.setLocationEnable(false)关闭定位请求 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+
+    <!--连接网络权限 -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!--读取网络信息状态 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+
+
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+
+    <application
+        android:name=".App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Testxl">
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.player.PlayerActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <service android:name=".P2pService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.test.p2pservice"/>
+            </intent-filter>
+        </service>
+        <receiver android:name=".p2p.P2pReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.net.wifi.p2p.STATE_CHANGED"/>
+                <action android:name="android.net.wifi.p2p.PEERS_CHANGED"/>
+                <action android:name="android.net.wifi.p2p.CONNECTION_STATE_CHANGE"/>
+                <action android:name="android.net.wifi.p2p.THIS_DEVICE_CHANGED"/>
+                <action android:name="android.net.wifi.p2p.DISCOVERY_STATE_CHANGE"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".BootReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter android:priority="999">
+                <!-- 开机完成✅ 启动完成✅  开机是危险的行为，需要权限 -->
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.FIRST_BOOT_COMPLETED" />
+                <!-- 关机 -->
+                <action android:name="android.intent.action.ACTION_SHUTDOWN" />
+                <!-- 测试 -->
+                <action android:name="com.test.test"/>
+                <action android:name="com.netbus.keep"/>
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>
