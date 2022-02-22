@@ -161,8 +161,8 @@ public class MainActivity extends AppCompatActivity implements P2pInfoListener, 
 
         mHandler = new UIHandle();
 //        MessagerManager.getInstance().clientStart("10.10.84.56");
-        MessagerManager.getInstance().clientStart("192.168.1.102");
-//        MessagerManager.getInstance().serviceStart();
+//        MessagerManager.getInstance().clientStart("192.168.1.102");
+        MessagerManager.getInstance().serviceStart();
 //        P2pManager.getInstance().startService(getApplicationContext());
 //        P2pManager.getInstance().addP2pInfoListener(this);
 //        if (DeviceConfigUtil.isHost()){

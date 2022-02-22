@@ -27,6 +27,7 @@
       <module name="testxl.c100_ivoka" target="11" />
       <module name="testxl.DynamicFeature" target="11" />
       <module name="testxl.iflytekJar" target="11" />
+      <module name="testxl.MessageAdapter" target="11" />
       <module name="testxl.netlib" target="11" />
       <module name="testxl.test-complier" target="1.8" />
       <module name="testxl.test_aiavm" target="11" />
