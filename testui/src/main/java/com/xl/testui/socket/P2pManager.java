@@ -2,6 +2,7 @@ package com.xl.testui.socket;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.net.NetworkInfo;
 import android.net.wifi.WpsInfo;
 import android.net.wifi.p2p.WifiP2pConfig;
 import android.net.wifi.p2p.WifiP2pDevice;
@@ -14,12 +15,12 @@ import android.net.wifi.p2p.nsd.WifiP2pDnsSdServiceRequest;
 import android.net.wifi.p2p.nsd.WifiP2pUpnpServiceInfo;
 import android.net.wifi.p2p.nsd.WifiP2pUpnpServiceRequest;
 import android.os.Handler;
-import android.os.HandlerThread;
 import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
 import android.util.Pair;
+import android.view.Menu;
 
+import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +30,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 
-import androidx.annotation.NonNull;
 
 import com.xl.testui.util.DeviceConfigUtil;
 
@@ -37,22 +37,30 @@ public class P2pManager {
 
     private static final String TAG = P2pManager.class.getSimpleName();
 
-    public static final String THREAD_NAME = "NET_THREAD";
+    public static final int DISCONNECT = 0;
+    public static final int CONNECTING = 1;
+    public static final int CONNECTED = 2;
+
+    private static final int RETRY_COUNT = 5;
+
     public static final String DNSSD_INSTANCE_NAME = "QI_RUI";
-    private static final int MSG_START_SERVICE = 1;
-    private static final int MSG_SCAN_DEVICE = 2;
-    private static final int MSG_STOP_SERVICE = 3;
 
     private Context mContext;
     private WifiP2pManager mWifiP2pManager;
     private WifiP2pManager.Channel mChannel;
 
-    private HandlerThread mHandlerThread;
-    private NetHandler mNetHandler;
-
-    private WifiP2pDevice mWifiP2pDevice;
-
     private P2pInfoListener mP2pInfoListener;
+
+    private boolean mP2pEnable;
+
+    private int mCreateGroupRetryCount = 0;
+
+    private int mCurConnectState = DISCONNECT;
+
+    boolean groupOwnerExist = false;
+
+
+
 
     private WifiP2pManager.DnsSdTxtRecordListener mDnsSdTxtRecordListener = new WifiP2pManager.DnsSdTxtRecordListener() {
         @Override
@@ -61,7 +69,7 @@ public class P2pManager {
                 String fullDomain, Map record, WifiP2pDevice device) {
             Log.d(TAG, "serviceAvailable onDnsSdTxtRecordAvailable() called with: fullDomain = [" + fullDomain + "], record = [" + record + "], device = [" + device + "]");
             if (fullDomain.contains(DNSSD_INSTANCE_NAME.toLowerCase(Locale.ROOT))){
-                connectDevice(device);
+//                connectDevice(device);
             }
         }
     };
@@ -99,10 +107,11 @@ public class P2pManager {
 
 
     public void init(Context context) {
+        if (mContext!=null){
+            Log.d(TAG, "P2p already");
+            return;
+        }
         this.mContext = context;
-        mHandlerThread = new HandlerThread(THREAD_NAME);
-        mHandlerThread.start();
-        mNetHandler = new NetHandler(mHandlerThread.getLooper());
         mWifiP2pManager = (WifiP2pManager) mContext.getSystemService(Context.WIFI_P2P_SERVICE);
         mChannel = mWifiP2pManager.initialize(mContext, Looper.getMainLooper(), () -> {
             Log.d(TAG, "init() called with: context = [" + context + "]");
@@ -121,6 +130,30 @@ public class P2pManager {
         this.mP2pInfoListener = null;
     }
 
+
+    public void notifyP2pEnableState(boolean enable){
+        this.mP2pEnable = enable;
+    }
+
+    public void notifyP2pPeerChange(){
+        this.requestPeers();
+    }
+
+    public void notifyConnectStateChange(NetworkInfo networkInfo,WifiP2pInfo wifiP2pInfo){
+        if (networkInfo.isConnected()){
+            this.requestConnectedDeviceInfo();
+//            this.requestGroupInfo();
+        }
+    }
+
+    public void notifyDeviceStateChange(WifiP2pDevice wifiP2pDevice){
+
+    }
+
+    public void notifyScanStateChange(boolean scanning){
+
+    }
+
     /**
      * 启动服务
      */
@@ -129,8 +162,8 @@ public class P2pManager {
         if (mWifiP2pManager == null) {
             return;
         }
-        startDnssdService();
-//        startUpnpService();
+//        startDnssdService();
+        startUpnpService();
     }
 
 
@@ -155,7 +188,7 @@ public class P2pManager {
     @SuppressLint("MissingPermission")
     private void startDnssdService(){
         Map data = new HashMap();
-        data.put("service_port", String.valueOf(37000));
+        data.put("service_port", String.valueOf(BaseMessager.PORT));
         data.put("p2p_mac", DeviceConfigUtil.getP2pMac());
 
         WifiP2pDnsSdServiceInfo serviceInfoDnssd = WifiP2pDnsSdServiceInfo.newInstance(DNSSD_INSTANCE_NAME,"_ipp._tcp", data);
@@ -172,11 +205,26 @@ public class P2pManager {
         });
     }
 
+    public void closeDnssdUpnpService(){
+        mWifiP2pManager.clearLocalServices(mChannel, new WifiP2pManager.ActionListener() {
+            @Override
+            public void onSuccess() {
+                Log.d(TAG, "closeDnssdUpnpService onSuccess() called");
+            }
+
+            @Override
+            public void onFailure(int reason) {
+                Log.d(TAG, "closeDnssdUpnpService onFailure() called with: reason = [" + reason + "]");
+                parseActionListenerOnFailure(reason);
+            }
+        });
+    }
+
     @SuppressLint("MissingPermission")
     public void discoverService() {
-        discoverDnssdService();
-//        discoverUpnpService();
-//        mWifiP2pManager.setServiceResponseListener(mChannel,mServiceResponseListener);
+//        discoverDnssdService();
+        discoverUpnpService();
+        mWifiP2pManager.setServiceResponseListener(mChannel,mServiceResponseListener);
 
     }
 
@@ -240,6 +288,21 @@ public class P2pManager {
         });
     }
 
+    public void stopDiscoverService(){
+        mWifiP2pManager.clearServiceRequests(mChannel, new WifiP2pManager.ActionListener() {
+            @Override
+            public void onSuccess() {
+                Log.d(TAG, "stopDiscoverService onSuccess() called");
+            }
+
+            @Override
+            public void onFailure(int reason) {
+                Log.d(TAG, "stopDiscoverService onFailure() called with: reason = [" + reason + "]");
+                parseActionListenerOnFailure(reason);
+            }
+        });
+    }
+
     @SuppressLint("MissingPermission")
     public void createGroup() {
         if (mWifiP2pManager == null) {
@@ -252,6 +315,7 @@ public class P2pManager {
                 if (mP2pInfoListener != null) {
                     mP2pInfoListener.onCreateGroupResult(true);
                 }
+                mCreateGroupRetryCount = 0;
             }
 
             @Override
@@ -261,9 +325,34 @@ public class P2pManager {
                 if (mP2pInfoListener != null) {
                     mP2pInfoListener.onCreateGroupResult(false);
                 }
+                if (mCreateGroupRetryCount>=RETRY_COUNT){
+                    return;
+                }
+                mCreateGroupRetryCount++;
+                exitGroup();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        createGroup();
+                    }
+                },1000);
             }
         });
+    }
 
+    public void exitGroup(){
+        mWifiP2pManager.removeGroup(mChannel, new WifiP2pManager.ActionListener() {
+            @Override
+            public void onSuccess() {
+                Log.d(TAG, "exitGroup onSuccess() called");
+            }
+
+            @Override
+            public void onFailure(int reason) {
+                Log.d(TAG, "exitGroup onFailure() called with: reason = [" + reason + "]");
+                parseActionListenerOnFailure(reason);
+            }
+        });
     }
 
     /**
@@ -271,7 +360,7 @@ public class P2pManager {
      */
     @SuppressLint("MissingPermission")
     public void discoverPeer() {
-
+        Log.d(TAG, "discoverPeer() called");
         mWifiP2pManager.discoverPeers(mChannel, new WifiP2pManager.ActionListener() {
             @Override
             public void onSuccess() {
@@ -282,6 +371,7 @@ public class P2pManager {
             public void onFailure(int reason) {
                 Log.d(TAG, "discoverPeers onFailure() called with: reason = [" + reason + "]");
                 parseActionListenerOnFailure(reason);
+                retryDiscoverPeer();
             }
         });
     }
@@ -291,9 +381,11 @@ public class P2pManager {
      */
     @SuppressLint("MissingPermission")
     public void requestPeers() {
+        Log.d(TAG, "requestPeers() called");
         if (mWifiP2pManager == null) {
             return;
         }
+        groupOwnerExist = false;
         mWifiP2pManager.requestPeers(mChannel, new WifiP2pManager.PeerListListener() {
             @Override
             public void onPeersAvailable(WifiP2pDeviceList peers) {
@@ -306,9 +398,35 @@ public class P2pManager {
                     Log.d(TAG, "Device primaryDeviceType:" + device.primaryDeviceType);
                     Log.d(TAG, "Device secondaryDeviceType:" + device.secondaryDeviceType);
                     Log.d(TAG, "Device status:" + device.status);
+                    Log.d(TAG, "mCurConnectState:" + mCurConnectState);
                     devices.add(device);
+                    if (DeviceConfigUtil.isP2pGroupOwner(device.deviceName)&&mCurConnectState==DISCONNECT){
+                        mCurConnectState = CONNECTING;
+                        connectDevice(device);
+                        groupOwnerExist = true;
+                    }
                 }
-                mP2pInfoListener.onDevicesUpdate(devices);
+                if (!groupOwnerExist&&mCurConnectState==DISCONNECT){
+                    retryDiscoverPeer();
+                }
+                if (mP2pInfoListener!=null){
+                    mP2pInfoListener.onDevicesUpdate(devices);
+                }
+
+            }
+        });
+    }
+
+    public void stopDiscoverPeer(){
+        mWifiP2pManager.stopPeerDiscovery(mChannel, new WifiP2pManager.ActionListener() {
+            @Override
+            public void onSuccess() {
+                Log.d(TAG, "stopRequestPeer onSuccess() called");
+            }
+
+            @Override
+            public void onFailure(int reason) {
+                Log.d(TAG, "stopRequestPeer onFailure() called with: reason = [" + reason + "]");
             }
         });
     }
@@ -324,6 +442,7 @@ public class P2pManager {
             public void onSuccess() {
                 Log.d(TAG, "connectDevice onSuccess() called");
 //                requestConnectedDeviceInfo();
+                mCurConnectState = CONNECTED;
                 mWifiP2pManager.stopPeerDiscovery(mChannel, new WifiP2pManager.ActionListener() {
                     @Override
                     public void onSuccess() {
@@ -334,15 +453,17 @@ public class P2pManager {
                     public void onFailure(int reason) {
                         Log.d(TAG, "stopPeerDiscovery onFailure() called with: reason = [" + reason + "]");
                         parseActionListenerOnFailure(reason);
-
                     }
                 });
+                requestConnectedDeviceInfo();
             }
 
             @Override
             public void onFailure(int reason) {
                 Log.d(TAG, "connectDevice onFailure() called with: reason = [" + reason + "]");
                 parseActionListenerOnFailure(reason);
+                mCurConnectState = DISCONNECT;
+                retryDiscoverPeer();
             }
         });
     }
@@ -360,16 +481,25 @@ public class P2pManager {
                 try {
                     if (info.groupOwnerAddress == null) {
                         Log.e(TAG, "groupOwnerAddress is null");
+                        mCurConnectState = DISCONNECT;
+                        retryDiscoverPeer();
+//                        retryRequestConnectedDeviceInfo();
                         return;
                     }
                     InetAddress address = InetAddress.getByName(info.groupOwnerAddress.getHostAddress());
-
                     if (address == null) {
                         Log.e(TAG, "address is null");
+                        mCurConnectState = DISCONNECT;
+                        retryDiscoverPeer();
+//                        retryRequestConnectedDeviceInfo();
                         return;
                     }
                     Log.i(TAG, "address " + address.getHostAddress());
                     Log.d(TAG, "onConnectionInfoAvailable() called with: info.isGroupOwner = [" + info.isGroupOwner + "]");
+                    if (mP2pInfoListener==null){
+                        Log.e(TAG, "onConnectionInfoAvailable: mP2pInfoListener is null");
+                        return;
+                    }
                     if (info.isGroupOwner) {
                         mP2pInfoListener.onServiceConnected();
                     } else {
@@ -399,6 +529,9 @@ public class P2pManager {
                     Log.d(TAG, "onGroupInfoAvailable() called with: client device deviceAddress = [" + device.deviceAddress + "]");
                     Pair<String, String> macAndDeviceName = new Pair<>(device.deviceAddress, device.deviceName);
                     macAndDevicesName.add(macAndDeviceName);
+                    if (DeviceConfigUtil.isP2pGroupOwner(device.deviceName)){
+                        connectDevice(device);
+                    }
                 }
                 if (mP2pInfoListener != null) {
                     mP2pInfoListener.onClientUpdate(macAndDevicesName);
@@ -462,6 +595,31 @@ public class P2pManager {
         });
     }
 
+    private void retryDiscoverPeer(){
+        if (DeviceConfigUtil.isSocketService()){
+            return;
+        }
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (mCurConnectState==DISCONNECT){
+                    discoverPeer();
+                }else {
+                    Log.e(TAG, "retryDiscoverPeer not disconnect");
+                }
+            }
+        },10*1000);
+    }
+
+    private void retryRequestConnectedDeviceInfo(){
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                requestConnectedDeviceInfo();
+            }
+        },10*1000);
+    }
+
     private void parseActionListenerOnFailure(int reason) {
         switch (reason) {
             case WifiP2pManager.ERROR:
@@ -479,18 +637,5 @@ public class P2pManager {
         }
     }
 
-
-    static class NetHandler extends Handler {
-
-        public NetHandler(Looper looper) {
-            super(looper);
-        }
-
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
-            Log.d(TAG, "handleMessage() called with: msg = [" + msg + "]");
-        }
-    }
 
 }

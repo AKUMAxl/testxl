@@ -300,8 +300,7 @@ public class SocketTestManager implements P2pInfoListener, MessageCallback {
             MessageBean<Device> messageBean = new MessageBean<>();
             messageBean.setData(device);
             messageBean.setType(1);
-            messageBean.setLength(123);
-            mClientMessager.sendMsg(gson.toJson(messageBean));
+//            mClientMessager.sendMsg(gson.toJson(messageBean));
         }
     }
 
@@ -406,7 +405,6 @@ public class SocketTestManager implements P2pInfoListener, MessageCallback {
                         MessageBean messageBean = gson.fromJson(msgStr,type);
                         Log.d(TAG, "handleMessage() called with: "+messageBean.getData().toString());
                         if (messageBean.getType()==1){
-                            Log.d(TAG, "handleMessage() called with: getLength = [" + messageBean.getLength() + "]");
                             Device device = (Device) messageBean.getData();
                             Log.d(TAG, "handleMessage() called with: getLength = [" + device.getName() + "]");
                         }

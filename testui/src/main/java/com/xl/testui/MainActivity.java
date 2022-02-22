@@ -1,6 +1,7 @@
 package com.xl.testui;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatDrawableManager;
 import androidx.core.app.ActivityCompat;
@@ -20,6 +21,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.provider.Settings;
 import android.renderscript.RenderScript;
 import android.util.Log;
@@ -37,6 +39,7 @@ import com.xl.testui.iflytek.IflytekTestManager;
 import com.xl.testui.record.RecordTestManager;
 import com.xl.testui.socket.SocketTestManager;
 import com.xl.testui.testui.UITestManager;
+import com.xl.testui.util.DeviceConfigUtil;
 import com.xl.testui.util.ImageUtil;
 import com.xl.testui.vehicle.VehicleTestManager;
 import com.xl.testui.voice.VoiceTestManager;
@@ -48,9 +51,11 @@ public class MainActivity extends AppCompatActivity {
     private WindowManager mWindowManager;
     public static final int REQUEST_WRITE_EXTERNAL_STORAGE = 1;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        DeviceConfigUtil.getIMEI();
         mActivityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(mActivityMainBinding.getRoot());
 
@@ -97,21 +102,50 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         mActivityMainBinding.btnTestSocket.setOnClickListener(v -> {
-            if (checkPermission()){
+//            if (checkPermission()){
+//                requestPermission();
+//                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//                    // TODO: Consider calling
+//                    //    ActivityCompat#requestPermissions
+//                    // here to request the missing permissions, and then overriding
+//                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//                    //                                          int[] grantResults)
+//                    // to handle the case where the user grants the permission. See the documentation
+//                    // for ActivityCompat#requestPermissions for more details.
+//                    Log.d("xLLL", "checkSelfPermission ACCESS_FINE_LOCATION not grant");
+//                    return;
+//                }
+//                SocketTestManager.getInstance().init(this, mWindowManager);
+//            }
+//
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
                 requestPermission();
-                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    Log.d("xLLL", "checkSelfPermission ACCESS_FINE_LOCATION not grant");
-                    return;
-                }
-                SocketTestManager.getInstance().init(this, mWindowManager);
+                Log.d("xLLL", "checkSelfPermission ACCESS_FINE_LOCATION not grant");
+                return;
             }
+            startActivity(new Intent(this,NetActivity.class));
+        });
+        mActivityMainBinding.btnTestAware.setOnClickListener(v -> {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                requestPermission();
+                Log.d("xLLL", "checkSelfPermission ACCESS_FINE_LOCATION not grant");
+                return;
+            }
+            startActivity(new Intent(this,AwareActivity.class));
         });
 //        checkWPermission();
     }
@@ -143,11 +177,13 @@ public class MainActivity extends AppCompatActivity {
 
     private final static int REQ_CODE = 100;
     private static final String[] permissions = {
-            Manifest.permission.ACCESS_FINE_LOCATION
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_BACKGROUND_LOCATION
     };
 
     private void requestPermission(){
         requestPermissions(permissions,REQ_CODE);
+
     }
 
     @Override

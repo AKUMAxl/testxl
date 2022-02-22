@@ -17,6 +17,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+
 public class P2pClientDevicesAdapter extends RecyclerView.Adapter<P2pClientDevicesAdapter.ViewHolder>{
 
     private Context mContext;

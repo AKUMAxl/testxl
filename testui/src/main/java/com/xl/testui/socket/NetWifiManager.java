@@ -10,6 +10,7 @@ public class NetWifiManager {
 
 
     private NetWifiManager() {
+
     }
 
     private static class SingletonInstance {

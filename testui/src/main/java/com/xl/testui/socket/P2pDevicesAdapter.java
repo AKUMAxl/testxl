@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class P2pDevicesAdapter extends RecyclerView.Adapter<P2pDevicesAdapter.ViewHolder>{
 
+
     private Context mContext;
     private List<WifiP2pDevice> list;
     private P2pDevicesAdapter.OnClickListener mOnClickListener;

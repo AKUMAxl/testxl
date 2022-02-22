@@ -8,6 +8,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import androidx.annotation.NonNull;
 
+
 public class ThreadPoolUtil {
 
 
@@ -87,7 +88,7 @@ public class ThreadPoolUtil {
     private static class DefaultThreadFactory implements ThreadFactory {
 
         //线程池的计数
-        private static final AtomicInteger poolNumber = new AtomicInteger(1);
+        private static final AtomicInteger POOL_NUMBER = new AtomicInteger(1);
         //线程的计数
         private final AtomicInteger threadNumber = new AtomicInteger(1);
         private final ThreadGroup group;
@@ -97,7 +98,7 @@ public class ThreadPoolUtil {
         DefaultThreadFactory(int threadPriority, String threadNamePrefix) {
             this.threadPriority = threadPriority;
             this.group = Thread.currentThread().getThreadGroup();
-            this.namePrefix = threadNamePrefix + poolNumber.getAndIncrement() + "-thread-";
+            this.namePrefix = threadNamePrefix + POOL_NUMBER.getAndIncrement() + "-thread-";
         }
 
         @Override

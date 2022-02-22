@@ -19,6 +19,8 @@
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <!--外存储写权限，构建语法需要用到此权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
+
     <!--外存储读权限，构建语法需要用到此权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <!--配置权限，用来记录应用配置信息 -->
@@ -37,6 +39,11 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <!--读取网络信息状态 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -56,6 +63,16 @@
                 <category android:name=" android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".NetActivity"
+            android:exported="true"
+            android:launchMode="singleInstance">
+
+        </activity>
+        <activity android:name=".AwareActivity"
+            android:exported="true"
+            android:launchMode="singleInstance">
+
+        </activity>
         <activity android:name=".FreeFormActivity"
             android:exported="true"
             android:launchMode="singleInstance">
@@ -65,6 +82,12 @@
                 <category android:name=" android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <service android:name=".P2pService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.test.p2pservice"/>
+            </intent-filter>
+        </service>
         <receiver android:name=".socket.P2pReceiver">
             <intent-filter>
                 <action android:name="android.net.wifi.p2p.STATE_CHANGED"/>
@@ -74,10 +97,14 @@
                 <action android:name="android.net.wifi.p2p.DISCOVERY_STATE_CHANGE"/>
             </intent-filter>
         </receiver>
-        <receiver android:name=".BootReceiver">
+        <receiver android:name=".BootReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
             <intent-filter android:priority="999">
                 <!-- 开机完成✅ 启动完成✅  开机是危险的行为，需要权限 -->
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <!--<action android:name="android.intent.action.FIRST_BOOT_COMPLETED" />-->
                 <!-- 关机 -->
                 <action android:name="android.intent.action.ACTION_SHUTDOWN" />
                 <!-- 测试 -->

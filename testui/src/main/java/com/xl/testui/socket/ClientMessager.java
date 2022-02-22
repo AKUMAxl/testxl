@@ -14,6 +14,7 @@ import java.nio.charset.StandardCharsets;
 
 public class ClientMessager extends BaseMessager {
 
+
     private static final String HOST = "10.10.76.160";
     //    private static final String HOST = "10.10.76.116";
 //    private static final String HOST = "172.20.4.3";
@@ -28,6 +29,7 @@ public class ClientMessager extends BaseMessager {
     private boolean mRunning = true;
 
     public ClientMessager(String hostIp) {
+        super();
         this.mHost = hostIp;
     }
 
@@ -52,14 +54,21 @@ public class ClientMessager extends BaseMessager {
 
     }
 
-    public void sendMsg(String content) {
+
+    @Override
+    void sendMsg(byte[] data, String destDeviceNam) {
         ThreadPoolUtil.getInstance().execute(() -> {
             try {
                 if (outputStream == null) {
                     Log.e(TAG, "sendMsg: outputStream is null");
-                    return;
+                    if (socket!=null){
+                        outputStream = socket.getOutputStream();
+                    }else {
+                        Log.e(TAG, "sendMsg: socket is null");
+                        return;
+                    }
                 }
-                outputStream.write(content.getBytes(StandardCharsets.UTF_8));
+                outputStream.write(data);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -92,11 +101,12 @@ public class ClientMessager extends BaseMessager {
                 byte[] receiveBytes = new byte[inputStream.available()];
                 int length = inputStream.read(receiveBytes);
                 String data;
-                data = new String(receiveBytes, 0, length, Charset.defaultCharset());
-                if (!TextUtils.isEmpty(data)){
-                    Log.d(TAG, "client receive data:" + data);
-                    callbackMessage(data);
+                data = new String(receiveBytes, receiveBytes.length>22?22:0, receiveBytes.length>22?length-22:length, Charset.defaultCharset());
+                if (TextUtils.isEmpty(data)){
+                    continue;
                 }
+                Log.d(TAG, "receive data:"+data);
+                callbackMessage(data);
             }
         } catch (IOException e) {
             e.printStackTrace();
