@@ -17,5 +17,9 @@ public class MainActivity extends AppCompatActivity {
 
         mGlSurfaceView = new MyGLSurfaceView(this);
         setContentView(mGlSurfaceView);
+
+        GLNative.test();
     }
+
+
 }

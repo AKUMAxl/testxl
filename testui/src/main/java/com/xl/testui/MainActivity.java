@@ -60,9 +60,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(mActivityMainBinding.getRoot());
 
 
+
         mWindowManager = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE);
         mActivityMainBinding.btnTestFinish.setOnClickListener(v -> {
             finish();
+        });
+        mActivityMainBinding.btnTestTime.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            intent.setClass(this,TimeActivity.class);
+            startActivity(intent);
         });
         mActivityMainBinding.btnTestClient.setOnClickListener(v -> {
             if (checkPermission()) {
@@ -145,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("xLLL", "checkSelfPermission ACCESS_FINE_LOCATION not grant");
                 return;
             }
-            startActivity(new Intent(this,AwareActivity.class));
+//            startActivity(new Intent(this,AwareActivity.class));
         });
 //        checkWPermission();
     }

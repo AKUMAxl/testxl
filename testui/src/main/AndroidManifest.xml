@@ -73,6 +73,12 @@
             android:launchMode="singleInstance">
 
         </activity>
+        <activity android:name=".TimeActivity"
+            android:exported="true"
+            android:launchMode="singleInstance"
+            android:screenOrientation="landscape">
+
+        </activity>
         <activity android:name=".FreeFormActivity"
             android:exported="true"
             android:launchMode="singleInstance">

@@ -14,6 +14,12 @@
         android:text="finish"/>
 
     <Button
+        android:id="@+id/btn_test_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time"/>
+
+    <Button
         android:id="@+id/btn_test_client"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
