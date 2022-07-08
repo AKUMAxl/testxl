@@ -197,6 +197,7 @@ public class IflytekTestManager {
             @Override
             public void onItemClick(int position) {
                 if (SpeechSynthesizer.getSynthesizer().isSpeaking()){
+                    Log.d(TAG,"is speaking");
                     SpeechSynthesizer.getSynthesizer().stopSpeaking();
                 }
                 SpeechSynthesizer.getSynthesizer().startSpeaking(arrayList.get(position), null);

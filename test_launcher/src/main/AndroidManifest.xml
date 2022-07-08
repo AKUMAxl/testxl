@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.huawei.ivi.hmi.launcher"
     android:compileSdkVersion="30"
     android:compileSdkVersionCodename="11"
-    android:sharedUserId="android.uid.system"
+
     >
 
     <!--android:sharedUserId="android.uid.system"-->
@@ -42,6 +43,19 @@
                 <action android:name="dsv.launcher.action.enter" />
             </intent-filter>
         </service>
+        <service
+            android:name=".MyAccessibilityService"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:label="ACCESSIBILITY_SERVICE"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService"/>
+            </intent-filter>
+            <meta-data android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_config"/>
+        </service>
+
     </application>
 
     <permission
@@ -75,4 +89,7 @@
     <uses-permission android:name="ohos.permission.vehicle.CONTROL_DOORS" />
 
     <uses-permission android:name="dsv.launcher.permission.LOG_SERVICE" />
+
+    <uses-permission android:name="android.permission.BIND_ACCESSIBILITY_SERVICE"
+        tools:ignore="ProtectedPermissions" />
 </manifest>

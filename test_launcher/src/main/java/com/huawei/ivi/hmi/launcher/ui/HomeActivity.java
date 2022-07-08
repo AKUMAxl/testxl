@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.MotionEvent;
 
@@ -49,6 +50,9 @@ public class HomeActivity extends AppCompatActivity {
 ////            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_OPTIONS, options);
 //            startActivityForResult(intent, 100);
 //        }
+
+//        Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
+//        this.startActivity(intent);
     }
 
     private void startFreeForm(Context context){

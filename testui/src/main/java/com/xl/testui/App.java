@@ -8,9 +8,13 @@ import android.util.Log;
 
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
-import com.xl.testui.socket.P2pManager;
 import com.xl.testui.socket.P2pReceiver;
+import com.xl.testui.testAnnotation.ClassType;
+import com.xl.testui.testAnnotation.TestA;
+import com.xl.testui.testAnnotation.TestSuper;
 import com.xl.testui.util.DeviceConfigUtil;
+
+import java.lang.annotation.Annotation;
 
 public class App extends Application {
 
@@ -43,5 +47,15 @@ public class App extends Application {
 
         DeviceConfigUtil.initMacConfig(getApplicationContext());
         Log.d("xLLL","application onCreate");
+
+        TestSuper testA = new TestA();
+        Annotation[] annotations = testA.getClass().getAnnotations();
+        for (Annotation a:annotations) {
+            Log.d("xLLL","annnn:"+a.toString());
+            Log.d("xLLL","annnn:"+a.annotationType().getTypeName());
+        }
+        ClassType classType = testA.getClass().getAnnotation(ClassType.class);
+        String type = classType.type();
+        Log.d("xLLL","type:"+type);
     }
 }
